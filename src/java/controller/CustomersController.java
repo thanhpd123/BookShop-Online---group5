@@ -1,0 +1,104 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ */
+package controller;
+
+import entity.Book;
+import java.io.IOException;
+import java.io.PrintWriter;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import entity.Account;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.http.HttpSession;
+import java.util.Vector;
+import model.DAOCustomers;
+        
+
+/**
+ *
+ * @author Admin
+ */
+@WebServlet(name = "CustomersController", urlPatterns = {"/CustomersController"})
+public class CustomersController extends HttpServlet {
+
+    
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        DAOCustomers dao = new DAOCustomers();
+        HttpSession session = request.getSession(true);
+        String service = request.getParameter("service");
+        if (service == null) {
+            service = "listAll";
+        }
+        if (service.equals("listAll")) {
+            // call model
+            Vector<Account> vector = dao.getAll("select * from Customers");
+            // set data to view
+            request.setAttribute("data", vector);
+            RequestDispatcher dis = request.getRequestDispatcher("/jsp/CustomersManage.jsp");
+            //RequestDispatcher dis = request.getRequestDispatcher("/index.jsp");
+            dis.forward(request, response);
+        }
+         if (service.equals("search")) {
+            String FirstName = request.getParameter("FirstName");
+            Vector<Account> vector = dao.searchName(FirstName);
+            request.setAttribute("data", vector);
+            RequestDispatcher dis = request.getRequestDispatcher("/jsp/CustomersManage.jsp");
+            dis.forward(request, response);
+        }
+        
+
+
+    }
+        
+    
+        
+
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+
+}
+
