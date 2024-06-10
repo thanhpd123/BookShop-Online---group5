@@ -10,27 +10,17 @@ package entity;
  */
 public class CartItem {
     private int CartID, Quantity, Price;
-    private String BookID, BookImg;
+    private String BookID;
 
     public CartItem() {
     }
 
-    public CartItem(String BookImg, int CartID, String BookID, int Quantity, int Price) {
-        this.BookImg = BookImg;
+    public CartItem(int CartID, int Quantity, int Price, String BookID) {
         this.CartID = CartID;
-        this.BookID = BookID;
         this.Quantity = Quantity;
         this.Price = Price;
+        this.BookID = BookID;
     }
-
-    public String getBookImg() {
-        return BookImg;
-    }
-
-    public void setBookImg(String BookImg) {
-        this.BookImg = BookImg;
-    }
-    
 
     public int getCartID() {
         return CartID;
@@ -66,6 +56,8 @@ public class CartItem {
 
     @Override
     public String toString() {
-        return "CartItem{" + "CartID=" + CartID + ", Quantity=" + Quantity + ", Price=" + Price + ", BookID=" + BookID + ", BookImg=" + BookImg + '}';
+        return "CartItem{" + "CartID=" + CartID + ", Quantity=" + Quantity + ", Price=" + Price + ", BookID=" + BookID + '}';
     }
+    
+    // fividovkodvk
 }

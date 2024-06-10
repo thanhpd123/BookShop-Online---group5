@@ -14,8 +14,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
-import java.nio.file.Files;//
-import java.nio.file.Paths;//
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import model.*;
@@ -42,11 +42,11 @@ public class UserProfile extends HttpServlet {
         HttpSession session = request.getSession();
         AccountDAO accdao = new AccountDAO();
         int UserID = ((Account) session.getAttribute("acc")).getUserID();
-//update file anh
+
         Part part = request.getPart("image");
         String realPath = request.getServletContext().getRealPath("/img");
         String fileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
-//
+
         String fname = request.getParameter("fname");
         String lname = request.getParameter("lname");
         String phone = request.getParameter("phone");
@@ -65,7 +65,6 @@ public class UserProfile extends HttpServlet {
             msg = "Invalid date of birth";
         } else {
             if (!fileName.equals("")) {
-                //add file vao folder, db
             try {
                 if (!Files.exists(Paths.get(realPath))) {
                     Files.createDirectory(Paths.get(realPath));

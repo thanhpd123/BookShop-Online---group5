@@ -40,10 +40,15 @@ public class ChangePasswordServlet extends HttpServlet {
         String repass = request.getParameter("repass");
         Account customer = (Account) session.getAttribute("acc");
         AccountDAO accdao = new AccountDAO();
+        ///Example
+        String roleID = customer.getRoleID().toString();
+        if(!roleID.equals("2")){
+            response.sendRedirect("login");
+        }
+        ///Example
         Account customerLoad = accdao.loadAccount(customer.getEmail());
         String msg = "";
         int count = 0;
-        
         for(int i = 0; i < newpass.length(); i++){
             if(Character.isDigit(newpass.charAt(i))){
                 count ++;
@@ -51,7 +56,7 @@ public class ChangePasswordServlet extends HttpServlet {
         }
         if (!oldpass.equals(customer.getPassword())) {
             msg = "Old Password not valid!";
-        } else if (newpass.length() < 8) {
+        } else if (newpass.length() < 6) {
             msg = "New password is too short!";
         } else if (newpass.contains(" ")) {
             msg = "New password not valid!";

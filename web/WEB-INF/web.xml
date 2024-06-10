@@ -21,28 +21,28 @@
         <servlet-class>controller.RegisterServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>UserProfile</servlet-name>
-        <servlet-class>controller.UserProfile</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>ChangePasswordServlet</servlet-name>
         <servlet-class>controller.ChangePasswordServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>OrderController</servlet-name>
-        <servlet-class>controller.OrderController</servlet-class>
+        <servlet-name>UserProfile</servlet-name>
+        <servlet-class>controller.UserProfile</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>thisOrder</servlet-name>
-        <servlet-class>controller.thisOrder</servlet-class>
+        <servlet-name>SendEmail</servlet-name>
+        <servlet-class>verifyEmail.SendEmail</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>BlogListServlet</servlet-name>
-        <servlet-class>controller.BlogListServlet</servlet-class>
+        <servlet-name>PasswordRetrieval</servlet-name>
+        <servlet-class>controller.PasswordRetrieval</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>BlogDetailServlet</servlet-name>
-        <servlet-class>controller.BlogDetailServlet</servlet-class>
+        <servlet-name>SetNewPass</servlet-name>
+        <servlet-class>controller.SetNewPass</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>VerifyEmail</servlet-name>
+        <servlet-class>verifyEmail.VerifyEmail</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>NewHome</servlet-name>
@@ -61,39 +61,14 @@
         <url-pattern>/register</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>ChangePasswordServlet</servlet-name>
+        <url-pattern>/changepassword</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>UserProfile</servlet-name>
         <url-pattern>/userprofile</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ChangePasswordServlet</servlet-name>
-        <url-pattern>/changepassword</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>FeedBackServlet</servlet-name>
-        <servlet-class>controller.FeedBackServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>FeedBackDetailServlet</servlet-name>
-        <servlet-class>controller.FeedBackDetailServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>FeedBackServlet</servlet-name>
-        <url-pattern>/FeedBackServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>FeedBackDetailServlet</servlet-name>
-        <url-pattern>/FeedBackDetailServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>OrderController</servlet-name>
-        <url-pattern>/OrderController</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>thisOrder</servlet-name>
-        <url-pattern>/thisOrder</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-HEAD
         <servlet-name>SendEmail</servlet-name>
         <url-pattern>/sendemail</url-pattern>
     </servlet-mapping>
@@ -108,16 +83,5 @@ HEAD
     <servlet-mapping>
         <servlet-name>VerifyEmail</servlet-name>
         <url-pattern>/verifyemail</url-pattern>
-
-        <servlet-name>BlogListServlet</servlet-name>
-        <url-pattern>/BlogListServlet</url-pattern>
-93c1513d336b5293bc7f0e10320c121d04ab8cc7
     </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>BlogDetailServlet</servlet-name>
-        <url-pattern>/BlogDetailServlet</url-pattern>
-    </servlet-mapping>
-    <welcome-file-list>
-        <welcome-file>Home</welcome-file>
-    </welcome-file-list>
 </web-app>

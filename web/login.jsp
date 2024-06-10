@@ -116,7 +116,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12" style="text-align: center; margin-top: 20px;">
-                            <a href="xxx.jsp" class="btn btn-link">Forgot?</a>
+                            <a href="passwordretrieval" class="btn btn-link">Forgot?</a>
                             <a href="register" class="btn btn-link">Register</a>
                         </div>
                     </div>

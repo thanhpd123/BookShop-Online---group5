@@ -47,7 +47,7 @@ public class RegisterServlet extends HttpServlet {
             msg = "Your first name, last name, email, password exceed 40 characters";
         } else if (!(email.matches("^[a-zA-Z0-9_]+[@][a-zA-Z]+[.][a-zA-Z]+") || email.matches("^[a-zA-Z0-9_]+[@][a-zA-Z]+[.][a-zA-Z]+[.][a-zA-Z]+"))) {
             msg = "Email is invalid";
-        } else if (pass.length() < 8 || pass.contains(" ")) {
+        } else if (pass.length() < 6 || pass.contains(" ")) {
             msg = "Password is invalid";
         } else if (!(phone.matches("[0]{1}[35798]{1}[0-9]{8}"))) {
             msg = "Phone is invalid";
@@ -65,7 +65,6 @@ public class RegisterServlet extends HttpServlet {
         }
         request.setAttribute("msg", msg);
         request.getRequestDispatcher("register.jsp").forward(request, response);
-//out.print(dob);out.print(today);
     }
 
     @Override
