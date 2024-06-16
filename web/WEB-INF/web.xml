@@ -55,6 +55,14 @@
         <servlet-name>VerifyEmail</servlet-name>
         <servlet-class>verifyEmail.VerifyEmail</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>thisOrder</servlet-name>
+        <servlet-class>controller.thisOrder</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>OrderController</servlet-name>
+        <servlet-class>controller.OrderController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>NewHome</servlet-name>
         <url-pattern>/NewHome</url-pattern>
@@ -102,5 +110,13 @@
     <servlet-mapping>
         <servlet-name>VerifyEmail</servlet-name>
         <url-pattern>/verifyemail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>thisOrder</servlet-name>
+        <url-pattern>/thisOrder</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OrderController</servlet-name>
+        <url-pattern>/OrderController</url-pattern>
     </servlet-mapping>
 </web-app>

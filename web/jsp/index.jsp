@@ -502,7 +502,7 @@
                         <div class="navbar-nav mr-auto py-0 ml-auto justify-content-center">
                             <div class="navbar">
                                 <div>
-                                    <a id="navbar-list" href="Home?service=listAll" style="color: black">Trang Chủ</a>
+                                    <a id="navbar-list" href="OrderController?service=listAll" style="color: black">Trang Chủ</a>
                                     <a id="navbar-list" href="jsp/AboutUs.jsp" style="color: black">Về Chúng tôi</a>
                                     <a id="navbar-list" href="BookController?service=listAll" style="color: black">Sách</a>
                                     <div class="dropdown">
