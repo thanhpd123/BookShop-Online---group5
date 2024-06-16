@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
+    <servlet-mapping>
+        <servlet-name>BookManagementServlet</servlet-name>
+        <url-pattern>/BookManagementServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BlogListServlet</servlet-name>
+        <url-pattern>/BlogListServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BlogDetailServlet</servlet-name>
+        <url-pattern>/BlogDetailServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FeedBackDetailServlet</servlet-name>
+        <url-pattern>/FeedBackDetailServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FeedBackServlet</servlet-name>
+        <url-pattern>/FeedBackServlet</url-pattern>
+    </servlet-mapping>
     <welcome-file-list>
         <welcome-file>Home</welcome-file>
     </welcome-file-list>
@@ -62,6 +82,26 @@
     <servlet>
         <servlet-name>OrderController</servlet-name>
         <servlet-class>controller.OrderController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BookManagementServlet</servlet-name>
+        <servlet-class>controller.BookManagementServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BlogListServlet</servlet-name>
+        <servlet-class>controller.BlogListServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BlogDetailServlet</servlet-name>
+        <servlet-class>controller.BlogDetailServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FeedBackDetailServlet</servlet-name>
+        <servlet-class>controller.FeedBackDetailServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FeedBackServlet</servlet-name>
+        <servlet-class>controller.FeedBackServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>NewHome</servlet-name>

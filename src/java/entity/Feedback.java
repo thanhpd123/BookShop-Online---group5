@@ -3,79 +3,81 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package entity;
-
+import java.sql.Date;
 /**
  *
  * @author Dung Dinh
  */
 public class Feedback {
-    private int FeedbackID, UserID;
-    private String BookID, Rate, FBDate, FBContent;
-
-    public Feedback() {
-    }
-    
-    public Feedback(int FeedbackID, String BookID, String Rate, int UserID, String FBDate, String FBContent) {
-        this.FeedbackID = FeedbackID;
-        this.BookID = BookID;
-        this.Rate = Rate;
-        this.UserID = UserID;
-        this.FBDate = FBDate;
-        this.FBContent = FBContent;
-    }
+    private int feedbackID;
+    private String bookName;
+    private String userName;
+    private String rate;
+    private Date fbDate;
+    private String fbContent;
 
     public int getFeedbackID() {
-        return FeedbackID;
+        return feedbackID;
     }
 
-    public void setFeedbackID(int FeedbackID) {
-        this.FeedbackID = FeedbackID;
+    public Feedback(int feedbackID, String bookName, String userName, String rate, Date fbDate, String fbContent) {
+        this.feedbackID = feedbackID;
+        this.bookName = bookName;
+        this.userName = userName;
+        this.rate = rate;
+        this.fbDate = fbDate;
+        this.fbContent = fbContent;
     }
 
-    public int getUserID() {
-        return UserID;
+    public String getBookName() {
+        return bookName;
     }
 
-    public void setUserID(int UserID) {
-        this.UserID = UserID;
-    }
-
-    public String getBookID() {
-        return BookID;
-    }
-
-    public void setBookID(String BookID) {
-        this.BookID = BookID;
+    public String getUserName() {
+        return userName;
     }
 
     public String getRate() {
-        return Rate;
+        return rate;
     }
 
-    public void setRate(String Rate) {
-        this.Rate = Rate;
+    public Date getFbDate() {
+        return fbDate;
     }
 
-    public String getFBDate() {
-        return FBDate;
+    public String getFbContent() {
+        return fbContent;
     }
 
-    public void setFBDate(String FBDate) {
-        this.FBDate = FBDate;
+    public Feedback() {
     }
 
-    public String getFBContent() {
-        return FBContent;
+    public void setFeedbackID(int feedbackID) {
+        this.feedbackID = feedbackID;
     }
 
-    public void setFBContent(String FBContent) {
-        this.FBContent = FBContent;
+    public void setBookName(String bookName) {
+        this.bookName = bookName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public void setRate(String rate) {
+        this.rate = rate;
+    }
+
+    public void setFbDate(Date fbDate) {
+        this.fbDate = fbDate;
+    }
+
+    public void setFbContent(String fbContent) {
+        this.fbContent = fbContent;
     }
 
     @Override
     public String toString() {
-        return "Feedback{" + "FeedbackID=" + FeedbackID + ", UserID=" + UserID + ", BookID=" + BookID + ", Rate=" + Rate + ", FBDate=" + FBDate + ", FBContent=" + FBContent + '}';
+        return "Feedback{" + "feedbackID=" + feedbackID + ", bookName=" + bookName + ", userName=" + userName + ", rate=" + rate + ", fbDate=" + fbDate + ", fbContent=" + fbContent + '}';
     }
-    
-    
 }
