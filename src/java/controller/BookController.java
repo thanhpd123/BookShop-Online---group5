@@ -4,6 +4,7 @@
  */
 package controller;
 
+import entity.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -42,32 +43,52 @@ public class BookController extends HttpServlet {
         if (service == null) {
             service = "listAll";
         }
+        
         if (service.equals("bookByCat")) {
             String cat = request.getParameter("cat");
             Vector<Book> vector = dao.getBookCat(cat);
             request.setAttribute("data", vector);
-            RequestDispatcher dis = request.getRequestDispatcher("/jsp/BookByCat.jsp");
+            RequestDispatcher dis = request.getRequestDispatcher("/jsp/BookManage.jsp");
             dis.forward(request, response);
         }
+        
+        if (service.equals("sortPriceASC")) {
+            Vector<Book> vector = dao.sortPriceASC();
+            request.setAttribute("data", vector);
+            RequestDispatcher dis = request.getRequestDispatcher("/jsp/BookManage.jsp");
+            //RequestDispatcher dis = request.getRequestDispatcher("/index.jsp");
+            dis.forward(request, response);
+        }
+        
+        if (service.equals("sortPriceDESC")) {
+            Vector<Book> vector = dao.sortPriceDESC();
+            request.setAttribute("data", vector);
+            RequestDispatcher dis = request.getRequestDispatcher("/jsp/BookManage.jsp");
+            //RequestDispatcher dis = request.getRequestDispatcher("/index.jsp");
+            dis.forward(request, response);
+        }
+        
         if (service.equals("viewBook")) {
             String bookID = request.getParameter("bookID");
             Vector<Book> vectorBook = dao.getBook(bookID);
-            Vector<Book> vectorC = dao.getCat(bookID, "Select BookID, BookImg, Name, PublisherName, AuthorID, Edition, CategoryID, PublicationDate, Quantity, Price from Book\n"
+            Vector<Book> vectorC = dao.getCat(bookID, "Select BookID, BookImg, Name, Description, PublisherName, AuthorID, Edition, CategoryID, PublicationDate, Quantity, Price from Book\n"
                     + "Where BookID = '" + bookID + "'");
             String cat = vectorC.get(0).getCategoryID();
-            Vector<Book> vectorCat = dao.getBookCate(cat, "SELECT TOP 4 Book.BookID, Book.BookImg, Book.Name, Book.PublisherName, Author.AuthorName, Book.Edition, Category.CategoryName, Book.PublicationDate, Book.Quantity, Book.Price\n"
+            Vector<Book> vectorCat = dao.getBookCate(cat, "SELECT TOP 4 Book.BookID, Book.BookImg, Book.Name, Book.Description, Book.PublisherName, Author.AuthorName, Book.Edition, Category.CategoryName, Book.PublicationDate, Book.Quantity, Book.Price\n"
                     + "FROM Book \n"
                     + "INNER JOIN Author ON Book.AuthorID = Author.AuthorID\n"
                     + "INNER JOIN Category ON Book.CategoryID = Category.CategoryID\n"
-                    + "WHERE Book.CategoryID ='" + cat + "' AND BookID <> '" + bookID + "';");
+                    + "WHERE Book.CategoryID ='" + cat + "' AND BookID <> '"+ bookID +"';");
             request.setAttribute("dataBook", vectorBook);
+            request.setAttribute("data", vectorC);
             request.setAttribute("dataCate", vectorCat);
             RequestDispatcher dis = request.getRequestDispatcher("/jsp/BookDetail.jsp");
             dis.forward(request, response);
         }
+        
         if (service.equals("listAll")) {
             // call model
-            Vector<Book> vector = dao.getAllBook("select Book.BookID, Book.BookImg, Book.Name, Book.PublisherName, Author.AuthorName, Book.Edition, Category.CategoryName, Book.PublicationDate, Book.Quantity, Book.Price\n"
+            Vector<Book> vector = dao.getAllBook("select Book.BookID, Book.BookImg, Book.Name, Book.Description, Book.PublisherName, Author.AuthorName, Book.Edition, Category.CategoryName, Book.PublicationDate, Book.Quantity, Book.Price\n"
                     + "from Book \n"
                     + "INNER JOIN Author ON Book.AuthorID = Author.AuthorID\n"
                     + "INNER JOIN Category ON Book.CategoryID = Category.CategoryID;");
@@ -80,6 +101,7 @@ public class BookController extends HttpServlet {
             //RequestDispatcher dis = request.getRequestDispatcher("/index.jsp");
             dis.forward(request, response);
         }
+        
         if (service.equals("search")) {
             String name = request.getParameter("Name");
             Vector<Book> vector = dao.searchName(name);

@@ -1,12 +1,10 @@
 <%-- 
-    Document   : BookByCat
-    Created on : Jun 10, 2024, 11:25:03 AM
+    Document   : AboutUs
+    Created on : Jun 13, 2024, 11:08:41 PM
     Author     : Dung Dinh
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page import="entity.Book, java.util.Vector"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -112,7 +110,6 @@
         </style>
     </head>
     <body>
-
         <!<!-- menu -->
         <div class="menu container-fluid" style="background-color: #E5D3B3">
             <div class="row">
@@ -156,67 +153,96 @@
             </div>
         </div>
 
-        <!-- content -->
-        <div class="container-fluid mt-2">
-            <div class="text-center mb-4">
-                <h2 class="section-title px-5"><span class="px-2">Sách</span></h2>
-            </div>
-            <div class="row px-xl-5 pb-3">
-                <div class="col-lg-3">
-                    <!--<a class="btn shadow-none d-flex align-items-center justify-content-between w-100" data-toggle="collapse" href="#navbar-vertical" style="height: 65px; margin-top: -1px; padding: 0 30px; background-color: #D19C97">-->
-                    <h6 class="ml-auto mr-auto">Filter</h6>
-                    <i class="fa fa-angle-down text-dark"></i>
-                    <!--</a>-->
-                    <nav class="collapse show navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0" id="navbar-vertical">
-                        <div class="navbar-nav w-100 overflow-hidden" style="height: 410px">
-                            <a href="BookController?service=bookByCat&cat=CAT1" class="nav-item nav-link">Tiểu Thuyết</a>
-                            <a href="BookController?service=bookByCat&cat=CAT2" class="nav-item nav-link">Khoa Học</a>
-                            <a href="BookController?service=bookByCat&cat=CAT3" class="nav-item nav-link">Tài Chính</a>
-                            <a href="BookController?service=bookByCat&cat=CAT4" class="nav-item nav-link">Tự Lực</a>
-                            <a href="BookController?service=bookByCat&cat=CAT5" class="nav-item nav-link">Pháp Luật</a>
-                            <a href="BookController?service=bookByCat&cat=CAT6" class="nav-item nav-link">Lập Trình</a>
-                            <a href="BookController?service=bookByCat&cat=CAT7" class="nav-item nav-link">Tâm Lý Học</a>
-                        </div>
-                    </nav>
+        <!-- content -->        
+        <div class="container-fluid">
+            <div class="row mt-3 mb-3">
+                <div class="col-lg-2">
                 </div>
+                <div class="col-lg-8 text-center">
+                    <h2 style="color: #664229">About Us</h2>
+                </div>
+                <div class="col-lg-2">
+                </div>
+            </div>
+            <div class="row mb-5">
+                <div class="col-lg-2">
+                </div>
+                <div class="col-lg-4">
+                    <p>
+                        Trang web "BeS" cam kết mang đến cho người dùng không chỉ là nơi mua sách trực tuyến, mà còn là một nguồn cảm hứng vô tận về tri thức và giáo dục. Sứ mệnh của chúng tôi là khơi dậy đam mê đọc sách từ khi còn nhỏ, bằng cách cung cấp một thư viện sách đa dạng và phong phú, phù hợp với mọi độ tuổi và sở thích.
+                        <br>
+                        <br>
+                        Tại "BeS", chúng tôi tập trung vào việc chọn lọc các tựa sách chất lượng, từ sách giáo khoa, sách truyện tranh đến các tác phẩm văn học kinh điển, đảm bảo rằng mỗi cuốn sách đều mang lại giá trị và ý nghĩa sâu sắc cho người đọc. Chúng tôi đặc biệt chú trọng vào sự phát triển toàn diện của trẻ em thông qua việc khuyến khích đọc sách và khai thác tiềm năng sáng tạo của từng độc giả nhí.
+                        <br>
+                        <br>
+                        Ngoài việc cung cấp các sản phẩm sách chất lượng, "BeS" cũng là nơi để phụ huynh và giáo viên có thể tìm kiếm các tài liệu hữu ích, từ sách hướng dẫn nuôi dạy con cái đến những phương pháp giảng dạy mới nhất. Chúng tôi tin rằng với việc khai thác sức mạnh của tri thức, mỗi đứa trẻ có thể phát triển toàn diện và thành công trong tương lai.
+                        <br>
+                        <br>
+                        Hơn thế nữa, "BeS" cam kết về sự tiện lợi và an toàn trong trải nghiệm mua sắm trực tuyến. Với giao diện thân thiện và dịch vụ khách hàng nhiệt tình, chúng tôi mong muốn trở thành đối tác tin cậy của mọi gia đình, giúp họ dễ dàng tiếp cận với những kho tàng tri thức bao la chỉ qua một vài thao tác đơn giản trên "BeS".</p>
+                </div>
+                <div class="col-lg-4">
+                    <img class="d-flex ml-auto mr-auto pt-5" src="${pageContext.request.contextPath}/assets/bookAes.jpg" style="width: auto; height: 500px;">
+                </div>
+                <div class="col-lg-2">
+                </div>
+            </div>
+            <div class="row mt-3 mb-0" style="background-color: #E5D3B3; height: 100px">
+                <div class="col-lg-2">
+                </div>
+                <div class="col-lg-8">
+                </div>
+                <div class="col-lg-2">
+                </div>
+            </div>
+            <div class="row pt-0" style="background-color: #E5D3B3;">
+                <div class="col-lg-2">
+                </div>
+                <div class="col-lg-2 text-center">
+                    <h5 style="font-weight: normal; color: white">Hơn</h5>
+                    <h4 style="font-weight: normal; color: white">100 +</h4>
+                    <h5 style="font-weight: normal; color: white">Đầu Sách</h5>
+                </div>
+                <div class="col-lg-2 text-center">
+                    <h5 style="font-weight: normal; color: white">Nhiều</h5>
+                    <h4 style="font-weight: normal; color: white">Thể Loại</h4>
+                    <h5 style="font-weight: normal; color: white">Khác Nhau</h5>
+                </div>
+                <div class="col-lg-2 text-center">
+                    <h5 style="font-weight: normal; color: white">Nhiều</h5>
+                    <h4 style="font-weight: normal; color: white">Tác Giả</h4>
+                    <h5 style="font-weight: normal; color: white">Nổi Tiếng</h5>
+                </div>
+                <div class="col-lg-2 text-center">
+                    <h5 style="font-weight: normal; color: white">Nhiều</h5>
+                    <h4 style="font-weight: normal; color: white">Tác Phẩm</h4>
+                    <h5 style="font-weight: normal; color: white">Nước ngoài</h5>
+                </div>
+                <div class="col-lg-2">
+                </div>
+            </div>
+            <div class="row mb-3"  style="background-color: #E5D3B3; height: 100px">
+                <div class="col-lg-2">
+                </div>
+                <div class="col-lg-8">
+                </div>
+                <div class="col-lg-2">
+                </div>
+            </div>
+            <div class="row mt-3 mb-3">
+                <div class="col-lg-2">
+                </div>
+                <div class="col-lg-8 text-center">
+                    <p>
 
-                <div class="col-lg-9 pb-1">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <%
-                 Vector<Book> vector = (Vector<Book>) request.getAttribute("data");
-                 for(Book bk : vector) {
-                            %>
-                            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                                <div class="card product-item mb-4">
-                                    <div>
-                                        <a href="BookController?service=viewBook&bookID=<%=bk.getBookID()%>"><img class="pic d-flex ml-auto mr-auto" src = "${pageContext.request.contextPath}<%=bk.getBookImg()%>" style="width: auto; height: 200px"></a>
-                                    </div>
-                                    <div class="pt-4" style="background-color: #E5E5E5">
-                                        <h6 class="text-truncate mb-3 text-center"> <%=bk.getName()%> </h6>
-                                        <div class="d-flex justify-content-center p-0 pb-3">
-                                            <h6><%=bk.getPrice()%>&#8363;</h6>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--                    <div class="card-footer d-flex justify-content-between bg-light border">
-                                                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Xem sản phẩm</a>
-                                                        <a href="BookCart?service=addToCart&bookID<%--=<%=bk.getBookID()%>--%>" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Thêm vào giỏ</a>
-                                                    </div>-->
-                            </div>
-
-                            <%
-                                            }
-                            %>
-
-                        </div>
-                    </div>
+                    </p>
+                </div>
+                <div class="col-lg-2">
                 </div>
             </div>
         </div>
 
         <!-- footer -->
-        <div class="footer container-fluid text-dark mt-5 pt-5" style="background-color: #D2B48C">
+        <div class="footer container-fluid text-dark pt-3" style="background-color: #D2B48C">
             <div class="row px-xl-5 pt-5">
                 <div class="col-lg-6 col-md-12 mb-5 pr-3 pr-xl-5">
                     <a href="">

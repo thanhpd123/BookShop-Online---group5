@@ -16,7 +16,7 @@ public class Cart {
     public Cart() {
     }
 
-    public Cart(int CartID, int UserID, String BookID, String BookImg, int Quantity, int Price) {
+    public Cart(String BookImg, int CartID, int UserID, String BookID, int Quantity, int Price) {
         this.CartID = CartID;
         this.UserID = UserID;
         this.Quantity = Quantity;
@@ -31,6 +31,13 @@ public class Cart {
         this.Price = Price;
         this.BookID = BookID;
         this.BookImg = BookImg;
+    }
+    
+    public Cart(int UserID, String BookID, int Quantity, int Price) {
+        this.UserID = UserID;
+        this.Quantity = Quantity;
+        this.Price = Price;
+        this.BookID = BookID;
     }
 
     public int getCartID() {

@@ -29,14 +29,71 @@ public class DAOBook extends DBConnect {
                 String bookID = rs.getString(1);
                 String bookImg = rs.getString(2);
                 String name = rs.getString(3);
-                String publisherName = rs.getString(4);
-                String authorID = rs.getString(5);
-                String edition = rs.getString(6);
-                String categoryID = rs.getString(7);
-                String publicationDate = rs.getString(8);
-                int quantity = rs.getInt(9);
-                int price = rs.getInt(10);
-                Book bk = new Book(bookID, bookImg, name, publisherName, authorID, edition, categoryID, publicationDate, quantity, price);
+                String description = rs.getString(4);
+                String publisherName = rs.getString(5);
+                String authorID = rs.getString(6);
+                String edition = rs.getString(7);
+                String categoryID = rs.getString(8);
+                String publicationDate = rs.getString(9);
+                int quantity = rs.getInt(10);
+                int price = rs.getInt(11);
+                Book bk = new Book(bookID, bookImg, name, description, publisherName, authorID, edition, categoryID, publicationDate, quantity, price);
+                vector.add(bk);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOBook.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return vector;
+    }
+
+    public Vector<Book> sortPriceASC() {
+        String sql = "SELECT * FROM Book\n"
+                + "ORDER BY Price ASC;";
+        Vector<Book> vector = new Vector<Book>();
+        try {
+            Statement state = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs = state.executeQuery(sql);
+            while (rs.next()) {
+                String bookID = rs.getString(1);
+                String bookImg = rs.getString(2);
+                String name = rs.getString(3);
+                String description = rs.getString(4);
+                String publisherName = rs.getString(5);
+                String authorID = rs.getString(6);
+                String edition = rs.getString(7);
+                String categoryID = rs.getString(8);
+                String publicationDate = rs.getString(9);
+                int quantity = rs.getInt(10);
+                int price = rs.getInt(11);
+                Book bk = new Book(bookID, bookImg, name, description, publisherName, authorID, edition, categoryID, publicationDate, quantity, price);
+                vector.add(bk);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOBook.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return vector;
+    }
+
+    public Vector<Book> sortPriceDESC() {
+        String sql = "SELECT * FROM Book\n"
+                + "ORDER BY Price DESC;";
+        Vector<Book> vector = new Vector<Book>();
+        try {
+            Statement state = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs = state.executeQuery(sql);
+            while (rs.next()) {
+                String bookID = rs.getString(1);
+                String bookImg = rs.getString(2);
+                String name = rs.getString(3);
+                String description = rs.getString(4);
+                String publisherName = rs.getString(5);
+                String authorID = rs.getString(6);
+                String edition = rs.getString(7);
+                String categoryID = rs.getString(8);
+                String publicationDate = rs.getString(9);
+                int quantity = rs.getInt(10);
+                int price = rs.getInt(11);
+                Book bk = new Book(bookID, bookImg, name, description, publisherName, authorID, edition, categoryID, publicationDate, quantity, price);
                 vector.add(bk);
             }
         } catch (SQLException ex) {
@@ -46,7 +103,7 @@ public class DAOBook extends DBConnect {
     }
 
     public Vector<Book> getBook(String BookID) {
-        String sql = "SELECT Book.BookID, Book.BookImg, Book.Name, Book.PublisherName, Author.AuthorName, Book.Edition, Category.CategoryName, Book.PublicationDate, Book.Quantity, Book.Price\n"
+        String sql = "SELECT Book.BookID, Book.BookImg, Book.Name, Book.Description, Book.PublisherName, Author.AuthorName, Book.Edition, Category.CategoryName, Book.PublicationDate, Book.Quantity, Book.Price\n"
                 + "FROM Book \n"
                 + "INNER JOIN Author ON Book.AuthorID = Author.AuthorID\n"
                 + "INNER JOIN Category ON Book.CategoryID = Category.CategoryID\n"
@@ -59,14 +116,15 @@ public class DAOBook extends DBConnect {
                 String bookID = rs.getString(1);
                 String bookImg = rs.getString(2);
                 String name = rs.getString(3);
-                String publisherName = rs.getString(4);
-                String authorID = rs.getString(5);
-                String edition = rs.getString(6);
-                String categoryID = rs.getString(7);
-                String publicationDate = rs.getString(8);
-                int quantity = rs.getInt(9);
-                int price = rs.getInt(10);
-                Book bk = new Book(bookID, bookImg, name, publisherName, authorID, edition, categoryID, publicationDate, quantity, price);
+                String description = rs.getString(4);
+                String publisherName = rs.getString(5);
+                String authorID = rs.getString(6);
+                String edition = rs.getString(7);
+                String categoryID = rs.getString(8);
+                String publicationDate = rs.getString(9);
+                int quantity = rs.getInt(10);
+                int price = rs.getInt(11);
+                Book bk = new Book(bookID, bookImg, name, description, publisherName, authorID, edition, categoryID, publicationDate, quantity, price);
                 vector.add(bk);
             }
         } catch (SQLException ex) {
@@ -76,7 +134,7 @@ public class DAOBook extends DBConnect {
     }
 
     public Vector<Book> getBookCat(String catID) {
-        String sql = "SELECT Book.BookID, Book.BookImg, Book.Name, Book.PublisherName, Author.AuthorName, Book.Edition, Category.CategoryName, Book.PublicationDate, Book.Quantity, Book.Price\n"
+        String sql = "SELECT Book.BookID, Book.BookImg, Book.Name, Book.Description, Book.PublisherName, Author.AuthorName, Book.Edition, Category.CategoryName, Book.PublicationDate, Book.Quantity, Book.Price\n"
                 + "FROM Book \n"
                 + "INNER JOIN Author ON Book.AuthorID = Author.AuthorID\n"
                 + "INNER JOIN Category ON Book.CategoryID = Category.CategoryID\n"
@@ -89,14 +147,15 @@ public class DAOBook extends DBConnect {
                 String bookID = rs.getString(1);
                 String bookImg = rs.getString(2);
                 String name = rs.getString(3);
-                String publisherName = rs.getString(4);
-                String authorID = rs.getString(5);
-                String edition = rs.getString(6);
-                String categoryID = rs.getString(7);
-                String publicationDate = rs.getString(8);
-                int quantity = rs.getInt(9);
-                int price = rs.getInt(10);
-                Book bk = new Book(bookID, bookImg, name, publisherName, authorID, edition, categoryID, publicationDate, quantity, price);
+                String description = rs.getString(4);
+                String publisherName = rs.getString(5);
+                String authorID = rs.getString(6);
+                String edition = rs.getString(7);
+                String categoryID = rs.getString(8);
+                String publicationDate = rs.getString(9);
+                int quantity = rs.getInt(10);
+                int price = rs.getInt(11);
+                Book bk = new Book(bookID, bookImg, name, description, publisherName, authorID, edition, categoryID, publicationDate, quantity, price);
                 vector.add(bk);
             }
         } catch (SQLException ex) {
@@ -119,14 +178,15 @@ public class DAOBook extends DBConnect {
                 String bookID = rs.getString(1);
                 String bookImg = rs.getString(2);
                 String name = rs.getString(3);
-                String publisherName = rs.getString(4);
-                String authorID = rs.getString(5);
-                String edition = rs.getString(6);
-                String categoryID = rs.getString(7);
-                String publicationDate = rs.getString(8);
-                int quantity = rs.getInt(9);
-                int price = rs.getInt(10);
-                Book bk = new Book(bookID, bookImg, name, publisherName, authorID, edition, categoryID, publicationDate, quantity, price);
+                String description = rs.getString(4);
+                String publisherName = rs.getString(5);
+                String authorID = rs.getString(6);
+                String edition = rs.getString(7);
+                String categoryID = rs.getString(8);
+                String publicationDate = rs.getString(9);
+                int quantity = rs.getInt(10);
+                int price = rs.getInt(11);
+                Book bk = new Book(bookID, bookImg, name, description, publisherName, authorID, edition, categoryID, publicationDate, quantity, price);
                 vector.add(bk);
             }
         } catch (SQLException ex) {
@@ -144,14 +204,15 @@ public class DAOBook extends DBConnect {
                 String bookID = rs.getString(1);
                 String bookImg = rs.getString(2);
                 String name = rs.getString(3);
-                String publisherName = rs.getString(4);
-                String authorID = rs.getString(5);
-                String edition = rs.getString(6);
-                String categoryID = rs.getString(7);
-                String publicationDate = rs.getString(8);
-                int quantity = rs.getInt(9);
-                int price = rs.getInt(10);
-                Book bk = new Book(bookID, bookImg, name, publisherName, authorID, edition, categoryID, publicationDate, quantity, price);
+                String description = rs.getString(4);
+                String publisherName = rs.getString(5);
+                String authorID = rs.getString(6);
+                String edition = rs.getString(7);
+                String categoryID = rs.getString(8);
+                String publicationDate = rs.getString(9);
+                int quantity = rs.getInt(10);
+                int price = rs.getInt(11);
+                Book bk = new Book(bookID, bookImg, name, description, publisherName, authorID, edition, categoryID, publicationDate, quantity, price);
                 vector.add(bk);
             }
         } catch (SQLException ex) {
@@ -170,14 +231,15 @@ public class DAOBook extends DBConnect {
                 String bookID = rs.getString(1);
                 String bookImg = rs.getString(2);
                 String name = rs.getString(3);
-                String publisherName = rs.getString(4);
-                String authorID = rs.getString(5);
-                String edition = rs.getString(6);
-                String categoryID = rs.getString(7);
-                String publicationDate = rs.getString(8);
-                int quantity = rs.getInt(9);
-                int price = rs.getInt(10);
-                Book bk = new Book(bookID, bookImg, name, publisherName, authorID, edition, categoryID, publicationDate, quantity, price);
+                String description = rs.getString(4);
+                String publisherName = rs.getString(5);
+                String authorID = rs.getString(6);
+                String edition = rs.getString(7);
+                String categoryID = rs.getString(8);
+                String publicationDate = rs.getString(9);
+                int quantity = rs.getInt(10);
+                int price = rs.getInt(11);
+                Book bk = new Book(bookID, bookImg, name, description, publisherName, authorID, edition, categoryID, publicationDate, quantity, price);
                 vector.add(bk);
             }
         } catch (SQLException ex) {

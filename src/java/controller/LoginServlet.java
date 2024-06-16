@@ -35,8 +35,10 @@ public class LoginServlet extends HttpServlet {
         if(customer != null){
             HttpSession session = request.getSession();
             session.setAttribute("acc", customer);
-            request.setAttribute("msg1", "Login Successfuly");
-            request.getRequestDispatcher("login.jsp").forward(request, response); 
+            session.setAttribute("msg1", "Login Successfuly");
+            request.getRequestDispatcher("Home?service=listAll").forward(request, response); 
+            request.getRequestDispatcher("BookController?service=viewBook"); 
+            request.getRequestDispatcher("BookCart?service=showAll"); 
 //            response.sendRedirect("login.jsp");
         }
         else{

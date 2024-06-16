@@ -4,6 +4,7 @@
  */
 package controller;
 
+import entity.Account;
 import entity.Book;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -47,173 +48,55 @@ public class BookCart extends HttpServlet {
         if (service == null) {
             service = "showCart";
         }
+
         if (service.equals("addToCart")) {
-            String bookID = request.getParameter("bookID");
             int userID = Integer.parseInt(request.getParameter("userID"));
+            String bookID = request.getParameter("bookID");
             Cart cart = (Cart) session.getAttribute(bookID);
             if (cart == null) {
                 cart = new Cart();
                 Vector<Book> vector = daoBook.getBook(bookID);
                 Book bk = vector.get(0);
-                String bookImg = bk.getBookImg();
                 int price = bk.getPrice();
-                dao.addToCart(new Cart(userID, 1, price, bookID, bookImg));
+                dao.addToCart(new Cart(userID, bookID, 1, price));
+                session.setAttribute(bookID, cart);
+                response.sendRedirect("BookCart?service=showCart");
+                return;
+            } else {
+                cart.setQuantity(cart.getQuantity() + 1);
                 session.setAttribute(bookID, cart);
                 response.sendRedirect("BookCart?service=showCart");
                 return;
             }
         }
-//        if (service.equals("addToCart")) {
-//            String bookID = request.getParameter("bookID");
-//            CartItem cart = (CartItem) session.getAttribute(bookID);
-//            if(cart == null){
-//                cart = new CartItem();
-//                Vector <Book> vector = dao.getBook(bookID);
-//                Book bk = vector.get(0);
-//                cart.setBookImg(bk.getBookImg());
-//                cart.setBookID(bookID);
-//                cart.setQuantity(1);
-//                cart.setPrice(bk.getPrice());
-//                session.setAttribute(bookID, cart);
-//                response.sendRedirect("Home?service=listAll");
-//                return;
-//            }else{
-//                cart.setQuantity(cart.getQuantity()+1);
-//                session.setAttribute(bookID, cart);
-//                response.sendRedirect("Home?service=listAll");
-//                return;
-//            }
-//        }
-//        if (service.equals("addToCart")) {
-//            String bookID = request.getParameter("bookID");
-//            Vector<Book> vector = new Vector<Book>();
-//            Vector<CartItem> vectorCart = new Vector<CartItem>();
-//            vector = dao.getBook(bookID);
-//            vectorCart = dao.getAll("SELECT Book.BookImg, CartItem.CartID, Book.Name, CartItem.Quantity, CartItem.Price\n"
-//                    + "FROM CartItem\n"
-//                    + "INNER JOIN Book ON CartItem.BookID = Book.BookID");
-//            int cartID, quantity;
-//            cartID = vectorCart.get(0).getCartID();
-//            quantity = vectorCart.get(0).getQuantity();
-//            if(quantity == 0){
-//                quantity = 1;
-//            }else{
-//                quantity = quantity + 1;
-//            }
-//            if (session.getAttribute("cart") == null) {
-//                vectorCart.add(new CartItem(vector.get(0).getBookImg(), cartID, vector.get(0).getBookID(), quantity, vector.get(0).getPrice()));
-//            } else {
-//                vectorCart = (Vector<CartItem>) session.getAttribute("cart");
-//                boolean checkBookID = false;
-//                for(int i = 0; i < vectorCart.size(); i++){
-//                    if(vectorCart.get(i).getBookID().equalsIgnoreCase(bookID)) {
-//                        vectorCart.get(i).setQuantity(vectorCart.get(i).getQuantity() + 1);
-//                        checkBookID = true;
-//                        break;
-//                    }
-//                }
-//                if (checkBookID == false){
-//                    vectorCart.add(new CartItem(vector.get(0).getBookImg(), cartID, vector.get(0).getBookID(), 1, vector.get(0).getPrice()));
-//                }
-//            }
-//            session.setAttribute("cart", vectorCart);
-//            response.sendRedirect("Home?sevice=listAll");
-////            Book bk = /*new Book()*/ (Book) session.getAttribute(bookID);
-////            CartItem BkCart = (CartItem) session.getAttribute(bookID);
-////            // first time get session
-////            if (BkCart == null && bk == null) {
-////                BkCart = new CartItem();
-////                Vector<Book> vector = dao.getBook("bookID");
-////                String bookImg = bk.getBookImg();
-////                int cartID = BkCart.getCartID();
-////                int quantity = 1;
-////                int price = bk.getPrice();
-////                dao.addToCart(new CartItem(bookImg, cartID, bookID, quantity, price));
-////                response.sendRedirect("EmployeeController?service=listAll");
-////                return;
-//////                BkCart.setBookImg(bk.getBookImg());
-//////                BkCart.setCartID(BkCart.getCartID());
-//////                BkCart.setBookID(bookID);
-//////                BkCart.setPrice(bk.getPrice());
-//////                BkCart.setQuantity(1);
-//////                session.setAttribute(bookID, BkCart);
-//////                dao.addToCart(new CartItem(bookImg, cartID, bookID, quantity, price));
-//////                response.sendRedirect("BookCart?service=showCart");
-//////                return;
-////            } else {
-////                BkCart.setQuantity(BkCart.getQuantity() + 1);
-////                session.setAttribute(bookID, BkCart);
-////                response.sendRedirect("BookCart?service=showCart");
-////                return;
-////            }
-////            String submit = request.getParameter("submit");
-////            if (submit != null && submit.equals("addCart")) {
-////                int cartID = Integer.parseInt(request.getParameter("CartID"));
-////                String bookID = request.getParameter("BookID");
-////                int quantity = Integer.parseInt(request.getParameter("Quantity"));
-////                int price = Integer.parseInt(request.getParameter("Price"));
-////                dao.addToCart(new CartItem(cartID, bookID, quantity, price));
-////                response.sendRedirect("BookCart?service=showCart");
-////                return;
-////            }
-////            if (submit == null) {
-////
-////                // call model
-////                Vector<CartItem> vectorCart = dao.getAll("select * from Employee");
-////                request.setAttribute("dataEmployee", vectorCart);
-////                //select view (jsp)
-////                RequestDispatcher dis = request.getRequestDispatcher("/jsp/AddEmployee.jsp");
-////                dis.forward(request, response);
-////                return;
-////            }
-//        }
 
         if (service.equals("deleteCart")) {
             String bookID = (String) request.getParameter("bookID");
-            session.removeAttribute(bookID);
+            int userID = Integer.parseInt(request.getParameter("userID"));
+            dao.removeCart(bookID, userID);
             response.sendRedirect("BookCart?service=showCart");
             return;
         }
 
         if (service.equals("showCart")) {
+            Account acc = (Account)session.getAttribute("acc");
+            int userID = acc.getUserID();
             Vector<Cart> vector = dao.getAll("SELECT Book.BookImg, Cart.CartID, Cart.UserID, Book.Name, Cart.Quantity, Cart.Price\n"
                     + "FROM Cart\n"
-                    + "INNER JOIN Book ON Cart.BookID = Book.BookID");
+                    + "INNER JOIN Book ON Cart.BookID = Book.BookID\n"
+                    + "WHERE Cart.UserID = '" + userID + "';");
             request.setAttribute("data", vector);
+            session.setAttribute("acc", acc);
             RequestDispatcher dis = request.getRequestDispatcher("/jsp/ShowCart.jsp");
             dis.forward(request, response);
         }
 
-        if (service.equals("updateQuantity")) {
-            Enumeration<String> parameterNames = request.getParameterNames();
-            while (parameterNames.hasMoreElements()) {
-
-                String bookID = parameterNames.nextElement();
-                if (bookID.equals("service") || bookID.equals("submit")) {
-                    continue;
-                }
-                int quantity = Integer.parseInt(request.getParameter(bookID));
-                Cart bk = (Cart) session.getAttribute(bookID);
-                bk.setQuantity(quantity);
-                session.setAttribute(bookID, bk);
-
-            }
-            RequestDispatcher dis = request.getRequestDispatcher("/jsp/ShowCart.jsp");
-            dis.forward(request, response);
-
-        }
         // delete all
         if (service.equals("deleteAll")) {
-            Enumeration<String> attributeNames = request.getSession().getAttributeNames();
-            while (attributeNames.hasMoreElements()) {
-                String attributeName = attributeNames.nextElement();
-//                if (attributeName.equals("userInfo") || attributeName.equals("logged")) {
-//                    continue;
-//                }
-                session.removeAttribute(attributeName);
-            }
-            RequestDispatcher dis = request.getRequestDispatcher("/jsp/ShowCart.jsp");
-            dis.forward(request, response);
+            int userID = Integer.parseInt(request.getParameter("userID"));
+            dao.removeAll(userID);
+            response.sendRedirect("BookCart?service=showCart");
+            return;
         }
     }
 

@@ -7,7 +7,10 @@ import java.sql.SQLException;
 import entity.Account;
 import java.time.format.DateTimeFormatter;
 import java.sql.Date;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.DBConnect;
 
 public class AccountDAO extends DBConnect {
@@ -59,6 +62,7 @@ public class AccountDAO extends DBConnect {
         }
         return null;
     }
+    
 
     public ArrayList<Account> getEmailList() {
         ArrayList<Account> listEmail = new ArrayList<>();
@@ -107,7 +111,6 @@ public class AccountDAO extends DBConnect {
         }
         return null;
     }
-
     public boolean checkEmailExist(String inputEmail) {
         String sql = "select * from Account where Email = ?;";
         try (Connection connection = new DBConnect().getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {

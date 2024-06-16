@@ -9,16 +9,17 @@ package entity;
  * @author Dung Dinh
  */
 public class Book {
-    private String BookID, Name, PublisherName, AuthorID, Edition, CategoryID, PublicationDate, BookImg;
+    private String BookID, Name, PublisherName, AuthorID, Edition, CategoryID, PublicationDate, BookImg, Description;
     private int Quantity, Price;
 
     public Book() {
     }
 
-    public Book(String BookID, String BookImg, String Name, String PublisherName, String AuthorID, String Edition, String CategoryID, String PublicationDate, int Quantity, int Price) {
+    public Book(String BookID, String BookImg, String Name, String Description, String PublisherName, String AuthorID, String Edition, String CategoryID, String PublicationDate, int Quantity, int Price) {
         this.BookID = BookID;
         this.BookImg = BookImg;
         this.Name = Name;
+        this.Description = Description;
         this.PublisherName = PublisherName;
         this.AuthorID = AuthorID;
         this.Edition = Edition;
@@ -28,6 +29,14 @@ public class Book {
         this.Price = Price;
     }
 
+    public String getDescription() {
+        return Description;
+    }
+
+    public void setDescription(String Description) {
+        this.Description = Description;
+    }
+    
     public String getBookImg() {
         return BookImg;
     }
@@ -110,8 +119,9 @@ public class Book {
 
     @Override
     public String toString() {
-        return "Book{" + "BookID=" + BookID + ", Name=" + Name + ", PublisherName=" + PublisherName + ", AuthorID=" + AuthorID + ", Edition=" + Edition + ", CategoryID=" + CategoryID + ", PublicationDate=" + PublicationDate + ", BookImg=" + BookImg + ", Quantity=" + Quantity + ", Price=" + Price + '}';
+        return "Book{" + "BookID=" + BookID + ", Name=" + Name + ", PublisherName=" + PublisherName + ", AuthorID=" + AuthorID + ", Edition=" + Edition + ", CategoryID=" + CategoryID + ", PublicationDate=" + PublicationDate + ", BookImg=" + BookImg + ", Description=" + Description + ", Quantity=" + Quantity + ", Price=" + Price + '}';
     }
+
 
     
     

@@ -4,6 +4,7 @@
  */
 package controller;
 
+import entity.Account;
 import entity.Book;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
@@ -43,10 +44,14 @@ public class Home extends HttpServlet {
             service = "listAll";
         }
         if (service.equals("listAll")) {
+            String logged = (String)session.getAttribute("msg1");
+            Account acc = (Account)session.getAttribute("acc");
             Vector<Book> vectorCat2 = dao.getBookCat("CAT2");
             Vector<Book> vectorCat1 = dao.getBookCat("CAT1");
             Vector<Book> vectorCat3 = dao.getBookCat("CAT3");
             request.setAttribute("data1", vectorCat1);
+            session.setAttribute("msg1", logged);
+            session.setAttribute("acc", acc);
             request.setAttribute("data2", vectorCat2);
             request.setAttribute("data3", vectorCat3);
             RequestDispatcher dis = request.getRequestDispatcher("/jsp/index.jsp");

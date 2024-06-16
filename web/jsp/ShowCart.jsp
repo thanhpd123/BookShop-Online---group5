@@ -5,7 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="entity.Cart, entity.Book, java.util.Enumeration, jakarta.servlet.http.HttpSession, java.util.Vector"%>
+<%@page import="entity.Cart, entity.Book, entity.Account, jakarta.servlet.http.HttpSession, java.util.Vector"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -111,6 +111,9 @@
         </style>
     </head>
     <body>
+        <%
+            Account acc = (Account)session.getAttribute("acc");
+        %>
         <!<!-- menu -->
         <div class="menu container-fluid" style="background-color: #E5D3B3">
             <div class="row">
@@ -155,8 +158,6 @@
         </div>
         <%
             int totalPrice = 0;
-            Enumeration<String> attributeNames = request.getSession().getAttributeNames();
-            
         %>
         <div class="justify-content-center">
             <form action="BookCart?service=updateQuantity" method="post">
@@ -182,14 +183,7 @@
                     <tbody>
 
                         <%
-                            while (attributeNames.hasMoreElements()) {
-                                String attributeName = attributeNames.nextElement();
-        //                        if(attributeName.equals("userInfo") || attributeName.equals("logged")) {
-        //                                 continue;
-        //                        }
                                 Vector<Cart> vector = (Vector<Cart>) request.getAttribute("data");
-                               // Cart cart = (Cart) session.getAttribute(attributeName);
-                                
                                 for(Cart cart : vector) {
                                 totalPrice += cart.getPrice()*cart.getQuantity();
                         %>
@@ -200,11 +194,11 @@
                             <td><input type="text" name="<%=cart.getBookID()%>" value="<%=cart.getQuantity()%>"></td>
                             <td><%=cart.getPrice()%></td>
                             <td><%=cart.getPrice()*cart.getQuantity()%></td>      
-                            <td><a href="BookCart?service=deleteCart&bookID=<%=cart.getBookID()%>">Xóa</a></td>
+                            <td><a href="BookCart?service=deleteCart&userID=<%=acc.getUserID()%>&bookID=<%=cart.getBookID()%>">Xóa</a></td>
                         </tr>
                         <%
                             }
-                            }
+                            
                         %>
                         <tr class="text-center">
                             <td></td>
@@ -212,12 +206,12 @@
                             <td></td>
                             <td>Total</td>
                             <td></td>
-                            <td><a href="BookCart?service=deleteAll">Xóa tất cả</a></td>
+                            <td><a href="BookCart?service=deleteAll&userID=<%=acc.getUserID()%>">Xóa tất cả</a></td>
                         </tr>
                     </tbody>
                 </table>
             </form>
-            <a href="BookController?service=listAll">Quay Lại</a>
+            <a href="BookController?service=listAll">Tiếp tục mua hàng</a>
             <div>
             </div>
         </div>

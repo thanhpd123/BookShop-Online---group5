@@ -19,7 +19,7 @@ import java.util.logging.Level;
 public class DAOHome extends DBConnect {
 
     public Vector<Book> getBookCat(String catID) {
-        String sql = "SELECT TOP 8 Book.BookID, Book.BookImg, Book.Name, Book.PublisherName, Author.AuthorName, Book.Edition, Category.CategoryName, Book.PublicationDate, Book.Quantity, Book.Price\n"
+        String sql = "SELECT TOP 8 Book.BookID, Book.BookImg, Book.Name, Book.Description, Book.PublisherName, Author.AuthorName, Book.Edition, Category.CategoryName, Book.PublicationDate, Book.Quantity, Book.Price\n"
                 + "FROM Book \n"
                 + "INNER JOIN Author ON Book.AuthorID = Author.AuthorID\n"
                 + "INNER JOIN Category ON Book.CategoryID = Category.CategoryID\n"
@@ -32,14 +32,15 @@ public class DAOHome extends DBConnect {
                 String bookID = rs.getString(1);
                 String bookImg = rs.getString(2);
                 String name = rs.getString(3);
-                String publisherName = rs.getString(4);
-                String authorID = rs.getString(5);
-                String edition = rs.getString(6);
-                String categoryID = rs.getString(7);
-                String publicationDate = rs.getString(8);
-                int quantity = rs.getInt(9);
-                int price = rs.getInt(10);
-                Book bk = new Book(bookID, bookImg, name, publisherName, authorID, edition, categoryID, publicationDate, quantity, price);
+                String description = rs.getString(4);
+                String publisherName = rs.getString(5);
+                String authorID = rs.getString(6);
+                String edition = rs.getString(7);
+                String categoryID = rs.getString(8);
+                String publicationDate = rs.getString(9);
+                int quantity = rs.getInt(10);
+                int price = rs.getInt(11);
+                Book bk = new Book(bookID, bookImg, name, description, publisherName, authorID, edition, categoryID, publicationDate, quantity, price);
                 vector.add(bk);
             }
         } catch (SQLException ex) {
