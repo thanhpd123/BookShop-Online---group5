@@ -40,13 +40,13 @@ public class thisOrder extends HttpServlet {
        HttpSession session = request.getSession(true);
         DAOOrder dao = new DAOOrder();
         String service = request.getParameter("service");
+        int id = Integer.parseInt(request.getParameter("order"));
 
         if (service == null) {
             service = "listAll";
         }
         if (service.equals("listAll")) {
             // call model
-            String submit = request.getParameter("submit");
             Vector<Orders> vector = dao.getAll("""
                                                  SELECT Orders.OrderID, Orders.OrderDate, Orders.OrderState, Orders.UserID from Orders
                                                  INNER JOIN OrderDetail ON Orders.OrderID = OrderDetail.OrderID
@@ -70,12 +70,12 @@ public class thisOrder extends HttpServlet {
                                                       SELECT Account.UserID, Account.RoleID, Account.FirstName, Account.LastName, Account.Email, Account.Password, Account.PhoneNo, Account.Address, Account.DOB, Account.Gender ,Account.imgUser from Account
                                                       INNER JOIN Orders On Account.UserID = Orders.UserID""");
             request.setAttribute("acc", vectorAcc);
+            String submit = request.getParameter("submit");
 
             if (submit != null) {
                 String orderState = request.getParameter("orderState");
-                int id = Integer.parseInt(request.getParameter("order"));
                 String sql = ("UPDATE Orders SET OrderState = ? WHERE OrderID = ?");
-                dao.updateState(orderState,id,sql);
+                dao.updateState(orderState,id+1,sql);
             }
 
             RequestDispatcher dis = request.getRequestDispatcher("/jsp/MyOrder.jsp");
