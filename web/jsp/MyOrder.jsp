@@ -154,7 +154,7 @@
                     </div>   
                 </div>
                 <tr>
-                    <td><input type="submit" value="Cập nhật trạng thái" name="submit"></td>
+                    <td><input type="submit" value="Cập nhật trạng thái" name="submit" onclick="alert('Cập nhật trạng thái.')"></td>
                     <td><input type="reset" value="Reset"></td>
                 </tr>
 
