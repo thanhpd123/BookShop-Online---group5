@@ -90,7 +90,7 @@
         %>
         <div class="justify-content-center">
             <form action="thisOrder?service=listAll&order=<%=i%>" method="post">
-                <p class="text-center align-items-center mt-3 mb-3" style="caption-side: top; font-weight: 900; font-size: 130%">Đơn hàng của tôi</p>
+                <p class="text-center align-items-center mt-3 mb-3" style="caption-side: top; font-weight: 900; font-size: 130%">Order Detail</p>
                 <div></div>
                 <div style="border-width:3px;border-style: solid">
                     <div class="row" style="border-width:1px;border-color: gray;border-style: solid">
