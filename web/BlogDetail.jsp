@@ -62,7 +62,7 @@
                             <li><a href="#portfolio"></a></li>
                             <li><a href="#team"></a></li>
                             <li><a href="blog.html"></a></li>
-                            <li>Hello:<a href="#" style="color: red"><c:if test="${acc != null}">${acc.getFirstName()} ${acc.getLastName()}</c:if></a></li>
+                            <li>Hello:<a href="userprofile" style="color: red"><c:if test="${acc != null}">${acc.getFirstName()} ${acc.getLastName()}</c:if></a></li>
                             </ul>
                             <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
                         </nav>
@@ -274,26 +274,6 @@
                                 </div><!-- End recent post item-->
 
                             </div><!--/Recent Posts Widget -->
-
-                            <!-- Tags Widget -->
-                            <div class="tags-widget widget-item">
-
-                                <h3 class="widget-title">Tags</h3>
-                                <ul>
-                                    <li><a href="#">App</a></li>
-                                    <li><a href="#">IT</a></li>
-                                    <li><a href="#">Business</a></li>
-                                    <li><a href="#">Mac</a></li>
-                                    <li><a href="#">Design</a></li>
-                                    <li><a href="#">Office</a></li>
-                                    <li><a href="#">Creative</a></li>
-                                    <li><a href="#">Studio</a></li>
-                                    <li><a href="#">Smart</a></li>
-                                    <li><a href="#">Tips</a></li>
-                                    <li><a href="#">Marketing</a></li>
-                                </ul>
-
-                            </div><!--/Tags Widget -->
 
                         </div>
 

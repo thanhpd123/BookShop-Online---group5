@@ -20,7 +20,6 @@ public class BookManagementServlet extends HttpServlet {
         String bookID = request.getParameter("bookID");
         
         BookManageDAO dao = new BookManageDAO();
-        
         List<BookManage> listBM = dao.getAllBookManage();
         dao.deleteBook(bookID);
         request.setAttribute("listBookManage", listBM);

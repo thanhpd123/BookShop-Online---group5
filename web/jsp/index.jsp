@@ -226,7 +226,7 @@
                                             <a href="BookController?service=bookByCat&cat=CAT7">Tâm Lý Học</a>
                                         </div>
                                     </div>
-                                    <a id="navbar-list" href="" style="color: black">Liên Hệ</a>
+                                    <a id="navbar-list" href="BlogListServlet" style="color: black">Blog</a>
                                 </div>
                             </div>
                         </div>

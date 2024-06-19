@@ -14,6 +14,7 @@
         <title>JSP Page</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link rel="stylesheet" href="CSS/style.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
         <style>
             .logo{
                 width: 15%;
@@ -108,7 +109,6 @@
 
                 margin: 0 50px;
             }
-
         </style>
     </head>
     <body>
@@ -159,7 +159,7 @@
         <!-- content -->
         <div class="container-fluid mt-2">
             <div class="text-center mb-4">
-                <h2 class="section-title px-5"><span class="px-2">Sách</span></h2>
+                <h2 class="section-title px-5"><span class="px-2">Danh Sách Sản Phẩm</span></h2>
             </div>
             <div class="row px-xl-5 pb-3">
                 <div class="col-lg-3" style="height: vh-100; width: 100">
@@ -176,104 +176,102 @@
                             <a href="BookController?service=bookByCat&cat=CAT5" class="nav-item nav-link">Pháp Luật</a>
                             <a href="BookController?service=bookByCat&cat=CAT6" class="nav-item nav-link">Lập Trình</a>
                             <a href="BookController?service=bookByCat&cat=CAT7" class="nav-item nav-link">Tâm Lý Học</a>
-                            <!--                            <form action="BookController?service=bookByCat" method="get">
-                                                            <label>
-                                                                    <input type="checkbox" name="link1" value="CAT1"> Tiểu Thuyết
-                                                            </label>
-                                                            <br>
-                                                            <br>
-                                                            <label>
-                                                                <a href="LinkURL" target="_blank">
-                                                                    <input type="checkbox" name="link2" value="link"> Khoa Học
-                                                                </a>
-                                                            </label>
-                                                        </form>-->
+                            <div class="nav-item nav-link">
+                                <a href="BookController?service=sortPriceASC" ><i class="bi bi-arrow-up"></i> giá thấp-cao</a>
+                            </div>
+                            <div class="nav-item nav-link">
+                                <a href="BookController?service=sortPriceDESC"><i class="bi bi-arrow-down"></i> giá cao-thấp</a>
+                            </div>
                         </div>
                     </nav>
                 </div>
 
-                <div class="col-lg-9">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <%
-                             Vector<Book> vector = (Vector<Book>) request.getAttribute("data");
-                             for(Book bk : vector) {
-                            %>
-                            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+            </div>
+        </nav>
+    </div>
 
-                                <div class="card product-item  mb-4" style="">
-                                    <div>
-                                        <a href="BookController?service=viewBook&bookID=<%=bk.getBookID()%>"><img class="pic d-flex ml-auto mr-auto" src = "${pageContext.request.contextPath}<%=bk.getBookImg()%>" style="width: auto; height: 200px;"></a>
-                                    </div>
-                                    <div class="pt-4" style="background-color: #E5E5E5">
-                                        <h6 class="text-truncate mb-3 text-center"> <%=bk.getName()%> </h6>
-                                        <div class="d-flex justify-content-center p-0 pb-3">
-                                            <h6><%=bk.getPrice()%>&#8363;</h6>
-                                        </div>
-                                    </div>
-                                </div>
+    <div class="col-lg-9">
+        <div class="container-fluid">
+            <div class="row">
+                <%
+                 Vector<Book> vector = (Vector<Book>) request.getAttribute("data");
+                 for(Book bk : vector) {
+                %>
+                <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
 
-                                <!--                    <div class="card-footer d-flex justify-content-between bg-light border">
-                                                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Xem sản phẩm</a>
-                                                        <a href="BookCart?service=addToCart&bookID<%--=<%=bk.getBookID()%>--%>" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Thêm vào giỏ</a>
-                                                    </div>-->
+                    <div class="card product-item  mb-4" style="">
+                        <div>
+                            <a href="BookController?service=viewBook&bookID=<%=bk.getBookID()%>"><img class="pic d-flex ml-auto mr-auto" src = "${pageContext.request.contextPath}<%=bk.getBookImg()%>" style="width: auto; height: 200px;"></a>
+                        </div>
+                        <div class="pt-4" style="background-color: #E5E5E5">
+                            <h6 class="text-truncate mb-3 text-center"> <%=bk.getName()%> </h6>
+                            <div class="d-flex justify-content-center p-0 pb-3">
+                                <h6><%=bk.getPrice()%>&#8363;</h6>
                             </div>
-
-                            <%
-                                            }
-                            %>
                         </div>
                     </div>
-                </div>
-            </div>
 
-
-        </div>
-
-
-        <!-- footer -->
-        <div class="footer container-fluid text-dark mt-5 pt-5" style="background-color: #D2B48C">
-            <div class="row px-xl-5 pt-5">
-                <div class="col-lg-6 col-md-12 mb-5 pr-3 pr-xl-5">
-                    <a href="">
-                        <h1 class="mb-4 display-5 font-weight-semi-bold" style="color: white">Book E Shop</h1>
-                    </a>
-                    <p style="color: white">Cửa hàng sách online của chúng tôi cung cấp một loạt các đầu sách đa dạng, từ văn học cổ điển đến sách khoa học, đáp ứng mọi nhu cầu đọc của bạn. Bạn có thể dễ dàng tìm và mua những cuốn sách yêu thích từ mọi thể loại và chủ đề. Cảm ơn bạn đã ủng hộ cửa hàng sách của chúng tôi!</p>
-                    <p class="mb-2" style="color: white"><i class="fa fa-map-marker-alt text-primary mr-3"></i>Hoa Lac, Ha Noi, VietNam</p>
-                    <p class="mb-2" style="color: white"><i class="fa fa-envelope text-primary mr-3"></i>bes@gmail.com</p>
-                    <p class="mb-0" style="color: white"><i class="fa fa-phone-alt text-primary mr-3"></i>+84 98 123 4567</p>
+                    <!--                    <div class="card-footer d-flex justify-content-between bg-light border">
+                                            <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Xem sản phẩm</a>
+                                            <a href="BookCart?service=addToCart&bookID<%--=<%=bk.getBookID()%>--%>" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Thêm vào giỏ</a>
+                                        </div>-->
                 </div>
-                <div class="col-lg-6 col-md-12">
-                    <h5 class="font-weight-bold mb-4" style="color: white">Quick Links</h5>
-                    <div class="d-flex flex-column justify-content-start">
-                        <a class="text-white mb-2" href="index.jsp"><i class="fa fa-angle-right mr-2"></i>Home</a>
-                        <a class="text-white mb-2" href=""><i class="fa fa-angle-right mr-2"></i>Our Shop</a>
-                        <a class="text-white mb-2" href=""><i class="fa fa-angle-right mr-2"></i>Shop Detail</a>
-                        <a class="text-white mb-2" href="BookCart?service=showCart"><i class="fa fa-angle-right mr-2"></i>Shopping Cart</a>
-                        <a class="text-white mb-2" href=""><i class="fa fa-angle-right mr-2"></i>Checkout</a>
-                        <a class="text-white" href=""><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
 
-                    </div>
-                </div>
-            </div>
-            <div class="row border-top border-light mx-xl-5 py-4">
-                <div class="col-md-6 px-xl-0">
-                    <p class="mb-md-0 text-center text-md-left" style="color: white">
-                        &copy; 
-                        <a class="text-white font-weight-semi-bold" href="Home?service=listAll" >BeS | Book E Shop</a>. All Rights Reserved. Designed
-                        by BeS
-                    </p>
-                </div>
-                <div class="col-md-6 px-xl-0 text-center text-md-right">
-                </div>
+                <%
+                                }
+                %>
             </div>
         </div>
+    </div>
+</div>
+
+
+</div>
+
+
+<!-- footer -->
+<div class="footer container-fluid text-dark mt-5 pt-5" style="background-color: #D2B48C">
+    <div class="row px-xl-5 pt-5">
+        <div class="col-lg-6 col-md-12 mb-5 pr-3 pr-xl-5">
+            <a href="">
+                <h1 class="mb-4 display-5 font-weight-semi-bold" style="color: white">Book E Shop</h1>
+            </a>
+            <p style="color: white">Cửa hàng sách online của chúng tôi cung cấp một loạt các đầu sách đa dạng, từ văn học cổ điển đến sách khoa học, đáp ứng mọi nhu cầu đọc của bạn. Bạn có thể dễ dàng tìm và mua những cuốn sách yêu thích từ mọi thể loại và chủ đề. Cảm ơn bạn đã ủng hộ cửa hàng sách của chúng tôi!</p>
+            <p class="mb-2" style="color: white"><i class="fa fa-map-marker-alt text-primary mr-3"></i>Hoa Lac, Ha Noi, VietNam</p>
+            <p class="mb-2" style="color: white"><i class="fa fa-envelope text-primary mr-3"></i>bes@gmail.com</p>
+            <p class="mb-0" style="color: white"><i class="fa fa-phone-alt text-primary mr-3"></i>+84 98 123 4567</p>
+        </div>
+        <div class="col-lg-6 col-md-12">
+            <h5 class="font-weight-bold mb-4" style="color: white">Quick Links</h5>
+            <div class="d-flex flex-column justify-content-start">
+                <a class="text-white mb-2" href="index.jsp"><i class="fa fa-angle-right mr-2"></i>Home</a>
+                <a class="text-white mb-2" href=""><i class="fa fa-angle-right mr-2"></i>Our Shop</a>
+                <a class="text-white mb-2" href=""><i class="fa fa-angle-right mr-2"></i>Shop Detail</a>
+                <a class="text-white mb-2" href="BookCart?service=showCart"><i class="fa fa-angle-right mr-2"></i>Shopping Cart</a>
+                <a class="text-white mb-2" href=""><i class="fa fa-angle-right mr-2"></i>Checkout</a>
+                <a class="text-white" href=""><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
+
+            </div>
+        </div>
+    </div>
+    <div class="row border-top border-light mx-xl-5 py-4">
+        <div class="col-md-6 px-xl-0">
+            <p class="mb-md-0 text-center text-md-left" style="color: white">
+                &copy; 
+                <a class="text-white font-weight-semi-bold" href="Home?service=listAll" >BeS | Book E Shop</a>. All Rights Reserved. Designed
+                by BeS
+            </p>
+        </div>
+        <div class="col-md-6 px-xl-0 text-center text-md-right">
+        </div>
+    </div>
+</div>
 
 
 
-        <br>
-        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    </body>
+<br>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</body>
 </html>

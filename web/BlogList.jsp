@@ -73,7 +73,7 @@
                             <li><a href="#portfolio"></a></li>
                             <li><a href="#team"></a></li>
                             <li><a href="blog.html"></a></li>
-                            <li>Hello:<a href="#" style="color: red"><c:if test="${acc != null}">${acc.getFirstName()} ${acc.getLastName()}</c:if></a></li>
+                            <li>Hello:<a href="userprofile" style="color: red"><c:if test="${acc != null}">${acc.getFirstName()} ${acc.getLastName()}</c:if></a></li>
                         </ul>
                         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
                     </nav>
@@ -115,8 +115,8 @@
 <c:forEach  items="${blogs}" var="i">
                         <div class="col-lg-4">
                             <article>
-                                <div class="post-img">
-                                    <img src="${i.getBlogImg()}" alt="" class="img-fluid">
+                                <div class="post-img" style="width: 100%; height: 200px;">
+                                    <img src="${i.getBlogImg()}" alt="" class="img-fluid" style="width: 100%; height: 100%; object-fit: cover;">
                                 </div>
 
                                 <h2 class="title">
@@ -157,40 +157,39 @@
         </main>
 
         <!-- footer -->
-        <div class="footer container-fluid text-dark mt-5 pt-5" style="background-color: #EDF1FF">
+        <div class="footer container-fluid text-dark mt-5 pt-5" style="background-color: #D2B48C">
             <div class="row px-xl-5 pt-5">
                 <div class="col-lg-6 col-md-12 mb-5 pr-3 pr-xl-5">
                     <a href="">
-                        <h1 class="mb-4 display-5 font-weight-semi-bold" style="color: #D19C97">Book E Shop</h1>
+                        <h1 class="mb-4 display-5 font-weight-semi-bold" style="color: white">Book E Shop</h1>
                     </a>
-                    <p>Cửa hàng sách online của chúng tôi cung cấp một loạt các đầu sách đa dạng, từ văn học cổ điển đến sách khoa học, đáp ứng mọi nhu cầu đọc của bạn. Bạn có thể dễ dàng tìm và mua những cuốn sách yêu thích từ mọi thể loại và chủ đề. Cảm ơn bạn đã ủng hộ cửa hàng sách của chúng tôi!</p>
-                    <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>Hoa Lac, Ha Noi, VietNam</p>
-                    <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>bes@gmail.com</p>
-                    <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+84 98 123 4567</p>
+                    <p style="color: white">Cửa hàng sách online của chúng tôi cung cấp một loạt các đầu sách đa dạng, từ văn học cổ điển đến sách khoa học, đáp ứng mọi nhu cầu đọc của bạn. Bạn có thể dễ dàng tìm và mua những cuốn sách yêu thích từ mọi thể loại và chủ đề. Cảm ơn bạn đã ủng hộ cửa hàng sách của chúng tôi!</p>
+                    <p class="mb-2" style="color: white"><i class="fa fa-map-marker-alt text-primary mr-3"></i>Hoa Lac, Ha Noi, VietNam</p>
+                    <p class="mb-2" style="color: white"><i class="fa fa-envelope text-primary mr-3"></i>bes@gmail.com</p>
+                    <p class="mb-0" style="color: white"><i class="fa fa-phone-alt text-primary mr-3"></i>+84 98 123 4567</p>
                 </div>
                 <div class="col-lg-6 col-md-12">
-                    <h5 class="font-weight-bold mb-4" style="color: #D19C97">Quick Links</h5>
+                    <h5 class="font-weight-bold mb-4" style="color: white">Quick Links</h5>
                     <div class="d-flex flex-column justify-content-start">
-                        <a class="text-dark mb-2" href="index.jsp"><i class="fa fa-angle-right mr-2"></i>Home</a>
-                        <a class="text-dark mb-2" href=""><i class="fa fa-angle-right mr-2"></i>Our Shop</a>
-                        <a class="text-dark mb-2" href=""><i class="fa fa-angle-right mr-2"></i>Shop Detail</a>
-                        <a class="text-dark mb-2" href="BookCart?service=showCart"><i class="fa fa-angle-right mr-2"></i>Shopping Cart</a>
-                        <a class="text-dark mb-2" href=""><i class="fa fa-angle-right mr-2"></i>Checkout</a>
-                        <a class="text-dark" href=""><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
+                        <a class="text-white mb-2" href="index.jsp"><i class="fa fa-angle-right mr-2"></i>Home</a>
+                        <a class="text-white mb-2" href=""><i class="fa fa-angle-right mr-2"></i>Our Shop</a>
+                        <a class="text-white mb-2" href=""><i class="fa fa-angle-right mr-2"></i>Shop Detail</a>
+                        <a class="text-white mb-2" href="BookCart?service=showCart"><i class="fa fa-angle-right mr-2"></i>Shopping Cart</a>
+                        <a class="text-white mb-2" href=""><i class="fa fa-angle-right mr-2"></i>Checkout</a>
+                        <a class="text-white" href=""><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
 
                     </div>
                 </div>
             </div>
             <div class="row border-top border-light mx-xl-5 py-4">
                 <div class="col-md-6 px-xl-0">
-                    <p class="mb-md-0 text-center text-md-left text-dark">
+                    <p class="mb-md-0 text-center text-md-left" style="color: white">
                         &copy; 
-                        <a class="text-dark font-weight-semi-bold" href="#">BeS | Book E Shop</a>. All Rights Reserved. Designed
+                        <a class="text-white font-weight-semi-bold" href="Home?service=listAll" >BeS | Book E Shop</a>. All Rights Reserved. Designed
                         by BeS
                     </p>
                 </div>
                 <div class="col-md-6 px-xl-0 text-center text-md-right">
-                    <img class="img-fluid" src="img/payments.png" alt="">
                 </div>
             </div>
         </div>

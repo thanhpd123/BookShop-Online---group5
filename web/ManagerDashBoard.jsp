@@ -14,6 +14,101 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link rel="stylesheet" href="CSS/style.css">
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+        <style>
+            .logo{
+                width: 15%;
+                height: auto;
+                display: flex;
+                justify-content: center;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .searchbar{
+                margin-top: auto;
+                margin-bottom: auto;
+            }
+
+            #mybar{
+                width: 1300px;
+                display: inline;
+
+            }
+
+            .sidebar{
+                width: 200px;
+                margin-left: 30%;
+            }
+
+            #cate{
+                padding-top: 20px;
+                padding-bottom: 20px;
+                margin: 0 auto;
+                text-align: center;
+                border-bottom: solid 1px;
+                border-color: #D3D3D3;
+            }
+
+            #sidebar{
+                float: left;
+                height: 540px;
+                border-bottom: solid 1px;
+                border-right: solid 1px;
+
+            }
+
+            #sidebar-list{
+                list-style-type: none;
+                padding-top: 10px;
+                margin-bottom: 10px;
+            }
+
+            .menu{
+                display: flex;
+                padding: 0;
+                border-bottom: solid 1px;
+                border-color: #D3D3D3;
+            }
+
+            #element{
+                margin-left: 100px;
+                list-style-type: none;
+                display: flex;
+            }
+
+            #item{
+                margin-top: 5px;
+                padding-right: 15px;
+                margin: 0 40px;
+                font-size: 110%;
+
+            }
+
+            a{
+                text-decoration: none;
+            }
+
+            nav{
+                position: absolute;
+                right: 0;
+                display: flex;
+                justify-content: flex-end;
+            }
+
+            .navbar{
+                padding-top: 20px;
+                padding-bottom: 20px;
+                margin: 0 auto;
+                text-align: center;
+                border-bottom: solid 1px;
+                border-color: #D3D3D3;
+            }
+
+            #navbar-list{
+
+                margin: 0 50px;
+            }
+        </style>
     </head>
     <body>
         <!<!-- menu -->
