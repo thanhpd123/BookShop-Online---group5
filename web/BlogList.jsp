@@ -112,7 +112,7 @@
             <section id="blog-posts" class="blog-posts section">
                 <div class="container">
                     <div class="row gy-4">
-<c:forEach  items="${blogs}" var="i">
+<c:forEach  items="${listP}" var="i">
                         <div class="col-lg-4">
                             <article>
                                 <div class="post-img" style="width: 100%; height: 200px;">
@@ -141,17 +141,16 @@
 
             <!-- Pagination 2 Section -->
             <section id="pagination-2" class="pagination-2 section">
-
+            
                 <div class="container">
                     <div class="d-flex justify-content-center">
-                        <ul>
-                            <li><a href="#">1</a></li>
-                            <li class="active"><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
+                        <ul><c:forEach begin="1" end="${endP}" var="i">
+                            <li class="${tag == i?"active":""}"><a href="BlogListServlet?numberPaging=${i}">${i}</a></li>
+                            </c:forEach>
                         </ul>
                     </div>
                 </div>
-
+            
             </section><!-- /Pagination 2 Section -->
 
         </main>

@@ -80,7 +80,7 @@ public class BlogDAO extends DBConnect {
             ps.setInt(1, BlogID);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                vector.add(new BlogComments(rs.getInt(1), rs.getString(2), rs.getDate(3), rs.getString(4),rs.getString(5)));
+                vector.add(new BlogComments(rs.getInt(1), rs.getString(2), rs.getDate(3), rs.getString(4), rs.getString(5)));
             }
         } catch (SQLException ex) {
             Logger.getLogger(BlogDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -88,9 +88,41 @@ public class BlogDAO extends DBConnect {
         return vector;
     }
 
+    public int getTotalBlog() {
+        String sql = "select count(*) from Blogs";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(BlogDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+
+    public List<Blog> pagingBlogs(int numberPaging) {
+        List<Blog> list = new ArrayList<>();
+        String sql = "select * from Blogs\n"
+                + "ORDER BY CreatedDate DESC\n"
+                + "OFFSET ? ROWS FETCH NEXT 6 ROWS ONLY";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, (numberPaging-1)*6);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {                
+                list.add(new Blog(rs.getInt("BlogID"), rs.getNString("BlogImg"), rs.getNString("BlogAuthorImg"), rs.getNString("Title"), rs.getNString("AuthorName"), rs.getDate("CreatedDate")));
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(BlogDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
     public static void main(String[] args) {
         BlogDAO dao = new BlogDAO();
-        List<Blog> list = dao.getAllBlog();
+        List <Blog> list = dao.pagingBlogs(2);
         for (Blog o : list) {
             System.out.println(o);
         }
