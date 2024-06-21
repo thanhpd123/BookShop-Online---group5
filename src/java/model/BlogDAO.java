@@ -109,9 +109,28 @@ public class BlogDAO extends DBConnect {
                 + "OFFSET ? ROWS FETCH NEXT 6 ROWS ONLY";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, (numberPaging-1)*6);
+            ps.setInt(1, (numberPaging - 1) * 6);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) {                
+            while (rs.next()) {
+                list.add(new Blog(rs.getInt("BlogID"), rs.getNString("BlogImg"), rs.getNString("BlogAuthorImg"), rs.getNString("Title"), rs.getNString("AuthorName"), rs.getDate("CreatedDate")));
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(BlogDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
+    public List<Blog> getRecentsBlog() {
+        List<Blog> list = new ArrayList<>();
+        String sql = "SELECT *\n"
+                + "FROM Blogs\n"
+                + "ORDER BY CreatedDate DESC\n"
+                + "OFFSET 0 ROWS\n"
+                + "FETCH NEXT 5 ROWS ONLY;";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
                 list.add(new Blog(rs.getInt("BlogID"), rs.getNString("BlogImg"), rs.getNString("BlogAuthorImg"), rs.getNString("Title"), rs.getNString("AuthorName"), rs.getDate("CreatedDate")));
             }
         } catch (Exception ex) {
@@ -122,7 +141,7 @@ public class BlogDAO extends DBConnect {
 
     public static void main(String[] args) {
         BlogDAO dao = new BlogDAO();
-        List <Blog> list = dao.pagingBlogs(2);
+        List<Blog> list = dao.pagingBlogs(2);
         for (Blog o : list) {
             System.out.println(o);
         }

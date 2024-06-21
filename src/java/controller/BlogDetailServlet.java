@@ -1,5 +1,6 @@
 package controller;
 
+import entity.Blog;
 import entity.BlogComments;
 import entity.BlogDetail;
 import java.io.IOException;
@@ -7,6 +8,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
 import model.BlogDAO;
 import java.util.Vector;
 import model.AccountDAO;
@@ -21,6 +23,8 @@ public class BlogDetailServlet extends HttpServlet {
         AccountDAO adao = new AccountDAO();
         BlogDetail blogData = bdao.getBlogDetailbyID(blogID);
         Vector<BlogComments> comments = bdao.getAllCommentsByBlog(blogID);
+        List<Blog> blogRecent = bdao.getRecentsBlog();
+        request.setAttribute("blogRecents",blogRecent);
         request.setAttribute("blogData",blogData);
         request.setAttribute("commentData", comments);
         request.setAttribute("commentDataLength", comments.size());

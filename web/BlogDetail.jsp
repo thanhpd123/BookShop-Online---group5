@@ -115,7 +115,7 @@
                                         <ul>
                                             <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="blog-details.html">${blogData.getAuthorName()}</a></li>
                                             <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="blog-details.html"><time datetime="2020-01-01">${blogData.getCreatedDate()}</time></a></li>
-                                            <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="blog-details.html">12 Comments</a></li>
+                                            <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="blog-details.html">${commentDataLength} Comments</a></li>
                                         </ul>
                                     </div><!-- End meta top -->
 
@@ -213,66 +213,19 @@
 
                             </div><!--/Search Widget -->
 
-                            <!-- Categories Widget -->
-                            <div class="categories-widget widget-item">
-
-                                <h3 class="widget-title">Categories</h3>
-                                <ul class="mt-3">
-                                    <li><a href="#">Tiểu Thuyết <span>(25)</span></a></li>
-                                    <li><a href="#">Khoa Học <span>(12)</span></a></li>
-                                    <li><a href="#">Tài Chính <span>(5)</span></a></li>
-                                    <li><a href="#">Đời Sống <span>(22)</span></a></li>
-                                    <li><a href="#">Toán <span>(8)</span></a></li>
-                                    <li><a href="#">Triết Học <span>(14)</span></a></li>
-                                </ul>
-
-                            </div><!--/Categories Widget -->
-
                             <!-- Recent Posts Widget -->
                             <div class="recent-posts-widget widget-item">
 
                                 <h3 class="widget-title">Recent Posts</h3>
-
+                                <c:forEach items="${blogRecents}" var="i">
                                 <div class="post-item">
-                                    <img src="assets/img/blog/un-1.jpg" alt="" class="flex-shrink-0">
+                                    <img src="${i.getBlogImg()}" alt="" class="flex-shrink-0" >
                                     <div>
-                                        <h4><a href="blog-details.html">Cuộc sống và những điều nhỏ bé</a></h4>
-                                        <time datetime="2020-01-01">Jan 1, 2020</time>
+                                        <h4><a href="BlogDetailServlet?blogID=${i.getBlogID()}">${i.getTitle()}</a></h4>
+                                        <time datetime="2022-01-01">${i.getCreatedDate()}</time>
                                     </div>
                                 </div><!-- End recent post item-->
-
-                                <div class="post-item">
-                                    <img src="assets/img/blog/un-2.jpg" alt="" class="flex-shrink-0">
-                                    <div>
-                                        <h4><a href="blog-details.html">Ẩm thực Việt Nam: Hương vị quê hương</a></h4>
-                                        <time datetime="2020-01-01">Jan 1, 2020</time>
-                                    </div>
-                                </div><!-- End recent post item-->
-
-                                <div class="post-item">
-                                    <img src="assets/img/blog/un-3.jpg" alt="" class="flex-shrink-0">
-                                    <div>
-                                        <h4><a href="blog-details.html">Du lịch khám phá: Những điểm đến không thể bỏ qua</a></h4>
-                                        <time datetime="2020-01-01">Jan 1, 2020</time>
-                                    </div>
-                                </div><!-- End recent post item-->
-
-                                <div class="post-item">
-                                    <img src="assets/img/blog/un-4.jpg" alt="" class="flex-shrink-0">
-                                    <div>
-                                        <h4><a href="blog-details.html">Sách và văn hóa đọc trong thời đại số</a></h4>
-                                        <time datetime="2020-01-01">Jan 1, 2020</time>
-                                    </div>
-                                </div><!-- End recent post item-->
-
-                                <div class="post-item">
-                                    <img src="assets/img/blog/blog-recent-5.jpg" alt="" class="flex-shrink-0">
-                                    <div>
-                                        <h4><a href="blog-details.html">Chăm sóc sức khỏe: Bí quyết sống khỏe mỗi ngày</a></h4>
-                                        <time datetime="2020-01-01">Jan 1, 2020</time>
-                                    </div>
-                                </div><!-- End recent post item-->
-
+                                </c:forEach>
                             </div><!--/Recent Posts Widget -->
 
                         </div>
