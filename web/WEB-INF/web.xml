@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
+    <servlet>
+        <servlet-name>DeleteBookManageServlet</servlet-name>
+        <servlet-class>controller.DeleteBookManageServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>BookManagementServlet</servlet-name>
         <url-pattern>/BookManagementServlet</url-pattern>
@@ -19,6 +23,10 @@
     <servlet-mapping>
         <servlet-name>FeedBackServlet</servlet-name>
         <url-pattern>/FeedBackServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteBookManageServlet</servlet-name>
+        <url-pattern>/DeleteBookManageServlet</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>Home</welcome-file>

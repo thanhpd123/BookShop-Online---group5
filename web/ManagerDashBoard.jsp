@@ -157,6 +157,7 @@
                         <thead>
                             <tr>
                                 <th>Book ID</th>
+                                <th>Book Image</th>
                                 <th>Name</th>
                                 <th>Author</th>
                                 <th>Price</th>
@@ -168,13 +169,25 @@
                             <c:forEach items="${listBookManage}" var="i">
                                 <tr>
                                     <td>${i.getBookID()}</td>
+                                    <td><img style="width: 40%; height: 70px; " src="${pageContext.request.contextPath}${i.getBookImg()}"></td>
                                     <td>${i.getName()}</td>
                                     <td>${i.getAuthorID()}</td>
-                                    <td>${i.getPrice()}</td>
+                                    <td>    
+                                        <form action="DeleteBookManageServlet" method="post">
+                                            <input type="text" name="price" value="${i.getPrice()}">
+                                            <input type="hidden" name="bookID" value="${i.getBookID()}">
+                                        </form>
+                                    </td>
                                     <td>${i.getQuantity()}</td>
                                     <td>
-                                        <button type="submit" class="btn btn-danger btn-sm" onclick="doDelete('${i.getBookID()}')">Delete</button>
-                                        <button type="button" class="btn btn-warning btn-sm">Edit</button>
+                                        <form action="DeleteBookManageServlet" style="display:inline;">
+                                            <input type="hidden" name="bookID" value="${i.getBookID()}">
+                                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                        </form>
+                                        <form action="DeleteBookManageServlet" method="post" style="display:inline;">
+                                            <input type="hidden" name="bookID" value="${i.getBookID()}">
+                                            <button type="submit" class="btn btn-warning btn-sm">Edit</button>
+                                        </form>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -197,8 +210,16 @@
                             <input type="text" class="form-control" id="name" name="name" required>
                         </div>
                         <div class="form-group">
-                            <label for="authorID">Publisher Name</label>
+                            <label for="description">Description</label>
+                            <input type="text" class="form-control" id="description" name="description" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="publisherName">Publisher Name</label>
                             <input type="text" class="form-control" id="publisherName" name="publisherName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="authorID">Author ID</label>
+                            <input type="number" class="form-control" id="authorID" name="authorID" required>
                         </div>
                         <div class="form-group">
                             <label for="edition">Edition</label>
@@ -213,16 +234,24 @@
                             <input type="date" class="form-control" id="publicationDate" name="publicationDate" required>
                         </div>
                         <div class="form-group">
-                            <label for="authorID">Author ID</label>
-                            <input type="number" class="form-control" id="authorID" name="authorID" required>
+                            <label for="quantity">Quantity</label>
+                            <input type="number" class="form-control" id="quantity" name="quantity" required>
                         </div>
                         <div class="form-group">
-                            <label for="price">Price</label>
+                            <label for="price">Price(vnd)</label>
                             <input type="number" class="form-control" id="price" name="price" required>
                         </div>
                         <div class="form-group">
-                            <label for="quantity">Quantity</label>
-                            <input type="number" class="form-control" id="quantity" name="quantity" required>
+                            <label for="salePrice">Sale Price(vnd)</label>
+                            <input type="number" class="form-control" id="salePrice" name="salePrice" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="flag">Flag(1 or 0)</label>
+                            <input type="number" class="form-control" id="flag" name="flag" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="status">Status</label>
+                            <input type="text" class="form-control" id="status" name="status" required>
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                         <p style="color:red">${error}</p>

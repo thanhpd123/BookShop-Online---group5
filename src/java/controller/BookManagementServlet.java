@@ -16,12 +16,9 @@ public class BookManagementServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String bookID = request.getParameter("bookID");
-        
+            throws ServletException, IOException {        
         BookManageDAO dao = new BookManageDAO();
         List<BookManage> listBM = dao.getAllBookManage();
-        dao.deleteBook(bookID);
         request.setAttribute("listBookManage", listBM);
         request.getRequestDispatcher("ManagerDashBoard.jsp").forward(request, response);
     }
@@ -32,6 +29,7 @@ public class BookManagementServlet extends HttpServlet {
         String bookID = request.getParameter("bookID");
         String bookImg = request.getParameter("bookImg");
         String name = request.getParameter("name");
+        String description = request.getParameter("description");
         String publisherName = request.getParameter("publisherName");
         int authorID = Integer.parseInt(request.getParameter("authorID"));
         String edition = request.getParameter("edittion");
@@ -40,12 +38,14 @@ public class BookManagementServlet extends HttpServlet {
         Date publicationDate = Date.valueOf(publicationDateString);
         int quantity = Integer.parseInt(request.getParameter("quantity"));
         int price = Integer.parseInt(request.getParameter("price"));
-
+        float salePrice = Float.parseFloat(request.getParameter("salePrice"));
+        boolean flag = Boolean.parseBoolean(request.getParameter("flag"));
+        String status = request.getParameter("status");
         BookManageDAO daoB = new BookManageDAO();
         if (daoB.checkDuplicateRollNo(bookID)) {
             request.setAttribute("error", "Roll No existing!");
         } else {
-            daoB.insertBook(bookID, bookImg, name, publisherName, authorID, edition, categoryID, publicationDate, quantity, price);
+            daoB.insertBook(bookID, bookImg,  name,  description,  publisherName,  authorID,  edition,  categoryID,  publicationDate,  quantity,  price,  salePrice,  flag,  status);
         }
         doGet(request, response);
     }

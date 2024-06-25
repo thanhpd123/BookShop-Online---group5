@@ -20,19 +20,21 @@ import java.util.List;
 public class FeedbackDAO extends DBConnect {
 
     public List<Feedback> getAllFeedbacks() {
-        String sql = " SELECT \n"
-                + "                   Feedback.FeedbackID,\n"
-                + "                    Book.[Name] AS BookName,\n"
-                + "                    CONCAT(Account.FirstName, ' ', Account.LastName) AS UserName,\n"
-                + "                   Feedback.Rate,\n"
-                + "                    Feedback.FBDate,\n"
-                + "                    Feedback.FBContent\n"
-                + "                 FROM \n"
-                + "                   Feedback\n"
-                + "                JOIN \n"
-                + "                   Book ON Feedback.BookID = Book.BookID\n"
-                + "                JOIN \n"
-                + "                    Account ON Feedback.UserID = Account.UserID;";
+        String sql = "SELECT \n"
+                + "    Feedback.FeedbackID,\n"
+                + "    Book.[Name] AS BookName,\n"
+                + "    CONCAT(Account.FirstName, ' ', Account.LastName) AS UserName,\n"
+                + "    Feedback.Rate,\n"
+                + "    Feedback.FBDate,\n"
+                + "    Feedback.FBContent\n"
+                + "FROM \n"
+                + "    Feedback\n"
+                + "JOIN \n"
+                + "    Book \n"
+                + "    ON Feedback.BookID = Book.BookID\n"
+                + "JOIN \n"
+                + "    Account \n"
+                + "    ON Feedback.UserID = Account.UserID;";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -124,11 +126,12 @@ public class FeedbackDAO extends DBConnect {
         }
         return null;
     }
-            public static void main(String[] args) {
+
+    public static void main(String[] args) {
         FeedbackDAO dao = new FeedbackDAO();
-         List<Feedback> list = dao.getAllFeedbacks();
-         for (Feedback o : list) {
-             System.out.println(o);
+        List<Feedback> list = dao.getAllFeedbacks();
+        for (Feedback o : list) {
+            System.out.println(o);
         }
     }
 }
