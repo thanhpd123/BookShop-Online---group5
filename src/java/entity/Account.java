@@ -17,6 +17,19 @@ public class Account {
     public Account() {
     }
 
+    public Account(String RoleID, String FirstName, String LastName, String Email, String Password, String PhoneNo, String Address, String DOB, boolean Gender, String imgUser) {
+        this.RoleID = RoleID;
+        this.FirstName = FirstName;
+        this.LastName = LastName;
+        this.Email = Email;
+        this.Password = Password;
+        this.PhoneNo = PhoneNo;
+        this.Address = Address;
+        this.DOB = DOB;
+        this.Gender = Gender;
+        this.imgUser = imgUser;
+    }
+       
     public Account(int UserID, String RoleID, String FirstName, String LastName, String Email, String Password, String PhoneNo, String Address, String DOB, boolean Gender, String imgUser) {
         this.UserID = UserID;
         this.RoleID = RoleID;

@@ -108,13 +108,24 @@
                 margin: 0 50px;
             }
 
+            .button1{
+                border-color: #987554;
+                color: #987554;
+                background-color: white;
+            }
+
+            .button1:hover {
+                background-color: #D2B48C;
+                color: white;
+            }
+
         </style>
     </head>
     <body>
         <%
             Account acc = (Account)session.getAttribute("acc");
         %>
-        <!<!-- menu -->
+        <!-- menu -->
         <div class="menu container-fluid" style="background-color: #E5D3B3">
             <div class="row">
                 <!-- logo -->
@@ -122,7 +133,7 @@
                     <a href="Home?service=listAll"><img class="logo" src = "${pageContext.request.contextPath}/assets/logo.PNG" alt="Logo"></a>
                 </div>
 
-                <!<!-- search bar -->
+                <!-- search bar -->
                 <div class="cl-lg-6 d-flex justify-content-center align-items-center">
                     <form action="BookController?service=search" method="POST">
                         <div style="display: inline-block"><input type="text" placeholder="Search Book Name" name="Name" style="width: 350px"></div>
@@ -131,7 +142,7 @@
                     </form>
                 </div>
 
-                <!<!-- menu item -->
+                <!-- menu item -->
                 <div class="cl-lg-3 d-flex justify-content-center align-items-center">
                     <nav>
                         <ul id="element">
@@ -156,68 +167,87 @@
                 </div>
             </div>
         </div>
+
         <%
             int totalPrice = 0;
         %>
-        <div class="justify-content-center">
-            <form action="BookCart?service=updateQuantity" method="post">
-                <table class="ml-auto mr-auto" style="width: 80%">
-                    <caption class="text-center align-items-center mt-3 mb-3" style="caption-side: top; font-weight: 900; font-size: 130%">Giỏ Hàng của Bạn</caption>
-                    <colgroup>
-                        <col span="1" style="width: 30%;">
-                        <col span="1" style="width: 15%;">
-                        <col span="1" style="width: 25%;">
-                        <col span="1" style="width: 10%;">
-                        <col span="1" style="width: 20%;">
-                    </colgroup>
-                    <thead>
-                        <tr class="text-center">
-                            <th></th>
-                            <th>Name</th>
-                            <th>Quantity</th>
-                            <th>Price</th>
-                            <th>Total</th>
-                            <th>Delete</a></th>
-                        </tr>
-                    </thead>
-                    <tbody>
 
+        <!-- content -->
+        <div class="container-fluid" style="background-color: #F5F5F5">
+            <div class="row">
+                <div class="col-lg-2">
+                </div>
+                <div class="col-lg-8 mt-3">
+                    <h4 class="text-center pt-3 pb-3 mb-0" style="font-weight: normal; background-color: white">Giỏ Hàng của Bạn</h4>
+                    <div class="container-fluid">
+                        <div class="row pb-3 mb-3" style="background-color: white">
+                            <div class="col-4 text-center mt-auto mb-auto" style="font-size: 17px"></div>
+                            <div class="col-3 text-center mt-auto mb-auto" style="font-size: 17px">Sản Phẩm</div>
+                            <div class="col-2 text-center mt-auto mb-auto" style="font-size: 17px">Số Lượng</div>
+                            <div class="col-2 text-center mt-auto mb-auto" style="font-size: 17px">Giá</div>
+                            <div class="col-1 text-center mt-auto mb-auto" style="font-size: 17px"></div>
+                        </div>
                         <%
-                                Vector<Cart> vector = (Vector<Cart>) request.getAttribute("data");
-                                for(Cart cart : vector) {
-                                totalPrice += cart.getPrice()*cart.getQuantity();
+                            Vector<Cart> vector = (Vector<Cart>) request.getAttribute("data");
+                            Vector<Cart> vectorCart = (Vector<Cart>) request.getAttribute("dataBookID");
+                            for(Cart cart : vector) {
+                            totalPrice += cart.getPrice()*cart.getQuantity();
                         %>
+                        <div class="row mb-3" style="background-color: white">
+                            <div class="col-4 text-center pt-4 pb-4 mt-auto mb-auto"><img src="${pageContext.request.contextPath}<%=cart.getBookImg()%>" style="width: 50%"></div>
+                            <div class="col-3 text-center mt-auto mb-auto" style="font-size: 18px"><%=cart.getBookID()%></div>
+                            <div class="col-2 text-center mt-auto mb-auto" style="font-size: 18px">
+                                <form action="BookCart?service=updateQuantity&bookID=<%=cart.getBookID()%>&userID=<%=cart.getUserID()%>" method="POST">
+                                    <a href="BookCart?service=changeQuantityMinus?bookID=<%=cart.getBookID()%>&userID=<%=cart.getUserID()%>"><button class="mt-auto mb-auto" style="width:30px; height: 30px; border-color: #987554; color: #987554; background-color: white"> - </button></a>
+                                    <input class="text-center" onkeypress="submitOnEnter(this, event);" style="width:50px" type="text" name="quantity" value="<%=cart.getQuantity()%>">
+                                    <a href="BookCart?service=changeQuantityPlus?bookID=<%=cart.getBookID()%>&userID=<%=cart.getUserID()%>"><button class="mt-auto mb-auto" style="width:30px; height: 30px; border-color: #987554; color: #987554; background-color: white"> + </button></a>
 
-                        <tr class="text-center">
-                            <td><img src="${pageContext.request.contextPath}<%=cart.getBookImg()%>" style="width: 50%"></td>
-                            <td><%=cart.getBookID()%></td>
-                            <td><input type="text" name="<%=cart.getBookID()%>" value="<%=cart.getQuantity()%>"></td>
-                            <td><%=cart.getPrice()%></td>
-                            <td><%=cart.getPrice()*cart.getQuantity()%></td>      
-                            <td><a href="BookCart?service=deleteCart&userID=<%=acc.getUserID()%>&bookID=<%=cart.getBookID()%>">Xóa</a></td>
-                        </tr>
+                                    <!--<input type="submit" value="add" name="submit">-->
+                                </form>
+                            </div>
+                            <div class="col-2 text-center mt-auto mb-auto" style="font-size: 18px"><%=cart.getPrice()*cart.getQuantity()%>&#8363;</div>
+                            <div class="col-1 text-center mt-auto mb-auto" style="font-size: 18px"><a href="BookCart?service=deleteCart&userID=<%=acc.getUserID()%>&bookID=<%=cart.getBookID()%>"><i class="bi bi-trash h4" style="color: #664229"></i></a></div>
+                        </div>
                         <%
                             }
-                            
                         %>
-                        <tr class="text-center">
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>Total</td>
-                            <td></td>
-                            <td><a href="BookCart?service=deleteAll&userID=<%=acc.getUserID()%>">Xóa tất cả</a></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </form>
-            <a href="BookController?service=listAll">Tiếp tục mua hàng</a>
-            <div>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                </div>
+            </div>
+            <div class="row pt-3 pb-3" style="background-color: white">
+                <div class="col-2">
+                </div>
+                <div class="col-lg-2 mt-auto mb-auto">
+                    <a href="BookCart?service=deleteAll" style="color: black; font-size: 20px">Xóa tất cả</a>
+                </div>
+                <div class="col-lg-5 mt-auto mb-auto" style="padding-left: 350px; font-size: 20px">
+                    <div class="">Tổng thanh toán (<%=vector.size()%> sản phẩm): <%=totalPrice%>&#8363</div>
+                </div>
+                <div class="col-lg-3" style="padding-left: 100px;">
+                    <%
+                        if (vector.size() != 0) {
+                    %>
+                    <a href="BookCart?service=checkOut"><button class="button1 mt-auto mb-auto" style="font-size:20px; width: 150px; height: 60px;">Thanh Toán</button></a>
+                    <%
+                        }
+                    %>
+                    <%
+                        if (vector.size() == 0) {
+                    %>
+                    <button onclick="warn()" class="button1 mt-auto mb-auto" style="font-size:20px; width: 150px; height: 60px;">Thanh Toán</button>
+                    <%
+                        }
+                    %>
+                </div>
+                <div class="col-1">
+                </div>
             </div>
         </div>
 
         <!-- footer -->
-        <div class="footer container-fluid text-dark mt-5 pt-5" style="background-color: #D2B48C">
+        <div class="footer container-fluid text-dark pt-5" style="background-color: #D2B48C">
             <div class="row px-xl-5 pt-5">
                 <div class="col-lg-6 col-md-12 mb-5 pr-3 pr-xl-5">
                     <a href="">
@@ -254,6 +284,17 @@
             </div>
         </div>
 
+        <script type="text/javascript">
+            function submitOnEnter(inputElement, event) {
+                if (event.keyCode == 13) {
+                    inputElement.form.submit();
+                }
+            }
+
+            function warn() {
+                alert("Chưa có Sản Phẩm trong giỏ hàng");
+            }
+        </script>
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>

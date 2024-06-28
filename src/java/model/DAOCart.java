@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package model;
+import entity.Account;
 import entity.Book;
 import entity.Cart;
 import java.sql.PreparedStatement;
@@ -48,6 +49,29 @@ public class DAOCart extends DBConnect {
         }
         return vector;
     }
+    
+    public Vector<Cart> getAllCart() {
+        String sql = "SELECT *\n"
+                    + "FROM Cart";
+        Vector<Cart> vector = new Vector<Cart>();
+        try {
+            Statement state = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs = state.executeQuery(sql);
+            while (rs.next()) {
+                int cartID = rs.getInt(1);
+                int userID = rs.getInt(2);
+                String bookID = rs.getString(3);
+                int quantity = rs.getInt(4);
+                int price = rs.getInt(5);
+                Cart cart = new Cart(cartID, userID, bookID, quantity, price);
+                vector.add(cart);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOCart.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return vector;
+    }
+    
     public Vector<Cart> getAll(String sql) {
 //        String sql = "SELECT Book.BookImg, CartItem.CartID, Book.Name, CartItem.Quantity, CartItem.Price\n"
 //                    + "FROM CartItem\n"
@@ -114,4 +138,80 @@ public class DAOCart extends DBConnect {
         return n;
 
     }
+    
+    public Vector<Account> getAll(int UserID) {
+        String sql = "SELECT Account.UserID, Roles.RoleName, Account.FirstName, Account.LastName, Account.Email, Account.Password, Account.PhoneNo, Account.Address, Account.Gender, Account.DOB, Account.imgUser\n"
+                + "	FROM Account\n"
+                + "	INNER JOIN Roles ON Account.RoleID = Roles.RoleID\n"
+                + "     WHERE Account.UserID = '" + UserID + "'";
+        Vector<Account> vector = new Vector<Account>();
+        try {
+            Statement state = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs = state.executeQuery(sql);
+            while (rs.next()) {
+                int userID = rs.getInt(1);
+                String roleID = rs.getString(2);
+                String fName = rs.getString(3);
+                String lName = rs.getString(4);
+                String email = rs.getString(5);
+                String password = rs.getString(6);
+                String phoneNo = rs.getString(7);
+                String address = rs.getString(8);
+                String dob = rs.getString(10);
+                int gt = rs.getInt(9);
+                boolean gender = (gt == 1 ? true : false);
+                String imgUser = rs.getString(11);
+                Account acc = new Account(userID, roleID, fName, lName, email, password, phoneNo, address, dob, gender, imgUser);
+                vector.add(acc);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return vector;
+    }
+
+    public int updateQuantity(int cartID, int userID, String bookID, int quantity, int price) {
+        int n = 0;
+        String sql = "Update Cart\n"
+                + "SET Quantity = ?\n"
+                + "   ,BookID = ?\n"
+                + "   ,UserID = ?\n"
+                + "   ,Price = ?\n"
+                + "WHERE CartID = ?";
+        try {
+            PreparedStatement pre = con.prepareStatement(sql);
+            pre.setInt(1, quantity);
+            pre.setInt(3, userID);
+            pre.setString(2, bookID);
+            pre.setInt(5, cartID);
+            pre.setInt(4, price);
+            n = pre.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOCart.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return n;
+    }
+
+    public Vector<Cart> getCart(String bkID, int uID) {
+        Vector<Cart> vector = new Vector<Cart>();
+        String sql = "Select * from Cart\n"
+                + "WHERE BookID = '" + bkID + "' AND UserID = '" + uID + "'";
+        try {
+            Statement state = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs = state.executeQuery(sql);
+            while (rs.next()) {
+                int cartID = rs.getInt(1);
+                int userID = rs.getInt(2);
+                String bookID = rs.getString(3);
+                int quantity = rs.getInt(4);
+                int price = rs.getInt(5);
+                Cart cart = new Cart (cartID, userID, bookID, quantity, price);
+                vector.add(cart);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOCart.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return vector;
+    }
 }
+

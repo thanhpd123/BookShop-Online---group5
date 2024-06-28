@@ -1,17 +1,17 @@
 <%-- 
-    Document   : BookManage
-    Created on : Jun 10, 2024, 11:28:19 AM
+    Document   : CheckOut
+    Created on : Jun 28, 2024, 11:55:57 AM
     Author     : Dung Dinh
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page import="entity.Book, java.util.Vector"%>
+<%@page import="entity.Account, entity.Cart, java.util.Vector"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Đặt Hàng</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link rel="stylesheet" href="CSS/style.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
@@ -109,10 +109,21 @@
 
                 margin: 0 50px;
             }
+            
+            .button1{
+                border-color: #987554; 
+                color: #987554; 
+                background-color: white;
+            }
+
+            .button1:hover {
+                background-color: #D2B48C;
+                color: white;
+            }
+            
         </style>
     </head>
     <body>
-
         <!-- menu -->
         <div class="menu container-fluid" style="background-color: #E5D3B3">
             <div class="row">
@@ -157,74 +168,106 @@
         </div>
 
         <!-- content -->
-        <div class="container-fluid mt-2">
-            <div class="text-center mb-4">
-                <h2 class="section-title px-5" style="color: #664229"><span class="px-2">Sách</span></h2>
+        <div class="container-fluid">
+            <div class="row mt-3 mb-0">
+                <a href="BookCart?service=showCart" style="color: black; margin-left: 5%"><i class="bi bi-arrow-90deg-left"></i>  Quay lại Giỏ Hàng</a>
             </div>
-            <div class="row px-xl-5 pb-3">
-                <div class="col-lg-3" style="height: vh-100; width: 100">
-                    <i class="fa fa-angle-down text-dark"></i>
-                    <nav class="collapse show navbar navbar-vertical navbar-light align-items-start pt-3 border border-bottom-0" id="navbar-vertical">
-                        <h4 class="pt-3 pb-3" style="width: 100%; height: 100%; color: white; background-color: #E5D3B3">Filter</h4>
-                        <div class="navbar-nav w-100 overflow-hidden" style="height: 410px">
-                            <a href="BookController?service=bookByCat&cat=CAT1" class="nav-item nav-link">Tiểu Thuyết</a>
-                            <a href="BookController?service=bookByCat&cat=CAT2" class="nav-item nav-link">Khoa Học</a>
-                            <a href="BookController?service=bookByCat&cat=CAT3" class="nav-item nav-link">Tài Chính</a>
-                            <a href="BookController?service=bookByCat&cat=CAT4" class="nav-item nav-link">Tự Lực</a>
-                            <a href="BookController?service=bookByCat&cat=CAT5" class="nav-item nav-link">Pháp Luật</a>
-                            <a href="BookController?service=bookByCat&cat=CAT6" class="nav-item nav-link">Lập Trình</a>
-                            <a href="BookController?service=bookByCat&cat=CAT7" class="nav-item nav-link">Tâm Lý Học</a>
-                            <div class="nav-item nav-link">
-                                <a href="BookController?service=sortPriceASC" ><i class="bi bi-arrow-up"></i> giá thấp-cao</a>
-                            </div>
-                            <div class="nav-item nav-link">
-                                <a href="BookController?service=sortPriceDESC"><i class="bi bi-arrow-down"></i> giá cao-thấp</a>
-                            </div>
-                        </div>
-                    </nav>
-                </div>
-
-                <div class="col-lg-9">
+            <div class="row">
+                <div class="col-lg-5 pl-0 pr-0">
                     <div class="container-fluid">
                         <div class="row">
-                            <%
-                             Vector<Book> vector = (Vector<Book>) request.getAttribute("data");
-                             for(Book bk : vector) {
-                            %>
-                            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-
-                                <div class="card product-item  mb-4" style="">
-                                    <div class="pt-4">
-                                        <a href="BookController?service=viewBook&bookID=<%=bk.getBookID()%>"><img class="pic d-flex ml-auto mr-auto" src = "${pageContext.request.contextPath}<%=bk.getBookImg()%>" style="width: auto; height: 200px;"></a>
-                                    </div>
-                                    <div class="pt-4">
-                                        <h6 class="text-truncate mb-3 text-center" style="font-weight: normal"> <%=bk.getName()%> </h6>
-                                        <div class="d-flex justify-content-center p-0 pb-3">
-                                            <h6><%=bk.getPrice()%>&#8363;</h6>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!--                    <div class="card-footer d-flex justify-content-between bg-light border">
-                                                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Xem sản phẩm</a>
-                                                        <a href="BookCart?service=addToCart&bookID<%--=<%=bk.getBookID()%>--%>" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Thêm vào giỏ</a>
-                                                    </div>-->
-                            </div>
-
-                            <%
-                                            }
-                            %>
+                            <div class="col-12 text-center mt-3 mb-4" style="font-size: 23px">Thông tin Liên lạc</div>
                         </div>
+                        <%
+                            Vector<Account> vector = (Vector<Account>) request.getAttribute("dataAddress");
+                            for(Account acc : vector) {
+                        %>
+                        <div class="row mb-3">
+                            <div class="col-3 mt-auto mb-auto pl-5" style="font-size: 17px">Tên người nhận: </div>
+                            <div class="col-7 border ml-0 pt-2 pb-2" style="width:100%; font-weight: normal; font-size: 18px"><%=acc.getFirstName()%> <%=acc.getLastName()%></div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-3 mt-auto mb-auto pl-5" style="display: inline-block; font-size: 17px">Địa chỉ: </div>
+                            <div class="col-7 border ml-0 pt-2 pb-2" style="width:100%; font-weight: normal; font-size: 18px"><%=acc.getAddress()%></div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-3 mt-auto mb-auto pl-5" style="display: inline-block; font-size: 17px">SĐT: </div>
+                            <div class="col-7 border ml-0 pt-2 pb-2" style="width:100%; font-weight: normal; font-size: 18px"><%=acc.getPhoneNo()%></div>
+                        </div>
+                        <%
+                            }
+                        %>
+                    </div>
+                </div>
+                <div class="col-lg-7 pl-0 pr-0">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12 text-center mt-3 mb-4" style="font-size: 23px"> Đơn Hàng </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-3 text-center" style="font-size: 20px">
+                            </div>
+                            <div class="col-3 text-center" style="font-size: 20px">
+                                Sản Phẩm
+                            </div>
+                            <div class="col-2 text-center" style="font-size: 20px">
+                                Giá
+                            </div>
+                            <div class="col-2 text-center" style="font-size: 20px">
+                                Số Lượng
+                            </div>
+                            <div class="col-2 text-center" style="font-size: 20px">
+                                Thành Tiền
+                            </div>
+                        </div>
+                        <%
+                            Vector <Cart> vectorC = (Vector<Cart>) request.getAttribute("dataCart");
+                            int totalPrice = 0;
+                            for (Cart cart : vectorC) {
+                            int total = cart.getQuantity()*cart.getPrice();
+                            totalPrice += cart.getQuantity()*cart.getPrice(); 
+                        %>
+                        <div class="row">
+                            <div class="col-3 text-center">
+                                <img class="ml-auto mr-auto mb-2" src="${pageContext.request.contextPath}<%=cart.getBookImg()%>" style="height: 190px; width: 130px">
+                            </div>
+                            <div class="col-3 text-center mt-auto mb-auto">
+                                <%=cart.getBookID()%>
+                            </div>
+                            <div class="col-2 text-center mt-auto mb-auto">
+                                <%=cart.getPrice()%>
+                            </div>
+                            <div class="col-2 text-center mt-auto mb-auto">
+                                <%=cart.getQuantity()%>
+                            </div>
+                            <div class="col-2 text-center mt-auto mb-auto">
+                                <%=total%>
+                            </div>
+                        </div>
+                        <%
+                            }
+                        %>
                     </div>
                 </div>
             </div>
-
-
+            <div class="row mb-4">
+                <div class="col-3">
+                </div>
+                <div class="col-3">
+                </div>
+                <div class="col-3 mt-auto mb-auto">
+                    <div class="" style="font-size: 20px; font-weight: normal"> Tổng thanh toán (<%=vectorC.size()%> sản phẩm): <%=totalPrice%>&#8363</div>
+                </div>
+                <div class="col-2">
+                    <a href="BookCart?service=payment"><button class="button1 mt-auto mb-auto ml-5" style="font-size:20px; width: 150px; height: 60px;">Đặt Hàng</button></a>
+                </div>
+                <div class="col-1">
+                </div>
+            </div>
         </div>
 
-
         <!-- footer -->
-        <div class="footer container-fluid text-dark mt-5 pt-5" style="background-color: #D2B48C">
+        <div class="footer container-fluid text-dark pt-5" style="background-color: #D2B48C">
             <div class="row px-xl-5 pt-5">
                 <div class="col-lg-6 col-md-12 mb-5 pr-3 pr-xl-5">
                     <a href="">
@@ -261,11 +304,10 @@
             </div>
         </div>
 
-
-
-        <br>
+        
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    
     </body>
 </html>

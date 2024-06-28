@@ -52,19 +52,37 @@ public class BookCart extends HttpServlet {
         if (service.equals("addToCart")) {
             int userID = Integer.parseInt(request.getParameter("userID"));
             String bookID = request.getParameter("bookID");
-            Cart cart = (Cart) session.getAttribute(bookID);
-            if (cart == null) {
-                cart = new Cart();
+            //Cart cart = (Cart) session.getAttribute(bookID);
+            Vector<Cart> vectorCart = dao.getCart(bookID, userID);
+            int n = vectorCart.size();
+            if (n == 0) {
+                Cart cart = new Cart();
                 Vector<Book> vector = daoBook.getBook(bookID);
                 Book bk = vector.get(0);
                 int price = bk.getPrice();
                 dao.addToCart(new Cart(userID, bookID, 1, price));
                 session.setAttribute(bookID, cart);
-                response.sendRedirect("BookCart?service=showCart");
+                response.sendRedirect("BookController?service=viewBook&bookID=" + bookID + "");
                 return;
-            } else {
-                cart.setQuantity(cart.getQuantity() + 1);
-                session.setAttribute(bookID, cart);
+            }
+            if (n != 0) {
+                for (Cart cart : vectorCart) {
+                    int quant = cart.getQuantity() + 1;
+                    dao.updateQuantity(cart.getCartID(), userID, bookID, quant, cart.getPrice());
+                    //session.setAttribute(bookID, cart);
+                    response.sendRedirect("BookController?service=viewBook&bookID=" + bookID + "");
+                    return;
+                }
+            }
+        }
+
+        if (service.equals("updateQuantity")) {
+            int quantity = Integer.parseInt(request.getParameter("quantity"));
+            int userID = Integer.parseInt(request.getParameter("userID"));
+            String bookID = request.getParameter("bookID");
+            Vector<Cart> vector = dao.getCart(bookID, userID);
+            for (Cart cart : vector) {
+                dao.updateQuantity(cart.getCartID(), cart.getUserID(), cart.getBookID(), quantity, cart.getPrice());
                 response.sendRedirect("BookCart?service=showCart");
                 return;
             }
@@ -78,8 +96,41 @@ public class BookCart extends HttpServlet {
             return;
         }
 
+        if (service.equals("changeQuantityPlus")) {
+            int userID = Integer.parseInt(request.getParameter("userID"));
+            String bookID = request.getParameter("bookID");
+            Vector<Cart> vector = dao.getCart(bookID, userID);
+            for (Cart cart : vector) {
+                int quant = cart.getQuantity() + 1;
+                dao.updateQuantity(cart.getCartID(), userID, bookID, quant, cart.getPrice());
+                response.sendRedirect("BookCart?service=showCart&userID=" + userID + "");
+                return;
+            }
+        }
+
+        if (service.equals("changeQuantityMinus")) {
+            int userID = Integer.parseInt(request.getParameter("userID"));
+            String bookID = request.getParameter("bookID");
+            Vector<Cart> vector = dao.getCart(bookID, userID);
+            for (Cart cart : vector) {
+                int quant;
+                if (cart.getQuantity() != 1) {
+                    quant = cart.getQuantity() - 1;
+                    dao.updateQuantity(cart.getCartID(), userID, bookID, quant, cart.getPrice());
+                    response.sendRedirect("BookCart?service=showCart&userID=" + userID + "");
+                    return;
+                }
+                if (cart.getQuantity() == 1) {
+                    quant = cart.getQuantity();
+                    dao.updateQuantity(cart.getCartID(), userID, bookID, quant, cart.getPrice());
+                    response.sendRedirect("BookCart?service=showCart&userID=" + userID + "");
+                    return;
+                }
+            }
+        }
+
         if (service.equals("showCart")) {
-            Account acc = (Account)session.getAttribute("acc");
+            Account acc = (Account) session.getAttribute("acc");
             int userID = acc.getUserID();
             Vector<Cart> vector = dao.getAll("SELECT Book.BookImg, Cart.CartID, Cart.UserID, Book.Name, Cart.Quantity, Cart.Price\n"
                     + "FROM Cart\n"
@@ -91,9 +142,40 @@ public class BookCart extends HttpServlet {
             dis.forward(request, response);
         }
 
+        if (service.equals("checkOut")) {
+            Account acc = (Account) session.getAttribute("acc");
+            int userID = acc.getUserID();
+            Vector<Cart> vectorC = dao.getAll("SELECT Book.BookImg, Cart.CartID, Cart.UserID, Book.Name, Cart.Quantity, Cart.Price\n"
+                    + "FROM Cart\n"
+                    + "INNER JOIN Book ON Cart.BookID = Book.BookID\n"
+                    + "WHERE Cart.UserID = '" + userID + "';");
+            Vector<Account> vectorA = dao.getAll(userID);
+            request.setAttribute("dataAddress", vectorA);
+            request.setAttribute("dataCart", vectorC);
+
+            RequestDispatcher dis = request.getRequestDispatcher("/jsp/CheckOut.jsp");
+            dis.forward(request, response);
+        }
+        
+        if (service.equals("payment")) {
+            Account acc = (Account) session.getAttribute("acc");
+            int userID = acc.getUserID();
+            Vector<Cart> vectorC = dao.getAll("SELECT Book.BookImg, Cart.CartID, Cart.UserID, Book.Name, Cart.Quantity, Cart.Price\n"
+                    + "FROM Cart\n"
+                    + "INNER JOIN Book ON Cart.BookID = Book.BookID\n"
+                    + "WHERE Cart.UserID = '" + userID + "';");
+            Vector<Account> vectorA = dao.getAll(userID);
+            request.setAttribute("dataAddress", vectorA);
+            request.setAttribute("dataCart", vectorC);
+
+            RequestDispatcher dis = request.getRequestDispatcher("/jsp/Payment.jsp");
+            dis.forward(request, response);
+        }
+        
         // delete all
         if (service.equals("deleteAll")) {
-            int userID = Integer.parseInt(request.getParameter("userID"));
+            Account acc = (Account) session.getAttribute("acc");
+            int userID = acc.getUserID();
             dao.removeAll(userID);
             response.sendRedirect("BookCart?service=showCart");
             return;

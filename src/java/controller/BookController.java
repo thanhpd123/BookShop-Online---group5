@@ -15,8 +15,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.DAOBook;
 import entity.Book;
+import entity.EntityFeedback;
 import jakarta.servlet.RequestDispatcher;
 import java.util.Vector;
+import model.DAOFeedback;
 
 /**
  *
@@ -70,6 +72,8 @@ public class BookController extends HttpServlet {
         
         if (service.equals("viewBook")) {
             String bookID = request.getParameter("bookID");
+            DAOFeedback daoFB = new DAOFeedback();
+            Vector<EntityFeedback> vectorFB = daoFB.getFeedback(bookID);
             Vector<Book> vectorBook = dao.getBook(bookID);
             Vector<Book> vectorC = dao.getCat(bookID, "Select BookID, BookImg, Name, Description, PublisherName, AuthorID, Edition, CategoryID, PublicationDate, Quantity, Price from Book\n"
                     + "Where BookID = '" + bookID + "'");
@@ -79,6 +83,7 @@ public class BookController extends HttpServlet {
                     + "INNER JOIN Author ON Book.AuthorID = Author.AuthorID\n"
                     + "INNER JOIN Category ON Book.CategoryID = Category.CategoryID\n"
                     + "WHERE Book.CategoryID ='" + cat + "' AND BookID <> '"+ bookID +"';");
+            request.setAttribute("dataFB", vectorFB);
             request.setAttribute("dataBook", vectorBook);
             request.setAttribute("data", vectorC);
             request.setAttribute("dataCate", vectorCat);

@@ -36,10 +36,17 @@ public class LoginServlet extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute("acc", customer);
             session.setAttribute("msg1", "Login Successfuly");
-            request.getRequestDispatcher("Home?service=listAll").forward(request, response); 
-            request.getRequestDispatcher("BookController?service=viewBook"); 
-            request.getRequestDispatcher("BookCart?service=showAll"); 
-//            response.sendRedirect("login.jsp");
+            if (customer.getRoleID().equals("3")) {
+                request.getRequestDispatcher("Home?service=listAll").forward(request, response);
+                request.getRequestDispatcher("BookCart?service=checkOut").forward(request, response);
+                request.getRequestDispatcher("BookCart?service=deleteAll").forward(request, response);
+            }
+            if (customer.getRoleID().equals("1")) {
+//                request.getRequestDispatcher("AdminController?service=listUser").forward(request, response);
+                request.getRequestDispatcher("/jsp/AdminManage.jsp").forward(request, response);
+            }
+            request.getRequestDispatcher("BookController?service=viewBook");
+            request.getRequestDispatcher("BookCart?service=showAll");
         }
         else{
             request.setAttribute("msg", "Invalid email or password");

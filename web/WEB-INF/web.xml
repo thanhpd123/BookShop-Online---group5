@@ -4,6 +4,10 @@
         <servlet-name>DeleteBookManageServlet</servlet-name>
         <servlet-class>controller.DeleteBookManageServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AdminController</servlet-name>
+        <servlet-class>controller.AdminController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>BookManagementServlet</servlet-name>
         <url-pattern>/BookManagementServlet</url-pattern>
@@ -27,6 +31,10 @@
     <servlet-mapping>
         <servlet-name>DeleteBookManageServlet</servlet-name>
         <url-pattern>/DeleteBookManageServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminController</servlet-name>
+        <url-pattern>/AdminController</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>Home</welcome-file>

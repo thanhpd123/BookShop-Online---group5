@@ -24,6 +24,15 @@ public class Cart {
         this.BookID = BookID;
         this.BookImg = BookImg;
     }
+    
+        public Cart(int CartID, int UserID, String BookID, int Quantity, int Price) {
+        this.CartID = CartID;
+        this.UserID = UserID;
+        this.Quantity = Quantity;
+        this.Price = Price;
+        this.BookID = BookID;
+    }
+
 
     public Cart(int UserID, int Quantity, int Price, String BookID, String BookImg) {
         this.UserID = UserID;
