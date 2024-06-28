@@ -77,6 +77,22 @@
             .star {
                 font-size: 20px;
             }
+            .button {
+                display: inline-block;
+                padding: 10px 20px;
+                font-size: 16px;
+                cursor: pointer;
+                text-align: center;
+                text-decoration: none;
+                color: #fff;
+                background-color: #007bff;
+                border: none;
+                border-radius: 5px;
+            }
+
+            .button:hover {
+                background-color: #0056b3;
+            }
         </style>
     </head>
     <body>
@@ -153,13 +169,13 @@
                             </select>
                         </td>
                     </tr>
-                    
+
                 </table>
                 <input type="hidden" name="feedbackID" value="<%= o.getFeedbackID() %>">
-                        <%
-            }
-        %>
-                <input type="submit" value="Update Status">
+                <%
+    }
+                %>
+                <a href="FeedBackServlet" class="button">Update Status</a>
             </form>
         </div>
     </body>
