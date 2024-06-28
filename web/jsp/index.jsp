@@ -11,7 +11,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Trang Chủ</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link rel="stylesheet" href="CSS/style.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
@@ -212,7 +212,7 @@
                             <div class="navbar">
                                 <div>
                                     <a id="navbar-list" href="Home?service=listAll" style="color: black">Trang Chủ</a>
-                                    <a id="navbar-list" href="jsp/AboutUs.jsp" style="color: black">Về Chúng tôi</a>
+                                    <a id="navbar-list" href="AboutUs" style="color: black">Về Chúng tôi</a>
                                     <a id="navbar-list" href="BookController?service=listAll" style="color: black">Sách</a>
                                     <div class="dropdown">
                                         <p id="navbar-list" href="" style="color: black">Thể Loại</p>
@@ -503,7 +503,7 @@
                             <div class="navbar">
                                 <div>
                                     <a id="navbar-list" href="Home?service=listAll" style="color: black">Trang Chủ</a>
-                                    <a id="navbar-list" href="jsp/AboutUs.jsp" style="color: black">Về Chúng tôi</a>
+                                    <a id="navbar-list" href="AboutUs" style="color: black">Về Chúng tôi</a>
                                     <a id="navbar-list" href="BookController?service=listAll" style="color: black">Sách</a>
                                     <div class="dropdown">
                                         <p id="navbar-list" href="" style="color: black">Thể Loại</p>
