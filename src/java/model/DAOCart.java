@@ -72,6 +72,26 @@ public class DAOCart extends DBConnect {
         return vector;
     }
     
+    public Vector<Cart> getAllCart(String sql) {
+        Vector<Cart> vector = new Vector<Cart>();
+        try {
+            Statement state = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs = state.executeQuery(sql);
+            while (rs.next()) {
+                int cartID = rs.getInt(1);
+                int userID = rs.getInt(2);
+                String bookID = rs.getString(3);
+                int quantity = rs.getInt(4);
+                int price = rs.getInt(5);
+                Cart cart = new Cart(cartID, userID, bookID, quantity, price);
+                vector.add(cart);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOCart.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return vector;
+    }
+    
     public Vector<Cart> getAll(String sql) {
 //        String sql = "SELECT Book.BookImg, CartItem.CartID, Book.Name, CartItem.Quantity, CartItem.Price\n"
 //                    + "FROM CartItem\n"

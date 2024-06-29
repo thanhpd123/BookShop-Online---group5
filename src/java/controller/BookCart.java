@@ -90,7 +90,8 @@ public class BookCart extends HttpServlet {
 
         if (service.equals("deleteCart")) {
             String bookID = (String) request.getParameter("bookID");
-            int userID = Integer.parseInt(request.getParameter("userID"));
+            Account acc = (Account) session.getAttribute("acc");
+            int userID = acc.getUserID();
             dao.removeCart(bookID, userID);
             response.sendRedirect("BookCart?service=showCart");
             return;
@@ -136,7 +137,11 @@ public class BookCart extends HttpServlet {
                     + "FROM Cart\n"
                     + "INNER JOIN Book ON Cart.BookID = Book.BookID\n"
                     + "WHERE Cart.UserID = '" + userID + "';");
+            Vector<Cart> vectorB = dao.getAllCart("SELECT * FROM Cart\n"
+                    + "WHERE UserID = '" + userID + "';");
+            //Vector<Book> vectorBk = dao.getAllBook();
             request.setAttribute("data", vector);
+            request.setAttribute("dataB", vectorB);
             session.setAttribute("acc", acc);
             RequestDispatcher dis = request.getRequestDispatcher("/jsp/ShowCart.jsp");
             dis.forward(request, response);
@@ -156,7 +161,7 @@ public class BookCart extends HttpServlet {
             RequestDispatcher dis = request.getRequestDispatcher("/jsp/CheckOut.jsp");
             dis.forward(request, response);
         }
-        
+
         if (service.equals("payment")) {
             Account acc = (Account) session.getAttribute("acc");
             int userID = acc.getUserID();
@@ -171,7 +176,7 @@ public class BookCart extends HttpServlet {
             RequestDispatcher dis = request.getRequestDispatcher("/jsp/Payment.jsp");
             dis.forward(request, response);
         }
-        
+
         // delete all
         if (service.equals("deleteAll")) {
             Account acc = (Account) session.getAttribute("acc");

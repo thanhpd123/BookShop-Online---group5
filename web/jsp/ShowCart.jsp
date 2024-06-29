@@ -13,6 +13,7 @@
         <title>BES | Cart</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link rel="stylesheet" href="CSS/style.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
         <style>
             .logo{
                 width: 15%;
@@ -119,6 +120,16 @@
                 color: white;
             }
 
+            .button2{
+                color: white;
+                background-color: #D2B48C;
+            }
+
+            .button2:hover {
+                background-color: white;
+                color: #D2B48C;
+            }
+
         </style>
     </head>
     <body>
@@ -126,10 +137,10 @@
             Account acc = (Account)session.getAttribute("acc");
         %>
         <!-- menu -->
-        <div class="menu container-fluid" style="background-color: #E5D3B3">
+        <div class="menu container-fluid" style="height: 90px; background-color: #E5D3B3">
             <div class="row">
                 <!-- logo -->
-                <div class="cl-lg-3 d-none d-lg-block">
+                <div class="cl-lg-3 mt-auto mb-auto d-none d-lg-block">
                     <a href="Home?service=listAll"><img class="logo" src = "${pageContext.request.contextPath}/assets/logo.PNG" alt="Logo"></a>
                 </div>
 
@@ -185,11 +196,11 @@
                             <div class="col-3 text-center mt-auto mb-auto" style="font-size: 17px">Sản Phẩm</div>
                             <div class="col-2 text-center mt-auto mb-auto" style="font-size: 17px">Số Lượng</div>
                             <div class="col-2 text-center mt-auto mb-auto" style="font-size: 17px">Giá</div>
-                            <div class="col-1 text-center mt-auto mb-auto" style="font-size: 17px"></div>
+                            <div class="col-1 text-center mt-auto mb-auto" style="font-size: 17px">Xóa</div>
                         </div>
                         <%
                             Vector<Cart> vector = (Vector<Cart>) request.getAttribute("data");
-                            Vector<Cart> vectorCart = (Vector<Cart>) request.getAttribute("dataBookID");
+                            Vector<Cart> vectorCart = (Vector<Cart>) request.getAttribute("dataB");
                             for(Cart cart : vector) {
                             totalPrice += cart.getPrice()*cart.getQuantity();
                         %>
@@ -200,13 +211,21 @@
                                 <form action="BookCart?service=updateQuantity&bookID=<%=cart.getBookID()%>&userID=<%=cart.getUserID()%>" method="POST">
                                     <a href="BookCart?service=changeQuantityMinus?bookID=<%=cart.getBookID()%>&userID=<%=cart.getUserID()%>"><button class="mt-auto mb-auto" style="width:30px; height: 30px; border-color: #987554; color: #987554; background-color: white"> - </button></a>
                                     <input class="text-center" onkeypress="submitOnEnter(this, event);" style="width:50px" type="text" name="quantity" value="<%=cart.getQuantity()%>">
-                                    <a href="BookCart?service=changeQuantityPlus?bookID=<%=cart.getBookID()%>&userID=<%=cart.getUserID()%>"><button class="mt-auto mb-auto" style="width:30px; height: 30px; border-color: #987554; color: #987554; background-color: white"> + </button></a>
+                                    <a href="BookCart?service=changeQuantityPlus?bookID=2"><button class="mt-auto mb-auto" style="width:30px; height: 30px; border-color: #987554; color: #987554; background-color: white"> + </button></a>
 
                                     <!--<input type="submit" value="add" name="submit">-->
                                 </form>
                             </div>
                             <div class="col-2 text-center mt-auto mb-auto" style="font-size: 18px"><%=cart.getPrice()*cart.getQuantity()%>&#8363;</div>
-                            <div class="col-1 text-center mt-auto mb-auto" style="font-size: 18px"><a href="BookCart?service=deleteCart&userID=<%=acc.getUserID()%>&bookID=<%=cart.getBookID()%>"><i class="bi bi-trash h4" style="color: #664229"></i></a></div>
+                            <%
+                                for(Cart cart1 : vectorCart){
+                                if(cart1.getCartID() == cart.getCartID()){
+                            %>
+                            <div class="col-1 text-center mt-auto mb-auto" style="font-size: 18px"><a href="BookCart?service=deleteCart&bookID=<%=cart1.getBookID()%>"><i class="bi bi-x h3" style="color: #664229"></i></a></div>
+                            <%
+                                    }
+                                }
+                            %>
                         </div>
                         <%
                             }
@@ -220,7 +239,7 @@
                 <div class="col-2">
                 </div>
                 <div class="col-lg-2 mt-auto mb-auto">
-                    <a href="BookCart?service=deleteAll" style="color: black; font-size: 20px">Xóa tất cả</a>
+                    <a href="BookCart?service=deleteAll"><button class="button2 mt-auto mb-auto" style="font-size:20px; width: 150px; height: 60px;">Xóa tất cả</button></a>
                 </div>
                 <div class="col-lg-5 mt-auto mb-auto" style="padding-left: 350px; font-size: 20px">
                     <div class="">Tổng thanh toán (<%=vector.size()%> sản phẩm): <%=totalPrice%>&#8363</div>

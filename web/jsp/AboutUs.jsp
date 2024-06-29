@@ -106,20 +106,44 @@
 
                 margin: 0 50px;
             }
+            
+                        .button1{
+                border-color: white;
+                color: white;
+                background-color: #E5D3B3;
+            }
+
+            .button1:hover {
+                border-color: #D2B48C;
+                background-color: white;
+                color: #E5D3B3;
+            }
+
+            .button2{
+                border-color: white;
+                color: white;
+                background-color: #E5D3B3;
+            }
+
+            .button2:hover {
+                border-color: #D2B48C;
+                background-color: white;
+                color: #E5D3B3;
+            }
 
         </style>
     </head>
     <body>
-        <!<!-- menu -->
-        <div class="menu container-fluid" style="background-color: #E5D3B3">
+        <!-- menu -->
+        <div class="menu container-fluid" style="height: 90px; background-color: #E5D3B3">
             <div class="row">
                 <!-- logo -->
-                <div class="cl-lg-3 d-none d-lg-block">
+                <div class="cl-lg-4 mt-auto mb-auto d-none d-lg-block">
                     <a href="Home?service=listAll"><img class="logo" src = "${pageContext.request.contextPath}/assets/logo.PNG" alt="Logo"></a>
                 </div>
 
-                <!<!-- search bar -->
-                <div class="cl-lg-6 d-flex justify-content-center align-items-center">
+                <!-- search bar -->
+                <div class="cl-lg-4 d-flex justify-content-center align-items-center">
                     <form action="BookController?service=search" method="POST">
                         <div style="display: inline-block"><input type="text" placeholder="Search Book Name" name="Name" style="width: 350px"></div>
                         <div style="display: inline-block"><input type="submit" value="Search" name="submit"></div>
@@ -127,8 +151,12 @@
                     </form>
                 </div>
 
-                <!<!-- menu item -->
-                <div class="cl-lg-3 d-flex justify-content-center align-items-center">
+                <!-- menu item -->
+                <div class="cl-lg-4 d-flex justify-content-center align-items-center">
+                    <%
+            String logged = (String)session.getAttribute("msg1");
+            if (logged != null) {
+                    %>
                     <nav>
                         <ul id="element">
                             <li id="item"><a href="" style="color: #664229">
@@ -149,6 +177,30 @@
                                 </a></li>
                         </ul>
                     </nav>
+                    <%
+                        }
+                        if(logged==null){
+                    %>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-4">
+                            </div>
+                            <div class="col-3">
+                                <a href="register"><button class="button1 mt-3 mb-3 ml-5" style="font-size:18px; width: 120px; height: 50px;">Đăng Ký</button></a>
+                            </div>
+                            <div class="col-1">
+                            </div>
+                            <div class="col-3">
+                                <a href="login"><button class="button2 mt-3 mb-3 ml-5" style="font-size:18px; width: 120px; height: 50px;">Đăng Nhập</button></a>
+                            </div>
+                            <div class="col-1">
+                            </div>
+                        </div>
+                    </div>
+                    <%
+                        }
+                    %>
+                    
                 </div>
             </div>
         </div>

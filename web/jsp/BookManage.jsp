@@ -114,10 +114,10 @@
     <body>
 
         <!-- menu -->
-        <div class="menu container-fluid" style="background-color: #E5D3B3">
+        <div class="menu container-fluid" style="height: 90px; background-color: #E5D3B3">
             <div class="row">
                 <!-- logo -->
-                <div class="cl-lg-3 d-none d-lg-block">
+                <div class="cl-lg-3 mt-auto mb-auto d-none d-lg-block">
                     <a href="Home?service=listAll"><img class="logo" src = "${pageContext.request.contextPath}/assets/logo.PNG" alt="Logo"></a>
                 </div>
 

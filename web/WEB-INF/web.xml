@@ -12,6 +12,10 @@
         <servlet-name>AboutUs</servlet-name>
         <servlet-class>controller.AboutUs</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LogOut</servlet-name>
+        <servlet-class>controller.LogOut</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>BookManagementServlet</servlet-name>
         <url-pattern>/BookManagementServlet</url-pattern>
@@ -43,6 +47,10 @@
     <servlet-mapping>
         <servlet-name>AboutUs</servlet-name>
         <url-pattern>/AboutUs</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LogOut</servlet-name>
+        <url-pattern>/LogOut</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>Home</welcome-file>

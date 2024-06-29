@@ -4,6 +4,7 @@
  */
 package controller;
 
+import entity.Account;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,7 +18,7 @@ import jakarta.servlet.http.HttpSession;
  *
  * @author Dung Dinh
  */
-public class AboutUs extends HttpServlet {
+public class LogOut extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,20 +32,13 @@ public class AboutUs extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String service = request.getParameter("service");
-        HttpSession session = request.getSession(true);
-        if (service == null) {
-            service = "listAll";
-        }
-
-        if (service.equals("listAll")) {
-            String logged = (String) session.getAttribute("msg1");
-            session.setAttribute("msg1", logged);
-            RequestDispatcher dis = request.getRequestDispatcher("/jsp/AboutUs.jsp");
-
-            //RequestDispatcher dis = request.getRequestDispatcher("/index.jsp");
-            dis.forward(request, response);
-        }
+        HttpSession session = request.getSession();
+        String logged = (String) session.getAttribute("msg1");
+        Account acc = (Account) session.getAttribute("acc");
+        session.setAttribute(null, logged);
+        session.setAttribute(null, acc);
+        RequestDispatcher dis = request.getRequestDispatcher("login");
+        dis.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
