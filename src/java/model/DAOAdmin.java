@@ -5,6 +5,7 @@
 package model;
 
 import entity.Account;
+import entity.Orders;
 import entity.Roles;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -122,8 +123,52 @@ public class DAOAdmin extends DBConnect {
         return vector;
     }
 
+    public Vector<Orders> getAllOrder() {
+        String sql = "Select * from Orders";
+        Vector<Orders> vector = new Vector<Orders>();
+        try {
+            Statement state = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs = state.executeQuery(sql);
+            while (rs.next()) {
+                int orderID = rs.getInt(1);
+                String orderDate = rs.getString(2);
+                String orderState = rs.getString(3);
+                int userID = rs.getInt(4);
+                Orders or = new Orders(orderID, orderDate, orderState, userID);
+                vector.add(or);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return vector;
+    }
+
+    public Vector<Orders> getMostBuy() {
+        String sql = "SELECT TOP 5 UserID, COUNT(*)\n"
+                + "FROM Orders\n"
+                + "GROUP BY UserID\n"
+                + "HAVING COUNT(*) > 1";
+        Vector <Orders> vector = new Vector<Orders>();
+        try {
+            Statement state = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs = state.executeQuery(sql);
+            while (rs.next()) {
+                int orderID = rs.getInt(1);
+                String orderDate = rs.getString(2);
+                String orderState = rs.getString(3);
+                int userID = rs.getInt(4);
+                int count = rs.getInt(5);
+                Orders or = new Orders(orderID, orderDate, orderState, userID, count);
+                vector.add(or);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return vector;
+    }
+
     public Vector<Account> getAll() {
-        String sql = "SELECT Account.UserID, Roles.RoleName, Account.FirstName, Account.LastName, Account.Email, Account.Password, Account.PhoneNo, Account.Address, Account.Gender, Account.DOB, Account.imgUser, Account.Status\n"
+        String sql = "SELECT Account.UserID, Roles.RoleName, Account.FirstName, Account.LastName, Account.Email, Account.Password, Account.PhoneNo, Account.Address, Account.Gender, Account.DOB, Account.imgUser, Account.Status, Account.RegisterDate\n"
                 + "FROM Account\n"
                 + "INNER JOIN Roles ON Account.RoleID = Roles.RoleID";
         Vector<Account> vector = new Vector<Account>();
@@ -144,7 +189,8 @@ public class DAOAdmin extends DBConnect {
                 String dob = rs.getString(10);
                 String imgUser = rs.getString(11);
                 String status = rs.getString(12);
-                Account acc = new Account(userID, roleID, fName, lName, email, password, phoneNo, address, dob, gender, imgUser, status);
+                String rd = rs.getString(13);
+                Account acc = new Account(userID, roleID, fName, lName, email, password, phoneNo, address, dob, gender, imgUser, status, rd);
                 vector.add(acc);
             }
         } catch (SQLException ex) {

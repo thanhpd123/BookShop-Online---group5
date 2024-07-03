@@ -5,16 +5,20 @@
         <servlet-class>controller.DeleteBookManageServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>AdminController</servlet-name>
-        <servlet-class>controller.AdminController</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>AboutUs</servlet-name>
         <servlet-class>controller.AboutUs</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>LogOut</servlet-name>
         <servlet-class>controller.LogOut</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdminController</servlet-name>
+        <servlet-class>controller.AdminController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SaleController</servlet-name>
+        <servlet-class>controller.SaleController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>BookManagementServlet</servlet-name>
@@ -41,16 +45,20 @@
         <url-pattern>/DeleteBookManageServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>AdminController</servlet-name>
-        <url-pattern>/AdminController</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>AboutUs</servlet-name>
         <url-pattern>/AboutUs</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>LogOut</servlet-name>
         <url-pattern>/LogOut</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminController</servlet-name>
+        <url-pattern>/AdminController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SaleController</servlet-name>
+        <url-pattern>/SaleController</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>Home</welcome-file>

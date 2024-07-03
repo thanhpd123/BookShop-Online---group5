@@ -9,7 +9,7 @@ package entity;
  * @author Dung Dinh
  */
 public class Orders {
-    private int OrderID, UserID;
+    private int OrderID, UserID, count;
     private String OrderDate, OrderState;
 
     public Orders() {
@@ -20,6 +20,22 @@ public class Orders {
         this.OrderDate = OrderDate;
         this.OrderState = OrderState;
         this.UserID = UserID;
+    }
+    
+    public Orders(int OrderID, String OrderDate, String OrderState, int UserID, int count) {
+        this.OrderID = OrderID;
+        this.OrderDate = OrderDate;
+        this.OrderState = OrderState;
+        this.UserID = UserID;
+        this.count = count;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 
     public int getOrderID() {
