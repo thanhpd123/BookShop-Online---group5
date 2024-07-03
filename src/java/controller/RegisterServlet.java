@@ -43,6 +43,8 @@ public class RegisterServlet extends HttpServlet {
         LocalDate dob = LocalDate.parse(date, formatter);
         LocalDate today = LocalDate.now();
         AccountDAO accdao = new AccountDAO();
+        LocalDate rd = LocalDate.now(); 
+        String registerDate = rd.toString(); 
         if (email.length() > 40 || fname.length() > 40 || lname.length() > 40 || pass.length() > 40) {
             msg = "Your first name, last name, email, password exceed 40 characters";
         } else if (!(email.matches("^[a-zA-Z0-9_]+[@][a-zA-Z]+[.][a-zA-Z]+") || email.matches("^[a-zA-Z0-9_]+[@][a-zA-Z]+[.][a-zA-Z]+[.][a-zA-Z]+"))) {
@@ -57,7 +59,7 @@ public class RegisterServlet extends HttpServlet {
             msg = "Invalid date of birth";
         } else {
             try {
-                accdao.AddNewAccount(fname, lname, email, phone, address, pass, gender, date);
+                accdao.AddNewAccount(fname, lname, email, phone, address, pass, gender, date, "available", registerDate);
             } catch (SQLException ex) {
                 Logger.getLogger(RegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
             }

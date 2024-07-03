@@ -49,7 +49,7 @@
                             </div>
                             <div class="col-8 mt-auto mb-auto">
                                 <div class="container-fluid">
-                                    <div class="row border-left pt-4 pb-4">
+                                    <div class="row border-left pt-3">
                                         <div class="col-3 pl-5">
                                             Mã Khách Hàng:
                                         </div>
@@ -63,6 +63,22 @@
                                         </div>
                                         <div class="col-4">
                                             <%=acc1.getEmail()%>
+                                        </div>
+                                        <div class="col-1">
+                                        </div>
+                                    </div>
+                                    <div class="row border-left pt-2 pb-3">
+                                        <div class="col-3 pl-5">
+                                        </div>
+                                        <div class="col-2">
+                                        </div>
+                                        <div class="col-1">
+                                        </div>
+                                        <div class="col-1">
+                                            SĐT:
+                                        </div>
+                                        <div class="col-4">
+                                            <%=acc1.getPhoneNo()%>
                                         </div>
                                         <div class="col-1">
                                         </div>
@@ -101,10 +117,10 @@
                                         </div>
                                     </div>
                                     <div class="row pt-4">
-                                        <div class="col-3" style="color: gray">
-                                            SĐT:
+                                        <div class="col-4" style="color: gray">
+                                            Ngày Đăng Ký:
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-2">
                                         </div>
                                         <div class="col-6" style="color: gray">
                                             Ngày Tháng Năm Sinh:
@@ -112,7 +128,7 @@
                                     </div>
                                     <div class="row pb-4">
                                         <div class="col-3">
-                                            <h6><%=acc1.getPhoneNo()%></h6>
+                                            <h6><%=acc1.getRegisterDate()%></h6>
                                         </div>
                                         <div class="col-3">
                                         </div>

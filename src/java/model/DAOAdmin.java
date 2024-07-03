@@ -5,6 +5,7 @@
 package model;
 
 import entity.Account;
+import entity.Roles;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,10 +19,11 @@ import java.util.logging.Logger;
  * @author Dung Dinh
  */
 public class DAOAdmin extends DBConnect {
+
     private static final Logger LOG = Logger.getLogger(DAOAdmin.class.getName());
 
     public Vector<Account> getAcc(int UserID) {
-        String sql = "SELECT Account.UserID, Roles.RoleName, Account.FirstName, Account.LastName, Account.Email, Account.Password, Account.PhoneNo, Account.Address, Account.Gender, Account.DOB, Account.imgUser\n"
+        String sql = "SELECT Account.UserID, Roles.RoleName, Account.FirstName, Account.LastName, Account.Email, Account.Password, Account.PhoneNo, Account.Address, Account.Gender, Account.DOB, Account.imgUser, Account.Status, Account.RegisterDate\n"
                 + "FROM Account\n"
                 + "INNER JOIN Roles ON Account.RoleID = Roles.RoleID\n"
                 + "WHERE Account.UserID = '" + UserID + "'";
@@ -42,7 +44,9 @@ public class DAOAdmin extends DBConnect {
                 boolean gender = (gt == 1 ? true : false);
                 String dob = rs.getString(10);
                 String imgUser = rs.getString(11);
-                Account acc = new Account(userID, roleID, fName, lName, email, password, phoneNo, address, dob, gender, imgUser);
+                String status = rs.getString(12);
+                String rd = rs.getString(13);
+                Account acc = new Account(userID, roleID, fName, lName, email, password, phoneNo, address, dob, gender, imgUser, status, rd);
                 vector.add(acc);
             }
         } catch (SQLException ex) {
@@ -50,9 +54,9 @@ public class DAOAdmin extends DBConnect {
         }
         return vector;
     }
-    
+
     public Vector<Account> getRole(String RoleID) {
-        String sql = "SELECT Account.UserID, Roles.RoleName, Account.FirstName, Account.LastName, Account.Email, Account.Password, Account.PhoneNo, Account.Address, Account.Gender, Account.DOB, Account.imgUser\n"
+        String sql = "SELECT Account.UserID, Roles.RoleName, Account.FirstName, Account.LastName, Account.Email, Account.Password, Account.PhoneNo, Account.Address, Account.Gender, Account.DOB, Account.imgUser, Account.Status\n"
                 + "FROM Account\n"
                 + "INNER JOIN Roles ON Account.RoleID = Roles.RoleID\n"
                 + "WHERE Account.RoleID = '" + RoleID + "'";
@@ -73,7 +77,8 @@ public class DAOAdmin extends DBConnect {
                 boolean gender = (gt == 1 ? true : false);
                 String dob = rs.getString(10);
                 String imgUser = rs.getString(11);
-                Account acc = new Account(userID, roleID, fName, lName, email, password, phoneNo, address, dob, gender, imgUser);
+                String status = rs.getString(12);
+                Account acc = new Account(userID, roleID, fName, lName, email, password, phoneNo, address, dob, gender, imgUser, status);
                 vector.add(acc);
             }
         } catch (SQLException ex) {
@@ -81,9 +86,44 @@ public class DAOAdmin extends DBConnect {
         }
         return vector;
     }
-    
+
+    public Vector<Account> search(String search) {
+        Vector<Account> vector = new Vector<Account>();
+        String sql = "SELECT Account.UserID, Roles.RoleName, Account.FirstName, Account.LastName, Account.Email, Account.Password, Account.PhoneNo, Account.Address, Account.Gender, Account.DOB, Account.imgUser, Account.Status\n"
+                + "FROM Account\n"
+                + "INNER JOIN Roles ON Account.RoleID = Roles.RoleID\n"
+                + "WHERE Account.FirstName LIKE '%" + search + "%'\n"
+                + "OR Account.LastName LIKE '%" + search + "%'\n"
+                + "OR Account.Email LIKE '%" + search + "%'\n"
+                + "OR Account.PhoneNo LIKE '%" + search + "%'";
+        try {
+            Statement state = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs = state.executeQuery(sql);
+            while (rs.next()) {
+                int userID = rs.getInt(1);
+                String roleID = rs.getString(2);
+                String fName = rs.getString(3);
+                String lName = rs.getString(4);
+                String email = rs.getString(5);
+                String password = rs.getString(6);
+                String phoneNo = rs.getString(7);
+                String address = rs.getString(8);
+                int gt = rs.getInt(9);
+                boolean gender = (gt == 1 ? true : false);
+                String dob = rs.getString(10);
+                String imgUser = rs.getString(11);
+                String status = rs.getString(12);
+                Account acc = new Account(userID, roleID, fName, lName, email, password, phoneNo, address, dob, gender, imgUser, status);
+                vector.add(acc);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return vector;
+    }
+
     public Vector<Account> getAll() {
-        String sql = "SELECT Account.UserID, Roles.RoleName, Account.FirstName, Account.LastName, Account.Email, Account.Password, Account.PhoneNo, Account.Address, Account.Gender, Account.DOB, Account.imgUser\n"
+        String sql = "SELECT Account.UserID, Roles.RoleName, Account.FirstName, Account.LastName, Account.Email, Account.Password, Account.PhoneNo, Account.Address, Account.Gender, Account.DOB, Account.imgUser, Account.Status\n"
                 + "FROM Account\n"
                 + "INNER JOIN Roles ON Account.RoleID = Roles.RoleID";
         Vector<Account> vector = new Vector<Account>();
@@ -103,7 +143,8 @@ public class DAOAdmin extends DBConnect {
                 boolean gender = (gt == 1 ? true : false);
                 String dob = rs.getString(10);
                 String imgUser = rs.getString(11);
-                Account acc = new Account(userID, roleID, fName, lName, email, password, phoneNo, address, dob, gender, imgUser);
+                String status = rs.getString(12);
+                Account acc = new Account(userID, roleID, fName, lName, email, password, phoneNo, address, dob, gender, imgUser, status);
                 vector.add(acc);
             }
         } catch (SQLException ex) {
@@ -111,7 +152,53 @@ public class DAOAdmin extends DBConnect {
         }
         return vector;
     }
-    
+
+    public Vector<Account> get(String sql) {
+        Vector<Account> vector = new Vector<Account>();
+        try {
+            Statement state = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs = state.executeQuery(sql);
+            while (rs.next()) {
+                int userID = rs.getInt(1);
+                String roleID = rs.getString(2);
+                String fName = rs.getString(3);
+                String lName = rs.getString(4);
+                String email = rs.getString(5);
+                String password = rs.getString(6);
+                String phoneNo = rs.getString(7);
+                String address = rs.getString(8);
+                int gt = rs.getInt(9);
+                boolean gender = (gt == 1 ? true : false);
+                String dob = rs.getString(10);
+                String imgUser = rs.getString(11);
+                String status = rs.getString(12);
+                Account acc = new Account(userID, roleID, fName, lName, email, password, phoneNo, address, dob, gender, imgUser, status);
+                vector.add(acc);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return vector;
+    }
+
+    public Vector<Roles> getAllRole() {
+        String sql = "SELECT * FROM Roles";
+        Vector<Roles> vector = new Vector<Roles>();
+        try {
+            Statement state = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs = state.executeQuery(sql);
+            while (rs.next()) {
+                String RoleID = rs.getString(1);
+                String RoleName = rs.getString(2);
+                Roles acc = new Roles(RoleID, RoleName);
+                vector.add(acc);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return vector;
+    }
+
     public int addAccount(Account acc) {
         int n = 0;
         String sql = "INSERT INTO Account (RoleID, FirstName, LastName, Email, Password, PhoneNo, Address, Gender, DOB, imgUser)\n"
@@ -136,7 +223,7 @@ public class DAOAdmin extends DBConnect {
         }
         return n;
     }
-    
+
     public int updateAcc(Account acc, int userID) {
         int n = 0;
         String sql = "UPDATE Account"
@@ -170,7 +257,7 @@ public class DAOAdmin extends DBConnect {
         }
         return n;
     }
-    
+
     public int removeAcc(int userID) {
         int n = 0;
         String sql = "DELETE FROM Account WHERE UserID = '" + userID + "';";
@@ -194,6 +281,5 @@ public class DAOAdmin extends DBConnect {
         }
         return n;
     }
-    
-}
 
+}

@@ -126,15 +126,15 @@ public class AccountDAO extends DBConnect {
         return false;
     }
 
-    public void AddNewAccount(String fname, String lname, String email, String phone, String address, String pass, String gender, String date) throws SQLException {
+    public void AddNewAccount(String fname, String lname, String email, String phone, String address, String pass, String gender, String date, String status, String rd) throws SQLException {
         Connection connection = null;
 //        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 //        LocalDate dob = LocalDate.parse(date, formatter);
         try {
             // Lấy kết nối từ DBContext
             connection = (Connection) new DBConnect().getConnection();
-            String sql = "INSERT INTO Account (RoleID, FirstName, LastName, Email, Password, PhoneNo, Address, Gender, DOB) "
-                    + "VALUES (3, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO Account (RoleID, FirstName, LastName, Email, Password, PhoneNo, Address, Gender, DOB, Status, RegisterDate) "
+                    + "VALUES (3, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
                 ps.setString(1, fname);
                 ps.setString(2, lname);
@@ -144,6 +144,8 @@ public class AccountDAO extends DBConnect {
                 ps.setString(6, address);
                 ps.setString(7, gender);
                 ps.setString(8, date);
+                ps.setString(9, status);
+                ps.setString(10, rd);
                 ps.executeUpdate();
                 System.out.println("Account added successfully!");
             }

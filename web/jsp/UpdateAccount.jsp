@@ -1,17 +1,17 @@
 <%-- 
-    Document   : AddAccount
-    Created on : Jun 28, 2024, 11:51:02 AM
+    Document   : UpdateAccount
+    Created on : Jun 29, 2024, 5:20:43 PM
     Author     : Dung Dinh
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page import="entity.Account, java.util.Vector, entity.Roles"%>
+<%@page import="entity.Account, entity.Roles, java.util.Vector"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Thêm Tài Khoản</title>
+        <title>Chỉnh Sửa Tài Khoản</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link rel="stylesheet" href="CSS/style.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
@@ -19,7 +19,7 @@
     <body>
         <c:import url="/jsp/AdminManage.jsp" />
         <%
-            Vector<Account> vector = (Vector<Account>) request.getAttribute("data");
+            Vector<Account> vector = (Vector<Account>) request.getAttribute("dataAcc");
             Vector<Roles> vectorRole = (Vector<Roles>) request.getAttribute("dataRole");
         %>
         <div class="container-fluid">
@@ -33,9 +33,12 @@
                     <div class="container-fluid">
                         <div class="row mb-3">
                             <div class="col-12 text-center">
-                                <h4>Thêm Người Dùng</h4>
+                                <h4>Chỉnh Sửa Thông Tin Người Dùng</h4>
                             </div>
                         </div>
+                        <%
+                            for(Account acc : vector) {
+                        %>
                         <form action="AdminController" method="post">
                             <div class="row">
                                 <div class="col-5 pl-5">
@@ -49,12 +52,12 @@
                             </div>
                             <div class="row mt-3">
                                 <div class="col-5 pl-4">
-                                    <input class="pt-1 pl-3 pb-1" type="text" style="width: 100%; color: gray;" value="Nhập Họ" name="FirstName">
+                                    <input class="pt-1 pl-3 pb-1" type="text" style="width: 100%; color: gray;" value="<%=acc.getFirstName()%>" name="FirstName">
                                 </div>
                                 <div class="col-1">
                                 </div>
                                 <div class="col-5 pl-4">
-                                    <input class="pt-1 pl-3 pb-1" type="text" style="width: 100%; color: gray;" value="Nhập Tên" name="LastName">
+                                    <input class="pt-1 pl-3 pb-1" type="text" style="width: 100%; color: gray;" value="<%=acc.getLastName()%>" name="LastName">
                                 </div>
                             </div>
                             <div class="row mt-3">
@@ -69,12 +72,12 @@
                             </div>
                             <div class="row mt-3">
                                 <div class="col-5 pl-4">
-                                    <input class="pt-1 pl-3 pb-1" type="text"  name="Email" value="Nhập Email" style="width: 100%; color: gray;">
+                                    <input class="pt-1 pl-3 pb-1" type="text"  name="Email" value="<%=acc.getEmail()%>" style="width: 100%; color: gray;">
                                 </div>
                                 <div class="col-1">
                                 </div>
                                 <div class="col-5 pl-4">
-                                    <input class="pt-1 pl-3 pb-1" type="text" style="width: 100%; color: gray;" value="Nhập Mật Khẩu" name="Password">
+                                    <input class="pt-1 pl-3 pb-1" type="text" style="width: 100%; color: gray;" value="<%=acc.getPassword()%>" name="Password">
                                 </div>
                             </div>
                             <div class="row mt-3">
@@ -86,7 +89,7 @@
                                         <%
                                             for(Roles role : vectorRole) {
                                         %>
-                                        <option value="<%= role.getRoleID()%>"><%= role.getRoleName()%></option>
+                                        <option value="<%= acc.getRoleID()%>"><%= role.getRoleName()%></option>
                                         <%
                                             }
                                         %>
@@ -109,7 +112,7 @@
                                 <div class="col-1">
                                 </div>
                                 <div class="col-5 pl-4">
-                                    <input class="pt-1 pl-3 pb-1" type="text" style="width: 100%; color: gray;" value="Nhập SĐT" name="PhoneNo">
+                                    <input class="pt-1 pl-3 pb-1" type="text" style="width: 100%; color: gray;" value="<%=acc.getPhoneNo()%>" name="PhoneNo">
                                 </div>
                             </div>
                             <div class="row mt-3">
@@ -117,7 +120,7 @@
                                     Địa Chỉ:
                                 </div>
                                 <div class="col-9">
-                                    <input class="pt-1 pl-3 pb-1" type="text" style="width: 100%; color: gray;" value="Nhập Địa Chỉ" name="Address">
+                                    <input class="pt-1 pl-3 pb-1" type="text" style="width: 100%; color: gray;" value="<%=acc.getAddress()%>" name="Address">
                                 </div>
                             </div>
                             <div class="row mt-3">
@@ -129,11 +132,14 @@
                                 <div class="col-1">
                                 </div>
                                 <div class="col-4">
-                                    <input type="submit" class="pt-2 pb-2 mr-0 ml-5" style="background-color: white" value="Thêm Tài Khoản" name="submit">
+                                    <input type="submit" class="pt-2 pb-2 mr-0 ml-5" style="background-color: white" value="Chỉnh Sửa" name="submit">
                                 </div>
                             </div>
-                            <input type="hidden" name="service" value="add">
+                            <input type="hidden" name="service" value="update">
                         </form>
+                        <%
+                                }
+                        %>
                     </div>
                 </div>
                 <div class="col-2">

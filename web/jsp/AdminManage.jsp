@@ -41,6 +41,9 @@
                 <div class="mt-5 border-top" style="width: 100%;">
                     <a href="Home?service=listAll" style="color: black;"><div class="pt-3 pb-3" style="padding-left: 12%"><i class="bi bi-house"></i> &nbsp;Trang Chủ</div></a>
                 </div>
+                <div class="border-top" style="width: 100%;">
+                    <a href="AdminController?service=dashboard" style="color: black;"><div class="pt-3 pb-3" style="padding-left: 12%"><i class="bi bi-clipboard-data"></i> &nbsp;Thống Kê</div></a>
+                </div>
                 <div class="dropdown dropright border-top" style="width:100%; padding-top: 3%; padding-bottom: 3%">
                     <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" style="width:100%; padding-right: 48%">
                         <i class="bi bi-list"></i> &nbsp;Danh Sách

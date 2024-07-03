@@ -10,7 +10,7 @@ package entity;
  */
 public class Account {
     private int UserID;
-    private String RoleID, FirstName, LastName, Email, Password, PhoneNo, Address, DOB;
+    private String RoleID, FirstName, LastName, Email, Password, PhoneNo, Address, DOB, Status, RegisterDate;
     private boolean Gender;
     private String imgUser;
 
@@ -29,6 +29,37 @@ public class Account {
         this.Gender = Gender;
         this.imgUser = imgUser;
     }
+    
+    public Account(int UserID, String RoleID, String FirstName, String LastName, String Email, String Password, String PhoneNo, String Address, String DOB, boolean Gender, String imgUser, String Status) {
+        this.UserID = UserID;
+        this.RoleID = RoleID;
+        this.FirstName = FirstName;
+        this.LastName = LastName;
+        this.Email = Email;
+        this.Password = Password;
+        this.PhoneNo = PhoneNo;
+        this.Address = Address;
+        this.DOB = DOB;
+        this.Gender = Gender;
+        this.imgUser = imgUser;
+        this.Status = Status;
+    }
+    
+    public Account(int UserID, String RoleID, String FirstName, String LastName, String Email, String Password, String PhoneNo, String Address, String DOB, boolean Gender, String imgUser, String Status, String RegisterDate) {
+        this.UserID = UserID;
+        this.RoleID = RoleID;
+        this.FirstName = FirstName;
+        this.LastName = LastName;
+        this.Email = Email;
+        this.Password = Password;
+        this.PhoneNo = PhoneNo;
+        this.Address = Address;
+        this.DOB = DOB;
+        this.Gender = Gender;
+        this.imgUser = imgUser;
+        this.Status = Status;
+        this.RegisterDate = RegisterDate;
+    }
        
     public Account(int UserID, String RoleID, String FirstName, String LastName, String Email, String Password, String PhoneNo, String Address, String DOB, boolean Gender, String imgUser) {
         this.UserID = UserID;
@@ -42,6 +73,22 @@ public class Account {
         this.DOB = DOB;
         this.Gender = Gender;
         this.imgUser = imgUser;
+    }
+
+    public String getRegisterDate() {
+        return RegisterDate;
+    }
+
+    public void setRegisterDate(String RegisterDate) {
+        this.RegisterDate = RegisterDate;
+    }
+    
+    public String getStatus() {
+        return Status;
+    }
+
+    public void setStatus(String Status) {
+        this.Status = Status;
     }
 
     public int getUserID() {
