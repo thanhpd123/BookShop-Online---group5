@@ -16,6 +16,49 @@
         <link rel="stylesheet" href="CSS/style.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+        <style>
+            .dropbtn {
+                background-color: #4CAF50;
+                color: white;
+                padding: 16px;
+                font-size: 16px;
+                border: none;
+                cursor: pointer;
+            }
+
+            .dropdown {
+                position: relative;
+                display: inline-block;
+            }
+
+            .dropdown-content {
+                display: none;
+                position: absolute;
+                background-color: #f9f9f9;
+                min-width: 220px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                z-index: 1;
+            }
+
+            .dropdown-content a {
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }
+
+            .dropdown-content a:hover {
+                background-color: #f1f1f1
+            }
+
+            .dropdown:hover .dropdown-content {
+                display: block;
+            }
+
+            .dropdown:hover .dropbtn {
+                background-color: #3e8e41;
+            }
+        </style>
     </head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
@@ -24,6 +67,8 @@
         <%
             Vector<Orders> vectorOr = (Vector<Orders>)request.getAttribute("dataOrder");
             Vector<Orders> vector = (Vector<Orders>)request.getAttribute("dataOr");
+            String day = (String)request.getAttribute("day");
+            String select = (String)request.getAttribute("select");
             int a = 0, b = 0, c = 0;
             for (Orders or : vectorOr) {
                 if (or.getOrderState().equals("Đã giao hàng")) {
@@ -45,7 +90,7 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col mr-3" style="background-color: white">
-                                m
+                                <%=vector.get(0).getOrderDate()%>
                             </div>
                             <div class="col pt-4 pb-4 ml-3" style="background-color: white">
                                 <div class="container-fluid">
@@ -58,11 +103,35 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row mt-3" style="background-color: white">
+                        <div class="row mt-4" style="background-color: white">
                             <div class="col-5">
+                                <div class="container-fluid">
+                                    <div class="row pt-5 pl-5">
+                                        <div class="col-6">
+                                            Lợi Nhuận Cửa Hàng:
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="dropdown text-center" style="display: inline-block">
+                                                <%=select%>
+                                                <div class="dropdown-content">
+                                                    <a href="SaleController?service=dashboard&day=7">7 Ngày Gần Nhất</a>
+                                                    <a href="SaleController?service=dashboard&day=30">30 Ngày Gần Nhất</a>
+                                                    <a href="SaleController?service=dashboard&day=365">365 Ngày Gần Nhất</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-7 pt-5 pb-5">
-                                <canvas id="LineChart" style="width:100%;max-width:600px"></canvas>
+                            <div class="col-7 pt-3 pb-5">
+                                <div class="container-fluid">
+                                    <div class="row pt-3 pl-5 pb-3">
+                                        Lợi Nhuận <%=day%> Ngày Gần Nhất:
+                                    </div>
+                                    <div class="row">
+                                        <canvas id="LineChart" style="width:100%;max-width:600px"></canvas>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -72,9 +141,22 @@
             </div>
         </div>
         <script>
-            const x = [<%=vector.get(0).getOrderDate()%>, <%=vector.get(1).getOrderDate()%>, <%=vector.get(2).getOrderDate()%>, <%=vector.get(3).getOrderDate()%>, <%=vector.get(4).getOrderDate()%>, <%=vector.get(5).getOrderDate()%>, <%=vector.get(6).getOrderDate()%>];
-            const y = [<%=vector.get(0).getPrice() * vector.get(0).getQuantity()%>, <%=vector.get(1).getPrice() * vector.get(1).getQuantity()%>, <%=vector.get(2).getPrice() * vector.get(2).getQuantity()%>, <%=vector.get(3).getPrice() * vector.get(3).getQuantity()%>, <%=vector.get(4).getPrice() * vector.get(4).getQuantity()%>, <%=vector.get(5).getPrice() * vector.get(5).getQuantity()%>, <%=vector.get(6).getPrice() * vector.get(6).getQuantity()%>];
-
+            const x = [<%
+                            for (Orders or : vector) {
+            %>
+            "<%=or.getOrderDate()%>",
+            <%
+                 }
+            %>
+            ];
+            const y = [<%
+                            for (Orders or1 : vector) {
+            %>
+            <%=or1.getPrice() * or1.getQuantity()%>,
+            <%
+                }
+            %>
+            ];
             new Chart("LineChart", {
                 type: "line",
                 data: {
@@ -91,6 +173,7 @@
                     legend: {display: false},
                     scales: {
                         y: [{ticks: {min: 0, max: 10000000}}]
+
                     }
                 }
             });

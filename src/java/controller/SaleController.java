@@ -4,12 +4,19 @@
  */
 package controller;
 
+import entity.Orders;
+import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.util.Vector;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import model.DAOOrders;
 
 /**
  *
@@ -29,17 +36,59 @@ public class SaleController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet SaleController</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet SaleController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        DAOOrders dao = new DAOOrders();
+        String service = request.getParameter("service");
+        String day = request.getParameter("day");
+        HttpSession session = request.getSession(true);
+        
+        if (day == null) {
+            day = "7";
+        }
+        
+        if (service == null) {
+            service = "dashboard";
+        }
+
+        if (service.equals("dashboard")) {
+            Vector<Orders> vector = dao.getAll();
+            Vector<Orders> vectorOr = new Vector<Orders>();
+            String select = "Lựa Chọn";
+            if (day.equals("30")) {
+                vectorOr = dao.getOrder("SELECT Orders.OrderDate , Orders.OrderState, SUM(OrderDetail.Quantity) AS Quantity, SUM(OrderDetail.Price) AS Price\n"
+                        + "FROM Orders\n"
+                        + "INNER JOIN OrderDetail ON Orders.OrderID = OrderDetail.OrderID\n"
+                        + "WHERE Orders.OrderDate BETWEEN GETDATE()-30 AND GETDATE() AND Orders.OrderState = N'Đã giao hàng'\n"
+                        + "GROUP By Orders.OrderDate, Orders.OrderState\n"
+                        + "ORDER BY Orders.OrderDate ");
+                select = "30 Ngày Gần Nhất";
+            }
+            
+            if (day.equals("365")) {
+                vectorOr = dao.getOrder("SELECT Orders.OrderDate , Orders.OrderState, SUM(OrderDetail.Quantity) AS Quantity, SUM(OrderDetail.Price) AS Price\n"
+                        + "FROM Orders\n"
+                        + "INNER JOIN OrderDetail ON Orders.OrderID = OrderDetail.OrderID\n"
+                        + "WHERE Orders.OrderDate BETWEEN GETDATE()-365 AND GETDATE() AND Orders.OrderState = N'Đã giao hàng'\n"
+                        + "GROUP By Orders.OrderDate, Orders.OrderState\n"
+                        + "ORDER BY Orders.OrderDate ");
+                select = "365 Ngày Gần Nhất";
+                
+            } 
+            if (day.equals("7")) {
+                vectorOr = dao.getOrder("SELECT Orders.OrderDate , Orders.OrderState, SUM(OrderDetail.Quantity) AS Quantity, SUM(OrderDetail.Price) AS Price\n"
+                        + "FROM Orders\n"
+                        + "INNER JOIN OrderDetail ON Orders.OrderID = OrderDetail.OrderID\n"
+                        + "WHERE Orders.OrderDate BETWEEN GETDATE()-7 AND GETDATE() AND Orders.OrderState = N'Đã giao hàng'\n"
+                        + "GROUP By Orders.OrderDate, Orders.OrderState\n"
+                        + "ORDER BY Orders.OrderDate");
+                select = "7 Ngày Gần Nhất";
+            }
+            request.setAttribute("dataOrder", vector);
+            request.setAttribute("dataOr", vectorOr);
+            request.setAttribute("day", day);
+            request.setAttribute("select", select);
+            request.getRequestDispatcher("/jsp/SaleDashboard.jsp");
+            RequestDispatcher dis = request.getRequestDispatcher("/jsp/SaleDashboard.jsp");
+            dis.forward(request, response);
         }
     }
 

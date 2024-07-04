@@ -9,10 +9,17 @@ package entity;
  * @author Dung Dinh
  */
 public class Orders {
-    private int OrderID, UserID, count;
+    private int OrderID, UserID, count, Quantity, Price;
     private String OrderDate, OrderState;
 
     public Orders() {
+    }
+
+    public Orders(String OrderDate, String OrderState, int Quantity, int Price) {
+        this.OrderDate = OrderDate;
+        this.Quantity = Quantity;
+        this.Price = Price;
+        this.OrderState = OrderState;
     }
 
     public Orders(int OrderID, String OrderDate, String OrderState, int UserID) {
@@ -28,6 +35,22 @@ public class Orders {
         this.OrderState = OrderState;
         this.UserID = UserID;
         this.count = count;
+    }
+
+    public int getQuantity() {
+        return Quantity;
+    }
+
+    public void setQuantity(int Quantity) {
+        this.Quantity = Quantity;
+    }
+
+    public int getPrice() {
+        return Price;
+    }
+
+    public void setPrice(int Price) {
+        this.Price = Price;
     }
 
     public int getCount() {

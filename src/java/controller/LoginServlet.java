@@ -39,6 +39,10 @@ public class LoginServlet extends HttpServlet {
 //                request.getRequestDispatcher("AdminController?service=listUser").forward(request, response);
                 request.getRequestDispatcher("/jsp/AdminManage.jsp").forward(request, response);
             }
+            if (customer.getRoleID().equals("4")) {
+//                request.getRequestDispatcher("AdminController?service=listUser").forward(request, response);
+                request.getRequestDispatcher("/jsp/SaleManage.jsp").forward(request, response);
+            }
             request.getRequestDispatcher("Home?service=listAll").forward(request, response);
             request.getRequestDispatcher("LogOut").forward(request, response);
             request.getRequestDispatcher("BookCart?service=checkOut").forward(request, response);
