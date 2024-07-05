@@ -192,9 +192,9 @@
                     <h4 class="text-center pt-3 pb-3 mb-0" style="font-weight: normal; background-color: white">Giỏ Hàng của Bạn</h4>
                     <div class="container-fluid">
                         <div class="row pb-3 mb-3" style="background-color: white">
-                            <div class="col-4 text-center mt-auto mb-auto" style="font-size: 17px"></div>
+                            <div class="col-3 text-center mt-auto mb-auto" style="font-size: 17px"></div>
                             <div class="col-3 text-center mt-auto mb-auto" style="font-size: 17px">Sản Phẩm</div>
-                            <div class="col-2 text-center mt-auto mb-auto" style="font-size: 17px">Số Lượng</div>
+                            <div class="col-3 text-center mt-auto mb-auto" style="font-size: 17px">Số Lượng</div>
                             <div class="col-2 text-center mt-auto mb-auto" style="font-size: 17px">Giá</div>
                             <div class="col-1 text-center mt-auto mb-auto" style="font-size: 17px">Xóa</div>
                         </div>
@@ -205,27 +205,41 @@
                             totalPrice += cart.getPrice()*cart.getQuantity();
                         %>
                         <div class="row mb-3" style="background-color: white">
-                            <div class="col-4 text-center pt-4 pb-4 mt-auto mb-auto"><img src="${pageContext.request.contextPath}<%=cart.getBookImg()%>" style="width: 50%"></div>
-                            <div class="col-3 text-center mt-auto mb-auto" style="font-size: 18px"><%=cart.getBookID()%></div>
-                            <div class="col-2 text-center mt-auto mb-auto" style="font-size: 18px">
-                                <form action="BookCart?service=updateQuantity&bookID=<%=cart.getBookID()%>&userID=<%=cart.getUserID()%>" method="POST">
-                                    <a href="BookCart?service=changeQuantityMinus?bookID=<%=cart.getBookID()%>&userID=<%=cart.getUserID()%>"><button class="mt-auto mb-auto" style="width:30px; height: 30px; border-color: #987554; color: #987554; background-color: white"> - </button></a>
-                                    <input class="text-center" onkeypress="submitOnEnter(this, event);" style="width:50px" type="text" name="quantity" value="<%=cart.getQuantity()%>">
-                                    <a href="BookCart?service=changeQuantityPlus?bookID=2"><button class="mt-auto mb-auto" style="width:30px; height: 30px; border-color: #987554; color: #987554; background-color: white"> + </button></a>
-
-                                    <!--<input type="submit" value="add" name="submit">-->
-                                </form>
-                            </div>
-                            <div class="col-2 text-center mt-auto mb-auto" style="font-size: 18px"><%=cart.getPrice()*cart.getQuantity()%>&#8363;</div>
                             <%
                                 for(Cart cart1 : vectorCart){
                                 if(cart1.getCartID() == cart.getCartID()){
                             %>
+                            <div class="col-3 text-center pt-4 pb-4 mt-auto mb-auto pl-5"><img src="${pageContext.request.contextPath}<%=cart.getBookImg()%>" style="width: 50%"></div>
+                            <div class="col-3 text-center mt-auto mb-auto" style="font-size: 18px"><%=cart.getBookID()%></div>
+                            <div class="col-3 text-center mt-auto mb-auto" style="font-size: 18px">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-2">
+                                        </div>
+                                        <div class="col-2">
+                                            <a href="BookCart?service=changeQuantityMinus&bookID=<%=cart1.getBookID()%>&userID=<%=cart1.getUserID()%>"><button style="background-color: white; width: 40px; height: 40px">-</button></a>
+                                        </div>
+                                        <div class="col-3 ">
+                                            <form action="BookCart?service=updateQuantity&bookID=<%=cart1.getBookID()%>&userID=<%=cart1.getUserID()%>" name="frm" method="POST">
+                                                <!--<input class="text-center justify-content-center align-items-center"  onkeypress="submitOnEnter(this, event);" style="width: 61 //px; padding-top: 5px; padding-bottom: 5px" type="text" name="quantity" value="<%=cart.getQuantity()%>">-->
+                                                <input class="text-center justify-content-center align-items-center" style="width: 61px; padding-top: 5px; padding-bottom: 5px" type="text" name="quantity" value="<%=cart.getQuantity()%>">
+                                                <input class="text-center justify-content-center align-items-center" style="display: none" type="submit" name="submit" value="submit">
+                                            </form>
+                                        </div>
+                                        <div class="col-2">
+                                            <a href="BookCart?service=changeQuantityPlus&bookID=<%=cart1.getBookID()%>&userID=<%=cart1.getUserID()%>"><button style="background-color: white; width: 40px; height: 40px; border-color: #664229">+</button></a>
+                                        </div>
+                                        <div class="col-3">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-2 text-center mt-auto mb-auto" style="font-size: 18px"><%=cart.getPrice()*cart.getQuantity()%>&#8363;</div>
                             <div class="col-1 text-center mt-auto mb-auto" style="font-size: 18px"><a href="BookCart?service=deleteCart&bookID=<%=cart1.getBookID()%>"><i class="bi bi-x h3" style="color: #664229"></i></a></div>
-                            <%
-                                    }
-                                }
-                            %>
+                                    <%
+                                            }
+                                        }
+                                    %>
                         </div>
                         <%
                             }
