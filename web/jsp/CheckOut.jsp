@@ -109,10 +109,10 @@
 
                 margin: 0 50px;
             }
-            
+
             .button1{
-                border-color: #987554; 
-                color: #987554; 
+                border-color: #987554;
+                color: #987554;
                 background-color: white;
             }
 
@@ -120,7 +120,48 @@
                 background-color: #D2B48C;
                 color: white;
             }
-            
+
+            .dropbtn {
+                background-color: #4CAF50;
+                color: white;
+                padding: 16px;
+                font-size: 16px;
+                border: none;
+                cursor: pointer;
+            }
+
+            .dropdown {
+                position: relative;
+                display: inline-block;
+            }
+
+            .dropdown-content {
+                display: none;
+                position: absolute;
+                background-color: #f9f9f9;
+                min-width: 150px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                z-index: 1;
+            }
+
+            .dropdown-content a {
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }
+
+            .dropdown-content a:hover {
+                background-color: #f1f1f1
+            }
+
+            .dropdown:hover .dropdown-content {
+                display: block;
+            }
+
+            .dropdown:hover .dropbtn {
+                background-color: #3e8e41;
+            }
         </style>
     </head>
     <body>
@@ -180,6 +221,7 @@
                         </div>
                         <%
                             Vector<Account> vector = (Vector<Account>) request.getAttribute("dataAddress");
+                            String name = (String) request.getAttribute("name");
                             for(Account acc : vector) {
                         %>
                         <div class="row mb-3">
@@ -197,6 +239,21 @@
                         <%
                             }
                         %>
+                        <div class="row mt-5">
+                            <div class="col-4">
+                            </div>
+                            <div class="col-4 mt-5">
+                                <%
+                                    if (name.equals("<i class=\"bi bi-credit-card-2-front\"></i> Chuyển Khoản")) {
+                                %>
+                                <img style="width: 100%; height: auto" src="${pageContext.request.contextPath}/assets/qr.jfif">
+                                <%
+                                    }
+                                %>
+                            </div>
+                            <div class="col-4">
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-7 pl-0 pr-0">
@@ -222,6 +279,7 @@
                         </div>
                         <%
                             Vector <Cart> vectorC = (Vector<Cart>) request.getAttribute("dataCart");
+                            
                             int totalPrice = 0;
                             for (Cart cart : vectorC) {
                             int total = cart.getQuantity()*cart.getPrice();
@@ -247,16 +305,32 @@
                         <%
                             }
                         %>
+                        <div class="row mt-4">
+                            <div class="col-2">
+                            </div>
+                            <div class="col-8 border">
+                                <div class="dropdown text-center pt-3 pb-3" style="width: 100%">
+                                    <%=name%>
+                                    <div class="dropdown-content">
+                                        <div onclick="card()"><a href="BookCart?service=checkOut&way=card"> Thẻ Tín Dụng / Ghi Nợ</a></div>
+                                        <div><a href="BookCart?service=checkOut&way=ck"> Chuyển Khoản</a></div>
+                                        <div><a href="BookCart?service=checkOut&way=cod"> Thanh Toán Khi Nhận Hàng</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
-            <div class="row mb-4">
-                <div class="col-3">
+            <div class="row mb-4 mt-3">
+                <div class="col-5">
                 </div>
-                <div class="col-3">
-                </div>
-                <div class="col-3 mt-auto mb-auto">
+                <div class="col-4 mt-auto mb-auto">
                     <div class="" style="font-size: 20px; font-weight: normal"> Tổng thanh toán (<%=vectorC.size()%> sản phẩm): <%=totalPrice%>&#8363</div>
+                    
                 </div>
                 <div class="col-2">
                     <a href="BookCart?service=payment"><button class="button1 mt-auto mb-auto ml-5" style="font-size:20px; width: 150px; height: 60px;">Đặt Hàng</button></a>
@@ -304,10 +378,14 @@
             </div>
         </div>
 
-        
+        <script>
+            function card() {
+                alert("Hiện tại, Cửa Hàng chưa hỗ trợ thanh toán qua thẻ\nVui Lòng chọn phương thức thanh toán khác!");
+            }
+        </script>
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    
+
     </body>
 </html>

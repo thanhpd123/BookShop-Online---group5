@@ -53,6 +53,8 @@ public class SaleController extends HttpServlet {
             Vector<Orders> vector = dao.getAll();
             Vector<Orders> vectorOr = new Vector<Orders>();
             String select = "Lựa Chọn";
+//            int userID = Integer.parseInt(request.getParameter("userID"));
+            Vector<Orders> vectorOrByUser = dao.getOrderByUser(2);
             if (day.equals("30")) {
                 vectorOr = dao.getOrder("SELECT Orders.OrderDate , Orders.OrderState, SUM(OrderDetail.Quantity) AS Quantity, SUM(OrderDetail.Price) AS Price\n"
                         + "FROM Orders\n"
@@ -84,6 +86,7 @@ public class SaleController extends HttpServlet {
             }
             request.setAttribute("dataOrder", vector);
             request.setAttribute("dataOr", vectorOr);
+            request.setAttribute("dataOrByUser", vectorOrByUser);
             request.setAttribute("day", day);
             request.setAttribute("select", select);
             request.getRequestDispatcher("/jsp/SaleDashboard.jsp");

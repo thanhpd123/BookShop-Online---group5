@@ -7,7 +7,6 @@ package controller;
 import entity.Account;
 import entity.Book;
 import entity.EntityFeedback;
-import entity.Orders;
 import entity.Roles;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
@@ -103,23 +102,8 @@ public class AdminController extends HttpServlet {
 
         if (service.equals("dashboard")) {
             String submit = request.getParameter("submit");
-            LocalDate now = LocalDate.now();
-            String current = now.toString();
-            String bookID = request.getParameter("BookID");
-//            Vector<Orders> vectorOr = dao.getMostBuy();
-            Vector<Account> vectorAcc = dao.getAll();
-            Vector<EntityFeedback> vectorFB = daoFB.getFeedback(bookID);
-            Vector<Book> vectorBk = daoBk.getAllBook("select Book.BookID, Book.BookImg, Book.Name, Book.Description, Book.PublisherName, Author.AuthorName, Book.Edition, Category.CategoryName, Book.PublicationDate, Book.Quantity, Book.Price\n"
-                    + "from Book \n"
-                    + "INNER JOIN Author ON Book.AuthorID = Author.AuthorID\n"
-                    + "INNER JOIN Category ON Book.CategoryID = Category.CategoryID;");
-            Vector<Book> vectorbk = daoBk.getBook(bookID);
+            Vector<EntityFeedback> vectorFB = daoFB.getFeedback("1");
             request.setAttribute("dataFB", vectorFB);
-            request.setAttribute("now", current);
-//            request.setAttribute("dataOrder", vectorOr);
-            request.setAttribute("bookID", bookID);
-            request.setAttribute("dataBk", vectorBk);
-            request.setAttribute("data", vectorbk);
             RequestDispatcher dis = request.getRequestDispatcher("/jsp/Dashboard.jsp");
             dis.forward(request, response);
         }

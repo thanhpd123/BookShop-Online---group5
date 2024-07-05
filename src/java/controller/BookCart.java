@@ -18,9 +18,13 @@ import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpSession;
 import java.util.Enumeration;
 import java.util.Vector;
+import java.time.LocalDate;
 import model.DAOCart;
 import entity.Book;
+import entity.OrderDetail;
+import entity.Orders;
 import model.DAOBook;
+import model.DAOOrders;
 
 /**
  *
@@ -43,6 +47,7 @@ public class BookCart extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession(true);
         DAOCart dao = new DAOCart();
+        DAOOrders daoOrder = new DAOOrders();
         DAOBook daoBook = new DAOBook();
         String service = request.getParameter("service");
         if (service == null) {
@@ -149,6 +154,23 @@ public class BookCart extends HttpServlet {
 
         if (service.equals("checkOut")) {
             Account acc = (Account) session.getAttribute("acc");
+            String way = request.getParameter("way");
+            String name = " ";
+            if (way.equals("Payment")) {
+                name = "<i class=\"bi bi-cart-check\"></i> Phương Thức Thanh Toán";
+            }
+
+            if (way.equals("card")) {
+                name = "<i class=\"bi bi-credit-card\"></i> Thẻ Tín Dụng / Ghi Nợ";
+            }
+
+            if (way.equals("ck")) {
+                name = "<i class=\"bi bi-credit-card-2-front\"></i> Chuyển Khoản";
+            }
+
+            if (way.equals("cod")) {
+                name = "<i class=\"bi bi-cash-stack\"></i> Thanh Toán Khi Nhận Hàng";
+            }
             int userID = acc.getUserID();
             Vector<Cart> vectorC = dao.getAll("SELECT Book.BookImg, Cart.CartID, Cart.UserID, Book.Name, Cart.Quantity, Cart.Price\n"
                     + "FROM Cart\n"
@@ -157,23 +179,8 @@ public class BookCart extends HttpServlet {
             Vector<Account> vectorA = dao.getAll(userID);
             request.setAttribute("dataAddress", vectorA);
             request.setAttribute("dataCart", vectorC);
-
+            request.setAttribute("name", name);
             RequestDispatcher dis = request.getRequestDispatcher("/jsp/CheckOut.jsp");
-            dis.forward(request, response);
-        }
-
-        if (service.equals("payment")) {
-            Account acc = (Account) session.getAttribute("acc");
-            int userID = acc.getUserID();
-            Vector<Cart> vectorC = dao.getAll("SELECT Book.BookImg, Cart.CartID, Cart.UserID, Book.Name, Cart.Quantity, Cart.Price\n"
-                    + "FROM Cart\n"
-                    + "INNER JOIN Book ON Cart.BookID = Book.BookID\n"
-                    + "WHERE Cart.UserID = '" + userID + "';");
-            Vector<Account> vectorA = dao.getAll(userID);
-            request.setAttribute("dataAddress", vectorA);
-            request.setAttribute("dataCart", vectorC);
-
-            RequestDispatcher dis = request.getRequestDispatcher("/jsp/Payment.jsp");
             dis.forward(request, response);
         }
 
@@ -183,6 +190,38 @@ public class BookCart extends HttpServlet {
             int userID = acc.getUserID();
             dao.removeAll(userID);
             response.sendRedirect("BookCart?service=showCart");
+            return;
+        }
+
+        if (service.equals("payment")) {
+            Account acc = (Account) session.getAttribute("acc");
+            int userID = acc.getUserID();
+            LocalDate current = LocalDate.now();
+            String now = current.toString();
+            String state = "Đang xử lý";
+            Vector<Cart> vectorC = dao.getAll("SELECT Book.BookImg, Cart.CartID, Cart.UserID, Book.Name, Cart.Quantity, Cart.Price\n"
+                    + "FROM Cart\n"
+                    + "INNER JOIN Book ON Cart.BookID = Book.BookID\n"
+                    + "WHERE Cart.UserID = '" + userID + "';");
+            Vector<Cart> vectorCart = dao.getAllCart("SELECT * FROM Cart\n"
+                    + "WHERE UserID = '" + userID + "'");
+            int n = vectorCart.size();
+            for (int i = 0; i <= n; i++) {
+                Vector<OrderDetail> vector = daoOrder.getAllOrderDetail();
+                int last = vector.lastElement().getOrderID();
+                int orderID;
+                if (last == 13) {
+                    orderID = 14;
+                } else {
+                    orderID = last + 1;
+                }
+                int price = vectorCart.get(i).getQuantity() * vectorCart.get(i).getPrice();
+                daoOrder.addOrderDetail(new OrderDetail(orderID, vectorCart.get(i).getBookID(), vectorCart.get(i).getQuantity(), price));
+                daoOrder.addOrder(new Orders(now, state, userID));
+                daoOrder.deleteCart(vectorCart.get(i).getBookID(), userID);
+            }
+            RequestDispatcher dis = request.getRequestDispatcher("/jsp/Check.jsp");
+            dis.forward(request, response);
             return;
         }
     }

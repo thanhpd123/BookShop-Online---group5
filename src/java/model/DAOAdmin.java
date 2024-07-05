@@ -20,7 +20,7 @@ import java.util.logging.Logger;
  * @author Dung Dinh
  */
 public class DAOAdmin extends DBConnect {
-
+    
     private static final Logger LOG = Logger.getLogger(DAOAdmin.class.getName());
 
     public Vector<Account> getAcc(int UserID) {

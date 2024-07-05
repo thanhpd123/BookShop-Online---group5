@@ -248,7 +248,7 @@
                     <%
                         if (vector.size() != 0) {
                     %>
-                    <a href="BookCart?service=checkOut"><button class="button1 mt-auto mb-auto" style="font-size:20px; width: 150px; height: 60px;">Thanh Toán</button></a>
+                    <a href="BookCart?service=checkOut&way=Payment"><button class="button1 mt-auto mb-auto" style="font-size:20px; width: 150px; height: 60px;">Thanh Toán</button></a>
                     <%
                         }
                     %>

@@ -46,6 +46,7 @@ public class LoginServlet extends HttpServlet {
             request.getRequestDispatcher("Home?service=listAll").forward(request, response);
             request.getRequestDispatcher("LogOut").forward(request, response);
             request.getRequestDispatcher("BookCart?service=checkOut").forward(request, response);
+            request.getRequestDispatcher("BookCart?service=payment").forward(request, response);
             request.getRequestDispatcher("BookCart?service=deleteAll").forward(request, response);
             request.getRequestDispatcher("AboutUs").forward(request, response);
             request.getRequestDispatcher("BookController?service=viewBook");

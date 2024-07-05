@@ -6,7 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page import="entity.EntityFeedback, entity.Book, entity.Orders, entity.Account, java.util.Vector"%>
+<%@page import="entity.EntityFeedback, entity.Book, entity.Account, java.util.Vector"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -41,27 +41,14 @@
                             </div>
                             <div class="col ml-3 pt-3 pb-4" style="background-color: white">
                                 <div class="container-fluid">
-                                    <div class="row mb-4">
+                                    <div class="row">
                                         <div class="col-1">
                                         </div>
                                         <div class="col-3">
                                             Chọn sách:
                                         </div>
                                         <div class="col-7 pl-0">
-                                            <form action="AdminController?service=dashboard" method="post" id="myForm">
-                                                <select style="width: 200px" name="BookID" onChange="selectChange(this.value)">
-                                                    <option label=" "></option>
-                                                    <%
-                                                        Vector<Book> vectorBk = (Vector<Book>) request.getAttribute("dataBk");
-                                                        String bookID = (String) request.getAttribute("bookID");
-                                                        for (Book bk : vectorBk) {
-                                                    %>
-                                                    <option value="<%=bk.getBookID()%>"><%=bk.getName()%></option>
-                                                    <%
-                                                        }
-                                                    %>
-                                                </select>
-                                            </form>
+                                            
                                         </div>
                                     </div>
                                     <div class="row">
@@ -78,7 +65,6 @@
         </div>
         <%
             Vector <EntityFeedback> vector = (Vector<EntityFeedback>) request.getAttribute("dataFB");
-            Vector <Book> vectorbk = (Vector<Book>) request.getAttribute("data");
             int a = 0, b = 0, c = 0, d = 0, e = 0;
             for (EntityFeedback fb : vector) {
                 if (fb.getRate() == 1) {
@@ -97,15 +83,7 @@
                     e++;
                 }
             } 
-            %>
-        <%--    Vector <Orders> vectorOrder = (Vector<Orders>) request.getAttribute("dataOrder");
-            for (Orders or : vectorOrder) {
-            %>
-            <%=or.getCount()%>
-            <%
-            }
-        %>  --%>
-        a
+        %>
         <script>
             const xValues = ["1 sao", "2 sao", "3 sao", "4 sao", "5 sao"];
             const yValues = [<%=a%>, <%=b%>, <%=c%>, <%=d%>, <%=e%>];
@@ -128,17 +106,10 @@
                 options: {
                     title: {
                         display: true,
-                        text: "Feedback của <%=vectorbk.get(0).getName()%>"
+                        text: "Feedback"
                     }
                 }
             });
-        </script>
-        <script>
-            function selectChange(val) {
-                //Set the value of action in action attribute of form element.
-                //Submit the form
-                $('#myForm').submit();
-            }
         </script>
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

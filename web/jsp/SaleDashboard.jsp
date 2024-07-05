@@ -67,6 +67,7 @@
         <%
             Vector<Orders> vectorOr = (Vector<Orders>)request.getAttribute("dataOrder");
             Vector<Orders> vector = (Vector<Orders>)request.getAttribute("dataOr");
+            Vector<Orders> vectorByUser = (Vector<Orders>)request.getAttribute("dataOrByUser");
             String day = (String)request.getAttribute("day");
             String select = (String)request.getAttribute("select");
             int a = 0, b = 0, c = 0;
@@ -89,10 +90,7 @@
                 <div class="col-10 mt-5">
                     <div class="container-fluid">
                         <div class="row">
-                            <div class="col mr-3" style="background-color: white">
-                                <%=vector.get(0).getOrderDate()%>
-                            </div>
-                            <div class="col pt-4 pb-4 ml-3" style="background-color: white">
+                            <div class="col pt-4 pb-4 mr-3" style="background-color: white">
                                 <div class="container-fluid">
                                     <div class="row pl-5">
                                         Tổng Số Đơn Hàng: <%=a + b + c%>
@@ -101,6 +99,9 @@
                                         <canvas id="myChart" style="width:100%;max-width:500px"></canvas>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col ml-2 pt-5" style="background-color: white">
+                                <canvas id="ChartUser" style="width:100%;max-width:600px"></canvas>
                             </div>
                         </div>
                         <div class="row mt-4" style="background-color: white">
@@ -139,7 +140,47 @@
                 <div class="col-1">
                 </div>
             </div>
-        </div>
+        </div>               
+
+        <script>
+            const Ox = [<%
+                            for (Orders or2 : vectorByUser) {
+            %>
+            "<%=or2.getOrderDate()%>",
+            <%
+                 }
+            %>
+            ];
+            const Oy = [<%
+                            for (Orders or3 : vectorByUser) {
+            %>
+            <%=or3.getPrice() * or3.getQuantity()%>,
+            <%
+                }
+            %>
+            ];
+            new Chart("ChartUser", {
+                type: "line",
+                data: {
+                    labels: Ox,
+                    datasets: [{
+                            fill: false,
+                            lineTension: 0,
+                            backgroundColor: "rgba(0,0,255,1.0)",
+                            borderColor: "rgba(0,0,255,0.1)",
+                            data: Oy
+                        }]
+                },
+                options: {
+                    legend: {display: false},
+                    scales: {
+                        Oy: [{ticks: {min: 0, max: 1000000000}}]
+
+                    }
+                }
+            });
+        </script>
+        
         <script>
             const x = [<%
                             for (Orders or : vector) {
@@ -172,7 +213,7 @@
                 options: {
                     legend: {display: false},
                     scales: {
-                        y: [{ticks: {min: 0, max: 10000000}}]
+                        y: [{ticks: {min: 0, max: 1000000000}}]
 
                     }
                 }

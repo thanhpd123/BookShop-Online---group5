@@ -21,9 +21,23 @@ public class Orders {
         this.Price = Price;
         this.OrderState = OrderState;
     }
+    
+    public Orders(String OrderDate, String OrderState, int UserID, int Quantity, int Price) {
+        this.OrderDate = OrderDate;
+        this.UserID = UserID;
+        this.Quantity = Quantity;
+        this.Price = Price;
+        this.OrderState = OrderState;
+    }
 
     public Orders(int OrderID, String OrderDate, String OrderState, int UserID) {
         this.OrderID = OrderID;
+        this.OrderDate = OrderDate;
+        this.OrderState = OrderState;
+        this.UserID = UserID;
+    }
+    
+    public Orders(String OrderDate, String OrderState, int UserID) {
         this.OrderDate = OrderDate;
         this.OrderState = OrderState;
         this.UserID = UserID;

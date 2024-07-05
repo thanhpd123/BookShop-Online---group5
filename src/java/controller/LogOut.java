@@ -35,9 +35,9 @@ public class LogOut extends HttpServlet {
         HttpSession session = request.getSession();
         String logged = (String) session.getAttribute("msg1");
         Account acc = (Account) session.getAttribute("acc");
-        session.setAttribute(null, logged);
-        session.setAttribute(null, acc);
-        RequestDispatcher dis = request.getRequestDispatcher("login");
+        session.removeAttribute("msg1");
+        session.removeAttribute("acc");
+        RequestDispatcher dis = request.getRequestDispatcher("Home");
         dis.forward(request, response);
     }
 
