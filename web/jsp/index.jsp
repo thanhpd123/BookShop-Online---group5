@@ -129,6 +129,7 @@
 
             a{
                 text-decoration: none;
+                color: #A9A9A9;
             }
 
             nav{
@@ -297,14 +298,14 @@
                 <div class="col-lg-2"></div>
                 <div class="col-lg-8 pb-1" style="background-color: white; ">
                     <div class="container-fluid mt-2">
-                        <div class="row pb-3">
+                        <div class="row">
                             <%
                  Vector<Book> vector1 = (Vector<Book>) request.getAttribute("data1");
                  for(Book bk : vector1) {
                             %>
                             <div class="col-3">
-                                <div class="card product-item border-left border-right border-top mb-4">
-                                    <a href="BookController?service=viewBook&bookID=<%=bk.getBookID()%>"><img class="pic d-flex ml-auto mr-auto mt-3 mb-4" src = "${pageContext.request.contextPath}<%=bk.getBookImg()%>" style="width: auto; height: 300px"></a>
+                                <div class="card product-item border-left border-right border-top mb-3">
+                                    <a href="BookController?service=viewBook&bookID=<%=bk.getBookID()%>"><img class="pic d-flex ml-auto mr-auto mt-3 mb-4" src = "${pageContext.request.contextPath}<%=bk.getBookImg()%>" style="width: 150px; height: 220px"></a>
                                     <h6 class="text-truncate mb-3 text-center"> <%=bk.getName()%> </h6>
                                     <div class="d-flex justify-content-center p-0 pb-3">
                                         <h6><%=bk.getPrice()%>&#8363;</h6>
@@ -316,6 +317,13 @@
                                 }
                             %>
 
+                        </div>
+                        <div class="row pb-4 pt-0">
+                            <div class="col-10">
+                            </div>
+                            <div class="col-2 pl-5">
+                                <a href="BookController?service=bookByCat&cat=CAT1&page=1" class="pl-5">Xem Thêm</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -351,14 +359,14 @@
                 <div class="col-lg-2"></div>
                 <div class="col-lg-8 pb-1" style="background-color: white; ">
                     <div class="container-fluid mt-2">
-                        <div class="row pb-3">
+                        <div class="row">
                             <%
                  Vector<Book> vector2 = (Vector<Book>) request.getAttribute("data2");
                  for(Book bk : vector2) {
                             %>
                             <div class="col-3">
-                                <div class="card product-item border-left border-right border-top mb-4">
-                                    <a href="BookController?service=viewBook&bookID=<%=bk.getBookID()%>"><img class="pic d-flex ml-auto mr-auto mt-3 mb-4" src = "${pageContext.request.contextPath}<%=bk.getBookImg()%>" style="width: auto; height: 300px"></a>
+                                <div class="card product-item border-left border-right border-top mb-3">
+                                    <a href="BookController?service=viewBook&bookID=<%=bk.getBookID()%>"><img class="pic d-flex ml-auto mr-auto mt-3 mb-4" src = "${pageContext.request.contextPath}<%=bk.getBookImg()%>" style="width: 150px; height: 220px"></a>
                                     <h6 class="text-truncate mb-3 text-center"> <%=bk.getName()%> </h6>
                                     <div class="d-flex justify-content-center p-0 pb-3">
                                         <h6><%=bk.getPrice()%>&#8363;</h6>
@@ -370,6 +378,13 @@
                                 }
                             %>
 
+                        </div>
+                        <div class="row pb-4 pt-0">
+                            <div class="col-10">
+                            </div>
+                            <div class="col-2 pl-5">
+                                <a href="BookController?service=bookByCat&cat=CAT2&page=1" class="pl-5">Xem Thêm</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -405,14 +420,14 @@
                 <div class="col-lg-2"></div>
                 <div class="col-lg-8 pb-1" style="background-color: white; ">
                     <div class="container-fluid mt-2">
-                        <div class="row pb-3">
+                        <div class="row">
                             <%
                  Vector<Book> vector3 = (Vector<Book>) request.getAttribute("data3");
                  for(Book bk : vector3) {
                             %>
                             <div class="col-3">
-                                <div class="card product-item border-left border-right border-top mb-4">
-                                    <a href="BookController?service=viewBook&bookID=<%=bk.getBookID()%>"><img class="pic d-flex ml-auto mr-auto mt-3 mb-4" src = "${pageContext.request.contextPath}<%=bk.getBookImg()%>" style="width: auto; height: 300px"></a>
+                                <div class="card product-item border-left border-right border-top mb-3">
+                                    <a href="BookController?service=viewBook&bookID=<%=bk.getBookID()%>"><img class="pic d-flex ml-auto mr-auto mt-3 mb-4" src = "${pageContext.request.contextPath}<%=bk.getBookImg()%>" style="width: 150px; height: 220px"></a>
                                     <h6 class="text-truncate mb-3 text-center"> <%=bk.getName()%> </h6>
                                     <div class="d-flex justify-content-center p-0 pb-3">
                                         <h6><%=bk.getPrice()%>&#8363;</h6>
@@ -424,6 +439,13 @@
                                 }
                             %>
 
+                        </div>
+                        <div class="row pb-4 pt-0">
+                            <div class="col-10">
+                            </div>
+                            <div class="col-2 pl-5">
+                                <a href="BookController?service=bookByCat&cat=CAT3&page=1" class="pl-5">Xem Thêm</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -604,6 +626,13 @@
                             %>
 
                         </div>
+                        <div class="row pb-4 pt-0">
+                            <div class="col-10">
+                            </div>
+                            <div class="col-2 pl-5">
+                                <a href="BookController?service=bookByCat&cat=CAT1&page=1" class="pl-5">Xem Thêm</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-2"></div>
@@ -658,6 +687,13 @@
                             %>
 
                         </div>
+                        <div class="row pb-4 pt-0">
+                            <div class="col-10">
+                            </div>
+                            <div class="col-2 pl-5">
+                                <a href="BookController?service=bookByCat&cat=CAT2&page=1" class="pl-5">Xem Thêm</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-2"></div>
@@ -711,6 +747,13 @@
                                 }
                             %>
 
+                        </div>
+                        <div class="row pb-4 pt-0">
+                            <div class="col-10">
+                            </div>
+                            <div class="col-2 pl-5">
+                                <a href="BookController?service=bookByCat&cat=CAT3&page=1" class="pl-5">Xem Thêm</a>
+                            </div>
                         </div>
                     </div>
                 </div>

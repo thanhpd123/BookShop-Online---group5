@@ -109,20 +109,49 @@
 
                 margin: 0 50px;
             }
+
+            .button1{
+                border-color: white;
+                color: white;
+                background-color: #E5D3B3;
+            }
+
+            .button1:hover {
+                border-color: #D2B48C;
+                background-color: white;
+                color: #E5D3B3;
+            }
+
+            .button2{
+                border-color: white;
+                color: white;
+                background-color: #E5D3B3;
+            }
+
+            .button2:hover {
+                border-color: #D2B48C;
+                background-color: white;
+                color: #E5D3B3;
+            }
+
         </style>
     </head>
     <body>
-
+        <%
+            String logged = (String)session.getAttribute("msg1");
+            String service = (String)session.getAttribute("service");
+            if (logged != null) {
+        %>
         <!-- menu -->
         <div class="menu container-fluid" style="height: 90px; background-color: #E5D3B3">
             <div class="row">
                 <!-- logo -->
-                <div class="cl-lg-3 mt-auto mb-auto d-none d-lg-block">
+                <div class="cl-lg-4 mt-auto mb-auto d-none d-lg-block">
                     <a href="Home?service=listAll"><img class="logo" src = "${pageContext.request.contextPath}/assets/logo.PNG" alt="Logo"></a>
                 </div>
 
                 <!-- search bar -->
-                <div class="cl-lg-6 d-flex justify-content-center align-items-center">
+                <div class="cl-lg-4 d-flex justify-content-center align-items-center">
                     <form action="BookController?service=search" method="POST">
                         <div style="display: inline-block"><input type="text" placeholder="Search Book Name" name="Name" style="width: 350px"></div>
                         <div style="display: inline-block"><input type="submit" value="Search" name="submit"></div>
@@ -131,7 +160,7 @@
                 </div>
 
                 <!-- menu item -->
-                <div class="cl-lg-3 d-flex justify-content-center align-items-center">
+                <div class="cl-lg-4 d-flex justify-content-center align-items-center">
                     <nav>
                         <ul id="element">
                             <li id="item"><a href="" style="color: #664229">
@@ -144,7 +173,7 @@
                                     <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
                                     </svg>
                                 </a></li>
-                            <li id="item"><a href="" style="color: #664229">
+                            <li id="item"><a href="Log Out" style="color: #664229">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"/>
                                     <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
@@ -167,18 +196,18 @@
                     <nav class="collapse show navbar navbar-vertical navbar-light align-items-start pt-3 border border-bottom-0" id="navbar-vertical">
                         <h4 class="pt-3 pb-3" style="width: 100%; height: 100%; color: white; background-color: #E5D3B3">Filter</h4>
                         <div class="navbar-nav w-100 overflow-hidden" style="height: 410px">
-                            <a href="BookController?service=bookByCat&cat=CAT1" class="nav-item nav-link">Tiểu Thuyết</a>
-                            <a href="BookController?service=bookByCat&cat=CAT2" class="nav-item nav-link">Khoa Học</a>
-                            <a href="BookController?service=bookByCat&cat=CAT3" class="nav-item nav-link">Tài Chính</a>
-                            <a href="BookController?service=bookByCat&cat=CAT4" class="nav-item nav-link">Tự Lực</a>
-                            <a href="BookController?service=bookByCat&cat=CAT5" class="nav-item nav-link">Pháp Luật</a>
-                            <a href="BookController?service=bookByCat&cat=CAT6" class="nav-item nav-link">Lập Trình</a>
-                            <a href="BookController?service=bookByCat&cat=CAT7" class="nav-item nav-link">Tâm Lý Học</a>
-                            <div class="nav-item nav-link">
-                                <a href="BookController?service=sortPriceASC" ><i class="bi bi-arrow-up"></i> giá thấp-cao</a>
+                            <a href="BookController?service=bookByCat&cat=CAT1&page=1" class="nav-item nav-link">Tiểu Thuyết</a>
+                            <a href="BookController?service=bookByCat&cat=CAT2&page=1" class="nav-item nav-link">Khoa Học</a>
+                            <a href="BookController?service=bookByCat&cat=CAT3&page=1" class="nav-item nav-link">Tài Chính</a>
+                            <a href="BookController?service=bookByCat&cat=CAT4&page=1" class="nav-item nav-link">Tự Lực</a>
+                            <a href="BookController?service=bookByCat&cat=CAT5&page=1" class="nav-item nav-link">Pháp Luật</a>
+                            <a href="BookController?service=bookByCat&cat=CAT6&page=1" class="nav-item nav-link">Lập Trình</a>
+                            <a href="BookController?service=bookByCat&cat=CAT7&page=1" class="nav-item nav-link">Tâm Lý Học</a>
+                            <div>
+                                <a href="BookController?service=sortPriceASC&page=1" class="nav-item nav-link"><i class="bi bi-arrow-up"></i> giá thấp-cao</a>
                             </div>
-                            <div class="nav-item nav-link">
-                                <a href="BookController?service=sortPriceDESC"><i class="bi bi-arrow-down"></i> giá cao-thấp</a>
+                            <div>
+                                <a href="BookController?service=sortPriceDESC&page=1" class="nav-item nav-link"><i class="bi bi-arrow-down"></i> giá cao-thấp</a>
                             </div>
                         </div>
                     </nav>
@@ -189,13 +218,14 @@
                         <div class="row">
                             <%
                              Vector<Book> vector = (Vector<Book>) request.getAttribute("data");
+                             Vector<Book> vectorAll = (Vector<Book>) request.getAttribute("dataAll");
                              for(Book bk : vector) {
                             %>
                             <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
 
                                 <div class="card product-item  mb-4" style="">
                                     <div class="pt-4">
-                                        <a href="BookController?service=viewBook&bookID=<%=bk.getBookID()%>"><img class="pic d-flex ml-auto mr-auto" src = "${pageContext.request.contextPath}<%=bk.getBookImg()%>" style="width: auto; height: 200px;"></a>
+                                        <a href="BookController?service=viewBook&bookID=<%=bk.getBookID()%>"><img class="pic d-flex ml-auto mr-auto" src = "${pageContext.request.contextPath}<%=bk.getBookImg()%>" style="width: 140px; height: 200px;"></a>
                                     </div>
                                     <div class="pt-4">
                                         <h6 class="text-truncate mb-3 text-center" style="font-weight: normal"> <%=bk.getName()%> </h6>
@@ -214,6 +244,123 @@
                             <%
                                             }
                             %>
+                        </div>
+                        <div class="row mt-3 mb-3">
+                            <div class="col-3" style="margin-right: 15px">
+                            </div>
+                            <div class="col-4">
+                                <nav aria-label="Page navigation example">
+                                    <%
+                                        if ( vectorAll.size() > 64 ) {
+                                    %>
+                                    <ul class="pagination">
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                                <span class="sr-only">Previous</span>
+                                            </a>
+                                        </li>
+                                        <li class="page-item"><a class="page-link" href="BookController?service=<%=service%>&page=1">1</a></li>
+                                        <li class="page-item"><a class="page-link" href="BookController?service=<%=service%>&page=2">2</a></li>
+                                        <li class="page-item"><a class="page-link" href="BookController?service=<%=service%>&page=3">3</a></li>
+                                        <li class="page-item"><a class="page-link" href="BookController?service=<%=service%>&page=4">4</a></li>
+                                        <li class="page-item"><a class="page-link" href="BookController?service=<%=service%>&page=5">5</a></li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                                <span class="sr-only">Next</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <%
+                                        }
+                                        if ( vectorAll.size() <= 64 && vectorAll.size() > 48 ) {
+                                    %>
+                                    <ul class="pagination" style="padding-right: 19px">
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                                <span class="sr-only">Previous</span>
+                                            </a>
+                                        </li>
+                                        <li class="page-item"><a class="page-link" href="BookController?service=<%=service%>&page=1">1</a></li>
+                                        <li class="page-item"><a class="page-link" href="BookController?service=<%=service%>&page=2">2</a></li>
+                                        <li class="page-item"><a class="page-link" href="BookController?service=<%=service%>&page=3">3</a></li>
+                                        <li class="page-item"><a class="page-link" href="BookController?service=<%=service%>&page=4">4</a></li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                                <span class="sr-only">Next</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <%
+                                        }
+                                        if ( vectorAll.size() <= 49 && vectorAll.size() > 32  ) {
+                                    %>
+                                    <ul class="pagination">
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                                <span class="sr-only">Previous</span>
+                                            </a>
+                                        </li>
+                                        <li class="page-item"><a class="page-link" href="BookController?service=<%=service%>&page=1">1</a></li>
+                                        <li class="page-item"><a class="page-link" href="BookController?service=<%=service%>&page=2">2</a></li>
+                                        <li class="page-item"><a class="page-link" href="BookController?service=<%=service%>&page=3">3</a></li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                                <span class="sr-only">Next</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <%
+                                        }
+                                        if ( vectorAll.size() <= 32 && vectorAll.size() > 16 ) {
+                                    %>
+                                    <ul class="pagination">
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                                <span class="sr-only">Previous</span>
+                                            </a>
+                                        </li>
+                                        <li class="page-item"><a class="page-link" href="BookController?service=<%=service%>&page=1">1</a></li>
+                                        <li class="page-item"><a class="page-link" href="BookController?service=<%=service%>&page=2">2</a></li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                                <span class="sr-only">Next</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <%
+                                        }
+                                        if ( vectorAll.size() <= 16 ) {
+                                    %>
+                                    <ul class="pagination" style="padding-right: 67px">
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                                <span class="sr-only">Previous</span>
+                                            </a>
+                                        </li>
+                                        <li class="page-item"><a class="page-link" href="BookController?service=<%=service%>&page=1">1</a></li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                                <span class="sr-only">Next</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <%
+                                        }
+                                    %>
+                                </nav>
+                            </div>
+                            <div class="col-4">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -260,6 +407,274 @@
                 </div>
             </div>
         </div>
+        <%
+            }
+            if (logged == null) {
+        %>
+        <!-- menu -->
+        <div class="menu container-fluid" style="height: 90px; background-color: #E5D3B3">
+            <div class="row">
+                <!-- logo -->
+                <div class="cl-lg-4 mt-auto mb-auto d-none d-lg-block">
+                    <a href="Home?service=listAll"><img class="logo" src = "${pageContext.request.contextPath}/assets/logo.PNG" alt="Logo"></a>
+                </div>
+
+                <!-- search bar -->
+                <div class="cl-lg-4 d-flex justify-content-center align-items-center">
+                    <form action="BookController?service=search" method="POST">
+                        <div style="display: inline-block"><input type="text" placeholder="Search Book Name" name="Name" style="width: 350px"></div>
+                        <div style="display: inline-block"><input type="submit" value="Search" name="submit"></div>
+
+                    </form>
+                </div>
+
+                <!-- menu item -->
+                <div class="cl-lg-4 d-flex justify-content-center align-items-center">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-4">
+                            </div>
+                            <div class="col-3">
+                                <a href="register"><button class="button1 mt-3 mb-3 ml-5" style="font-size:18px; width: 120px; height: 50px;">Đăng Ký</button></a>
+                            </div>
+                            <div class="col-1">
+                            </div>
+                            <div class="col-3">
+                                <a href="login"><button class="button2 mt-3 mb-3 ml-5" style="font-size:18px; width: 120px; height: 50px;">Đăng Nhập</button></a>
+                            </div>
+                            <div class="col-1">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- content -->
+        <div class="container-fluid mt-2">
+            <div class="text-center mb-4">
+                <h2 class="section-title px-5" style="color: #664229"><span class="px-2">Sách</span></h2>
+            </div>
+            <div class="row px-xl-5 pb-3">
+                <div class="col-lg-3" style="height: vh-100; width: 100">
+                    <i class="fa fa-angle-down text-dark"></i>
+                    <nav class="collapse show navbar navbar-vertical navbar-light align-items-start pt-3 border border-bottom-0" id="navbar-vertical">
+                        <h4 class="pt-3 pb-3" style="width: 100%; height: 100%; color: white; background-color: #E5D3B3">Filter</h4>
+                        <div class="navbar-nav w-100 overflow-hidden" style="height: 410px">
+                            <a href="BookController?service=bookByCat&cat=CAT1&page=1" class="nav-item nav-link">Tiểu Thuyết</a>
+                            <a href="BookController?service=bookByCat&cat=CAT2&page=1" class="nav-item nav-link">Khoa Học</a>
+                            <a href="BookController?service=bookByCat&cat=CAT3&page=1" class="nav-item nav-link">Tài Chính</a>
+                            <a href="BookController?service=bookByCat&cat=CAT4&page=1" class="nav-item nav-link">Tự Lực</a>
+                            <a href="BookController?service=bookByCat&cat=CAT5&page=1" class="nav-item nav-link">Pháp Luật</a>
+                            <a href="BookController?service=bookByCat&cat=CAT6&page=1" class="nav-item nav-link">Lập Trình</a>
+                            <a href="BookController?service=bookByCat&cat=CAT7&page=1" class="nav-item nav-link">Tâm Lý Học</a>
+                            <div>
+                                <a href="BookController?service=sortPriceASC&page=1" class="nav-item nav-link"><i class="bi bi-arrow-up"></i> giá thấp-cao</a>
+                            </div>
+                            <div>
+                                <a href="BookController?service=sortPriceDESC&page=1" class="nav-item nav-link"><i class="bi bi-arrow-down"></i> giá cao-thấp</a>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+
+                <div class="col-lg-9">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <%
+                             Vector<Book> vector = (Vector<Book>) request.getAttribute("data");
+                             Vector<Book> vectorAll = (Vector<Book>) request.getAttribute("dataAll");
+                             for(Book bk : vector) {
+                            %>
+                            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+
+                                <div class="card product-item  mb-4" style="">
+                                    <div class="pt-4">
+                                        <a href="BookController?service=viewBook&bookID=<%=bk.getBookID()%>"><img class="pic d-flex ml-auto mr-auto" src = "${pageContext.request.contextPath}<%=bk.getBookImg()%>" style="width: 140px; height: 200px;"></a>
+                                    </div>
+                                    <div class="pt-4">
+                                        <h6 class="text-truncate mb-3 text-center" style="font-weight: normal"> <%=bk.getName()%> </h6>
+                                        <div class="d-flex justify-content-center p-0 pb-3">
+                                            <h6><%=bk.getPrice()%>&#8363;</h6>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--                    <div class="card-footer d-flex justify-content-between bg-light border">
+                                                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Xem sản phẩm</a>
+                                                        <a href="BookCart?service=addToCart&bookID<%--=<%=bk.getBookID()%>--%>" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Thêm vào giỏ</a>
+                                                    </div>-->
+                            </div>
+
+                            <%
+                                            }
+                            %>
+                        </div>
+                        <div class="row mt-3 mb-3">
+                            <div class="col-3" style="margin-right: 15px">
+                            </div>
+                            <div class="col-4">
+                                <nav aria-label="Page navigation example">
+                                    <%
+                                        if ( vectorAll.size() > 64 ) {
+                                    %>
+                                    <ul class="pagination">
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                                <span class="sr-only">Previous</span>
+                                            </a>
+                                        </li>
+                                        <li class="page-item"><a class="page-link" href="BookController?service=<%=service%>&page=1">1</a></li>
+                                        <li class="page-item"><a class="page-link" href="BookController?service=<%=service%>&page=2">2</a></li>
+                                        <li class="page-item"><a class="page-link" href="BookController?service=<%=service%>&page=3">3</a></li>
+                                        <li class="page-item"><a class="page-link" href="BookController?service=<%=service%>&page=4">4</a></li>
+                                        <li class="page-item"><a class="page-link" href="BookController?service=<%=service%>&page=5">5</a></li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                                <span class="sr-only">Next</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <%
+                                        }
+                                        if ( vectorAll.size() <= 64 && vectorAll.size() > 48 ) {
+                                    %>
+                                    <ul class="pagination" style="padding-right: 19px">
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                                <span class="sr-only">Previous</span>
+                                            </a>
+                                        </li>
+                                        <li class="page-item"><a class="page-link" href="BookController?service=<%=service%>&page=1">1</a></li>
+                                        <li class="page-item"><a class="page-link" href="BookController?service=<%=service%>&page=2">2</a></li>
+                                        <li class="page-item"><a class="page-link" href="BookController?service=<%=service%>&page=3">3</a></li>
+                                        <li class="page-item"><a class="page-link" href="BookController?service=<%=service%>&page=4">4</a></li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                                <span class="sr-only">Next</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <%
+                                        }
+                                        if ( vectorAll.size() <= 49 && vectorAll.size() > 32  ) {
+                                    %>
+                                    <ul class="pagination">
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                                <span class="sr-only">Previous</span>
+                                            </a>
+                                        </li>
+                                        <li class="page-item"><a class="page-link" href="BookController?service=<%=service%>&page=1">1</a></li>
+                                        <li class="page-item"><a class="page-link" href="BookController?service=<%=service%>&page=2">2</a></li>
+                                        <li class="page-item"><a class="page-link" href="BookController?service=<%=service%>&page=3">3</a></li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                                <span class="sr-only">Next</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <%
+                                        }
+                                        if ( vectorAll.size() <= 32 && vectorAll.size() > 16 ) {
+                                    %>
+                                    <ul class="pagination">
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                                <span class="sr-only">Previous</span>
+                                            </a>
+                                        </li>
+                                        <li class="page-item"><a class="page-link" href="BookController?service=<%=service%>&page=1">1</a></li>
+                                        <li class="page-item"><a class="page-link" href="BookController?service=<%=service%>&page=2">2</a></li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                                <span class="sr-only">Next</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <%
+                                        }
+                                        if ( vectorAll.size() <= 16 ) {
+                                    %>
+                                    <ul class="pagination" style="padding-right: 67px">
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                                <span class="sr-only">Previous</span>
+                                            </a>
+                                        </li>
+                                        <li class="page-item"><a class="page-link" href="BookController?service=<%=service%>&page=1">1</a></li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                                <span class="sr-only">Next</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <%
+                                        }
+                                    %>
+                                </nav>
+                            </div>
+                            <div class="col-4">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+        <!-- footer -->
+        <div class="footer container-fluid text-dark mt-5 pt-5" style="background-color: #D2B48C">
+            <div class="row px-xl-5 pt-5">
+                <div class="col-lg-6 col-md-12 mb-5 pr-3 pr-xl-5">
+                    <a href="">
+                        <h1 class="mb-4 display-5 font-weight-semi-bold" style="color: white">Book E Shop</h1>
+                    </a>
+                    <p style="color: white">Cửa hàng sách online của chúng tôi cung cấp một loạt các đầu sách đa dạng, từ văn học cổ điển đến sách khoa học, đáp ứng mọi nhu cầu đọc của bạn. Bạn có thể dễ dàng tìm và mua những cuốn sách yêu thích từ mọi thể loại và chủ đề. Cảm ơn bạn đã ủng hộ cửa hàng sách của chúng tôi!</p>
+                    <p class="mb-2" style="color: white"><i class="fa fa-map-marker-alt text-primary mr-3"></i>Hoa Lac, Ha Noi, VietNam</p>
+                    <p class="mb-2" style="color: white"><i class="fa fa-envelope text-primary mr-3"></i>bes@gmail.com</p>
+                    <p class="mb-0" style="color: white"><i class="fa fa-phone-alt text-primary mr-3"></i>+84 98 123 4567</p>
+                </div>
+                <div class="col-lg-6 col-md-12">
+                    <h5 class="font-weight-bold mb-4" style="color: white">Quick Links</h5>
+                    <div class="d-flex flex-column justify-content-start">
+                        <a class="text-white mb-2" href="index.jsp"><i class="fa fa-angle-right mr-2"></i>Home</a>
+                        <a class="text-white mb-2" href=""><i class="fa fa-angle-right mr-2"></i>Our Shop</a>
+                        <a class="text-white mb-2" href=""><i class="fa fa-angle-right mr-2"></i>Shop Detail</a>
+                        <a class="text-white mb-2" href="BookCart?service=showCart"><i class="fa fa-angle-right mr-2"></i>Shopping Cart</a>
+                        <a class="text-white mb-2" href=""><i class="fa fa-angle-right mr-2"></i>Checkout</a>
+                        <a class="text-white" href=""><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row border-top border-light mx-xl-5 py-4">
+                <div class="col-md-6 px-xl-0">
+                    <p class="mb-md-0 text-center text-md-left" style="color: white">
+                        &copy; 
+                        <a class="text-white font-weight-semi-bold" href="Home?service=listAll" >BeS | Book E Shop</a>. All Rights Reserved. Designed
+                        by BeS
+                    </p>
+                </div>
+                <div class="col-md-6 px-xl-0 text-center text-md-right">
+                </div>
+            </div>
+        </div>
+        <%
+            }
+        %>
 
 
 

@@ -44,18 +44,8 @@
                 <div class="border-top" style="width: 100%;">
                     <a href="SaleController?service=dashboard" style="color: black;"><div class="pt-3 pb-3" style="padding-left: 12%"><i class="bi bi-clipboard-data"></i> &nbsp;Thống Kê</div></a>
                 </div>
-                <div class="dropdown dropright border-top" style="width:100%; padding-top: 3%; padding-bottom: 3%">
-                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" style="width:100%; padding-right: 48%">
-                        <i class="bi bi-list"></i> &nbsp;Order
-                    </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="BookController?service=listAll">Danh Sách Sản Phẩm</a>
-                        <a class="dropdown-item" href="AdminController?service=listUser">Danh Sách Khách Hàng</a>
-                        <a class="dropdown-item" href="#">Danh Sách Nhân Viên</a>
-                    </div>
-                </div>
                 <div class="border-top border-bottom pt-3 pb-3">
-                    <a href="BookController?service=bookByCat&cat=CAT2" style="width: 100%; color: black"><div style="padding-left: 12%"><i class="bi bi-card-text"></i> &nbsp;Quản Lý Blog</div></a>
+                    <a href="BookController?service=bookByCat&cat=CAT2" style="width: 100%; color: black"><div style="padding-left: 12%"><i class="bi bi-card-text"></i> &nbsp;Quản Lý Đơn Hàng</div></a>
                 </div>
             </div>
         </div>
