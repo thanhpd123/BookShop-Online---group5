@@ -46,6 +46,31 @@ public class DAOFeedback extends DBConnect {
         return vector;
     }
 
+    public Vector<EntityFeedback> getFeedback(int start, int end, String BookID) {
+        String sql = "SELECT *\n"
+                + "FROM (SELECT *, ROW_NUMBER() OVER (ORDER BY FBDate DESC) AS RowNum\n"
+                + "FROM Feedback WHERE BookID = '" + BookID + "') AS SubQuery\n"
+                + "WHERE RowNum BETWEEN " + start + " AND " + end + "";
+        Vector<EntityFeedback> vector = new Vector<EntityFeedback>();
+        try {
+            Statement state = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs = state.executeQuery(sql);
+            while (rs.next()) {
+                int fbID = rs.getInt(1);
+                String bookID = rs.getString(2);
+                int rate = rs.getInt(3);
+                String IDuser = rs.getString(4);
+                String fbDate = rs.getString(5);
+                String fbContent = rs.getString(6);
+                EntityFeedback fd = new EntityFeedback(fbID, bookID, rate, IDuser, fbDate, fbContent);
+                vector.add(fd);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOBook.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return vector;
+    }
+
     public Vector<EntityFeedback> getFeedback(String BookID, String sql) {
         Vector<EntityFeedback> vector = new Vector<EntityFeedback>();
         try {

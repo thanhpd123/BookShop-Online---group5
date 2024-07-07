@@ -82,30 +82,12 @@ public class BookCart extends HttpServlet {
         }
 
         if (service.equals("updateQuantity")) {
-            String quantity = request.getParameter("quantity");
+            int quantity = Integer.parseInt(request.getParameter("quantity"));
             int userID = Integer.parseInt(request.getParameter("userID"));
             String bookID = request.getParameter("bookID");
             Vector<Cart> vector = dao.getCart(bookID, userID);
-            if (quantity.equals("+")) {
-                dao.updateQuantity(vector.get(0).getCartID(), userID, bookID, vector.get(0).getQuantity() + 1, vector.get(0).getPrice());
-                response.sendRedirect("BookCart?service=showCart");
-                return;
-            }
-            if (quantity.equals("-")) {
-                int quantityBk = vector.get(0).getQuantity();
-                if (quantityBk == 1) {
-                    dao.updateQuantity(vector.get(0).getCartID(), userID, bookID, 1, vector.get(0).getPrice());
-                    response.sendRedirect("BookCart?service=showCart");
-                    return;
-                }
-
-                if (quantityBk > 1) {
-                    dao.updateQuantity(vector.get(0).getCartID(), userID, bookID, quantityBk - 1, vector.get(0).getPrice());
-                    response.sendRedirect("BookCart?service=showCart");
-                    return;
-                }
-            }
-            response.sendRedirect("BookCart?service=showCart");
+            dao.updateQuantity(vector.get(0).getCartID(), userID, bookID, quantity, vector.get(0).getPrice());
+            response.sendRedirect("BookCart?service=showCart&userID=" + userID + "");
             return;
         }
 
