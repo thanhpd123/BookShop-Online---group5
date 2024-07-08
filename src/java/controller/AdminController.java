@@ -154,6 +154,7 @@ public class AdminController extends HttpServlet {
 
         if (service.equals("add")) {
             String submit = request.getParameter("submit");
+            LocalDate current = LocalDate.now();
             if (submit != null && submit.equals("Thêm Tài Khoản")) {
                 String RoleID = request.getParameter("RoleID");
                 String FName = request.getParameter("FirstName");
@@ -165,7 +166,8 @@ public class AdminController extends HttpServlet {
                 boolean Gender = Boolean.parseBoolean(request.getParameter("Gender"));
                 String DOB = request.getParameter("DOB");
                 String imgUser = request.getParameter("imgUser");
-                dao.addAccount(new Account(RoleID, FName, LName, Email, PW, PhoneNo, Address, DOB, Gender, imgUser));
+                String now = current.toString();
+                dao.addAccount(new Account(RoleID, FName, LName, Email, PW, PhoneNo, Address, DOB, Gender, imgUser, "available", now));
                 response.sendRedirect("AdminController?service=listUser");
                 return;
             }

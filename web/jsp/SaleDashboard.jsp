@@ -6,7 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page import="entity.Orders, java.util.Vector"%>
+<%@page import="entity.Orders, java.util.Vector, entity.Account"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -68,9 +68,12 @@
             Vector<Orders> vectorOr = (Vector<Orders>)request.getAttribute("dataOrder");
             Vector<Orders> vector = (Vector<Orders>)request.getAttribute("dataOr");
             Vector<Orders> vectorByUser = (Vector<Orders>)request.getAttribute("dataOrByUser");
+            Vector<Account> vectorAcc = (Vector<Account>)request.getAttribute("data");
             String day = (String)request.getAttribute("day");
+            String startDate = (String)request.getAttribute("startDate");
+            String endDate = (String)request.getAttribute("endDate");
             String select = (String)request.getAttribute("select");
-            int a = 0, b = 0, c = 0;
+            int a = 0, b = 0, c = 0, d = 0;
             for (Orders or : vectorOr) {
                 if (or.getOrderState().equals("Đã giao hàng")) {
                     a++;
@@ -80,6 +83,9 @@
                 }
                 if (or.getOrderState().equals("Đang xử lý")) {
                     c++;
+                }
+                if (or.getOrderState().equals("Đã hủy")) {
+                    d++;
                 }
             }
         %>
@@ -100,18 +106,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col ml-2 pt-5" style="background-color: white">
-                                <canvas id="ChartUser" style="width:100%;max-width:600px"></canvas>
-                            </div>
-                        </div>
-                        <div class="row mt-4" style="background-color: white">
-                            <div class="col-5">
+                            <div class="col ml-2 pt-4" style="background-color: white">
                                 <div class="container-fluid">
-                                    <div class="row pt-5 pl-5">
-                                        <div class="col-6">
+                                    <div class="row pb-4">
+                                        <div class="col-5" style="padding-left: 10%">
                                             Lợi Nhuận Cửa Hàng:
                                         </div>
-                                        <div class="col-6">
+                                        <div class="col-4">
                                             <div class="dropdown text-center" style="display: inline-block">
                                                 <%=select%>
                                                 <div class="dropdown-content">
@@ -122,15 +123,85 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="row pb-2 text-center">
+                                        <div style="width: 100%">Lợi Nhuận <%=day%> Ngày Gần Nhất:</div>
+                                    </div>
+                                    <div class="row pb-4">
+                                        <canvas id="LineChart" style="width:100%;max-width:600px"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-4" style="background-color: white; padding-top: 50px">
+                            <div class="col-5">
+                                <div class="container-fluid">
+                                    <form action="SaleController?service=dashboard" method="post">
+                                        <div class="row pt-4">
+                                            <div class="col-4" style="padding-left: 40px">
+                                                Người Dùng:
+                                            </div>
+                                            <div class="col-7">
+                                                <select name="userID" style="background-color: white; padding: 6px;">
+                                                    <option></option>
+                                                    <%
+                                                        for (Account acc : vectorAcc) {
+                                                    %>
+                                                    <option value="<%=acc.getUserID()%>"><%=acc.getFirstName()%> <%=acc.getLastName()%></option>
+                                                    <%
+                                                        }
+                                                    %>
+                                                </select>
+                                            </div>
+                                            <div class="col-1">
+                                            </div>
+                                        </div>
+                                        <div class="row pt-3">
+                                            <div class="col-4" style="padding-left: 70px">
+                                                Bắt Đầu:
+                                            </div>
+                                            <div class="col-7">
+                                                <input class="text-center" type="date" name="start" style="width: 170px; padding: 2px">
+                                            </div>
+                                            <div class="col-1">
+                                            </div>
+                                        </div>
+                                        <div class="row pt-3">
+                                            <div class="col-4" style="padding-left: 62px">
+                                                Kết Thúc:
+                                            </div>
+                                            <div class="col-7">
+                                                <input class="text-center" type="date" name="end" style="width: 170px; padding: 2px">
+                                            </div>
+                                            <div class="col-1">
+                                            </div>
+                                        </div>
+                                        <div class="row pt-3">
+                                            <div class="col-4">
+                                            </div>
+                                            <div class="col-7">
+                                                <input type="submit" class="p-2" style="background-color: white; width: 100px" value="Tra Cứu" name="submit">
+                                            </div>
+                                            <div class="col-1">
+
+                                            </div>
+                                        </div>
+
+                                    </form>
                                 </div>
                             </div>
                             <div class="col-7 pt-3 pb-5">
                                 <div class="container-fluid">
                                     <div class="row pt-3 pl-5 pb-3">
-                                        Lợi Nhuận <%=day%> Ngày Gần Nhất:
+                                        <%
+                                            if (startDate != null && endDate != null) {
+                                        %>
+                                        Lợi Nhuận từ ngày <%=startDate%> đến <%=endDate%>:
+                                        <%
+                                            }
+                                        %>
                                     </div>
                                     <div class="row">
-                                        <canvas id="LineChart" style="width:100%;max-width:600px"></canvas>
+                                        <canvas id="ChartUser" style="width:100%;max-width:600px"></canvas>
                                     </div>
                                 </div>
                             </div>
@@ -180,7 +251,7 @@
                 }
             });
         </script>
-        
+
         <script>
             const x = [<%
                             for (Orders or : vector) {
@@ -221,9 +292,9 @@
         </script>
 
         <script>
-            var xValues = ["Đang xử lý", "Đang giao hàng", "Đã giao hàng"];
-            var yValues = [<%=c%>, <%=b%>, <%=a%>];
-            var barColors = ["red", "yellow", "orange"];
+            var xValues = ["Đang xử lý", "Đang giao hàng", "Đã giao hàng", "Đã hủy"];
+            var yValues = [<%=c%>, <%=b%>, <%=a%>, <%=d%>];
+            var barColors = ["#FF5C77", "#4DD091", "#FFEC59", "#FFA23A"];
 
             new Chart("myChart", {
                 type: "bar",

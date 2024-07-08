@@ -24,7 +24,7 @@ public class DAOAdmin extends DBConnect {
     private static final Logger LOG = Logger.getLogger(DAOAdmin.class.getName());
 
     public Vector<Account> getAcc(int UserID) {
-        String sql = "SELECT Account.UserID, Roles.RoleName, Account.FirstName, Account.LastName, Account.Email, Account.Password, Account.PhoneNo, Account.Address, Account.Gender, Account.DOB, Account.imgUser, Account.Status, Account.RegisterDate\n"
+        String sql = "SELECT Account.UserID, Roles.RoleName, Account.FirstName, Account.LastName, Account.Email, Account.Password, Account.PhoneNo, Account.Address, Account.Gender, Account.DOB, Account.imgUser, Account.Status, Account.Created_Date\n"
                 + "FROM Account\n"
                 + "INNER JOIN Roles ON Account.RoleID = Roles.RoleID\n"
                 + "WHERE Account.UserID = '" + UserID + "'";
@@ -168,7 +168,7 @@ public class DAOAdmin extends DBConnect {
     }
 
     public Vector<Account> getAll() {
-        String sql = "SELECT Account.UserID, Roles.RoleName, Account.FirstName, Account.LastName, Account.Email, Account.Password, Account.PhoneNo, Account.Address, Account.Gender, Account.DOB, Account.imgUser, Account.Status, Account.RegisterDate\n"
+        String sql = "SELECT Account.UserID, Roles.RoleName, Account.FirstName, Account.LastName, Account.Email, Account.Password, Account.PhoneNo, Account.Address, Account.Gender, Account.DOB, Account.imgUser, Account.Status, Account.Created_Date\n"
                 + "FROM Account\n"
                 + "INNER JOIN Roles ON Account.RoleID = Roles.RoleID";
         Vector<Account> vector = new Vector<Account>();
@@ -247,7 +247,7 @@ public class DAOAdmin extends DBConnect {
 
     public int addAccount(Account acc) {
         int n = 0;
-        String sql = "INSERT INTO Account (RoleID, FirstName, LastName, Email, Password, PhoneNo, Address, Gender, DOB, imgUser)\n"
+        String sql = "INSERT INTO Account (RoleID, FirstName, LastName, Email, Password, PhoneNo, Address, Gender, DOB, imgUser, Status, Created_Date)\n"
                 + "VALUES(?,?,?,?,?,?,?,?,?,?)";
         try {
             // khi dung preparedStatement ta khong can convẻt boolean thanh 0 and 1
@@ -262,6 +262,8 @@ public class DAOAdmin extends DBConnect {
             pre.setBoolean(8, acc.isGender());
             pre.setString(9, acc.getDOB());
             pre.setString(10, acc.getImgUser());
+            pre.setString(11, acc.getStatus());
+            pre.setString(12, acc.getRegisterDate());
             n = pre.executeUpdate();
 
         } catch (SQLException ex) {
