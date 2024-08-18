@@ -31,17 +31,29 @@ public class LoginServlet extends HttpServlet {
 
         AccountDAO accdao = new AccountDAO();
         Account customer = accdao.login(email, pass);
-        if (customer != null) {
+        if (customer != null && customer.getStatus().equals("active")) {
             HttpSession session = request.getSession();
             session.setAttribute("acc", customer);
             session.setAttribute("msg1", "Login Successfuly");
             if (customer.getRoleID().equals("1")) {
 //                request.getRequestDispatcher("AdminController?service=listUser").forward(request, response);
                 request.getRequestDispatcher("/jsp/AdminManage.jsp").forward(request, response);
+                request.getRequestDispatcher("AdminController?service=dashboard").forward(request, response);
+            }
+            if (customer.getRoleID().equals("2")) {
+//                request.getRequestDispatcher("AdminController?service=listUser").forward(request, response);
+                request.getRequestDispatcher("BookManagementServlet").forward(request, response);
             }
             if (customer.getRoleID().equals("4")) {
 //                request.getRequestDispatcher("AdminController?service=listUser").forward(request, response);
                 request.getRequestDispatcher("/jsp/SaleManage.jsp").forward(request, response);
+                request.getRequestDispatcher("SaleController?service=dashboard").forward(request, response);
+                request.getRequestDispatcher("SaleController?service=orderList").forward(request, response);
+                request.getRequestDispatcher("SaleController?service=changeStatus").forward(request, response);
+            }
+            if (customer.getRoleID().equals("5")) {
+//                request.getRequestDispatcher("AdminController?service=listUser").forward(request, response);
+                request.getRequestDispatcher("ShipServlet").forward(request, response);
             }
             request.getRequestDispatcher("Home?service=listAll").forward(request, response);
             request.getRequestDispatcher("LogOut").forward(request, response);
@@ -50,8 +62,12 @@ public class LoginServlet extends HttpServlet {
             request.getRequestDispatcher("BookController?service=listAll").forward(request, response);
             request.getRequestDispatcher("BookCart?service=deleteAll").forward(request, response);
             request.getRequestDispatcher("AboutUs").forward(request, response);
-            request.getRequestDispatcher("BookController?service=viewBook");
-            request.getRequestDispatcher("BookCart?service=showAll");
+            request.getRequestDispatcher("BookController?service=viewBook").forward(request, response);
+            request.getRequestDispatcher("BookCart?service=showAll").forward(request, response);
+            request.getRequestDispatcher("BookCart?service=addAddress").forward(request, response);
+        } if (!customer.getStatus().equals("active")) {
+            request.setAttribute("msg", "Account is not available");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
         } else {
             request.setAttribute("msg", "Invalid email or password");
             request.getRequestDispatcher("login.jsp").forward(request, response);

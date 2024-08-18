@@ -9,10 +9,26 @@ package entity;
  * @author Dung Dinh
  */
 public class Book {
-    private String BookID, Name, PublisherName, AuthorID, Edition, CategoryID, PublicationDate, BookImg, Description;
-    private int Quantity, Price;
-
+    private String BookID, Name, PublisherName, AuthorName, AuthorID, Edition, CategoryName, CategoryID, PublicationDate, BookImg, Description;
+    private int Quantity, Price, SalePrice, Purchases;
+    private String Flag, Status;
+    
     public Book() {
+    }
+
+    public Book(String BookID, String Name, int Purchases) {
+        this.BookID = BookID;
+        this.Name = Name;
+        this.Purchases = Purchases;
+    }
+
+    public Book(String Flag, String Status) {
+        this.Flag = Flag;
+        this.Status = Status;
+    }
+    
+    public Book(int Purchases) {
+        this.Purchases = Purchases;
     }
 
     public Book(String BookID, String BookImg, String Name, String Description, String PublisherName, String AuthorID, String Edition, String CategoryID, String PublicationDate, int Quantity, int Price) {
@@ -28,7 +44,22 @@ public class Book {
         this.Quantity = Quantity;
         this.Price = Price;
     }
-
+    public Book(String BookID, String BookImg, String Name, String PublisherName, String AuthorName, String Edition, String CategoryName, String PublicationDate,int Quantity, int Price, int SalePrice, String Flag, String Status) {
+        this.BookID = BookID;
+        this.BookImg = BookImg;
+        this.Name = Name;
+        this.PublisherName = PublisherName;
+        this.AuthorName = AuthorName;
+        this.Edition = Edition;
+        this.CategoryName = CategoryName;
+        this.PublicationDate = PublicationDate;
+        this.Quantity = Quantity;
+        this.Price = Price;
+        this.SalePrice = SalePrice;
+        this.Flag = Flag;
+        this.Status = Status;
+    }
+    
     public String getDescription() {
         return Description;
     }
@@ -77,6 +108,15 @@ public class Book {
         return Quantity;
     }
 
+    public int getPurchases() {
+        return Purchases;
+    }
+
+    public void setPurchases(int Purchases) {
+        this.Purchases = Purchases;
+    }
+    
+
     public int getPrice() {
         return Price;
     }
@@ -117,11 +157,50 @@ public class Book {
         this.Price = Price;
     }
 
-    @Override
-    public String toString() {
-        return "Book{" + "BookID=" + BookID + ", Name=" + Name + ", PublisherName=" + PublisherName + ", AuthorID=" + AuthorID + ", Edition=" + Edition + ", CategoryID=" + CategoryID + ", PublicationDate=" + PublicationDate + ", BookImg=" + BookImg + ", Description=" + Description + ", Quantity=" + Quantity + ", Price=" + Price + '}';
+    public String getCategoryName() {
+        return CategoryName;
     }
 
+    public void setCategoryName(String CategoryName) {
+        this.CategoryName = CategoryName;
+    }
+
+    public int getSalePrice() {
+        return SalePrice;
+    }
+
+    public void setSalePrice(int SalePrice) {
+        this.SalePrice = SalePrice;
+    }
+
+    public String getFlag() {
+        return Flag;
+    }
+
+    public void setFlag(String Flag) {
+        this.Flag = Flag;
+    }
+
+    public String getStatus() {
+        return Status;
+    }
+
+    public void setStatus(String Status) {
+        this.Status = Status;
+    }
+
+    public void setAuthorID(String AuthorID) {
+        this.AuthorID = AuthorID;
+    }
+
+    public String getAuthorName() {
+        return AuthorName;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" + "BookID=" + BookID + ", Name=" + Name + ", PublisherName=" + PublisherName + ", AuthorName=" + AuthorName + ", AuthorID=" + AuthorID + ", Edition=" + Edition + ", CategoryName=" + CategoryName + ", CategoryID=" + CategoryID + ", PublicationDate=" + PublicationDate + ", BookImg=" + BookImg + ", Description=" + Description + ", Quantity=" + Quantity + ", Price=" + Price + ", SalePrice=" + SalePrice + ", Flag=" + Flag + ", Status=" + Status + '}';
+    }
 
     
     

@@ -99,11 +99,11 @@
         Rate: 
         <select name="rate" value="${rate}">
             <option value="" >Tất cả</option>
-            <option value="5 sao" ${rate == '5 sao' ? 'selected' : ''}>5 sao</option>
-            <option value="4 sao" ${rate == '4 sao' ? 'selected' : ''}>4 sao</option>
-            <option value="3 sao" ${rate == '3 sao' ? 'selected' : ''}>3 sao</option>
-            <option value="2 sao" ${rate == '2 sao' ? 'selected' : ''}>2 sao</option>
-            <option value="1 sao" ${rate == '1 sao' ? 'selected' : ''}>1 sao</option>
+            <option value="5" ${rate == '5' ? 'selected' : ''}>5 sao</option>
+            <option value="4" ${rate == '4' ? 'selected' : ''}>4 sao</option>
+            <option value="3" ${rate == '3' ? 'selected' : ''}>3 sao</option>
+            <option value="2" ${rate == '2' ? 'selected' : ''}>2 sao</option>
+            <option value="1" ${rate == '1' ? 'selected' : ''}>1 sao</option>
         </select>
         Sort by:
         <select name="sortBy">

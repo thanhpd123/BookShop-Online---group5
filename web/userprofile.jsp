@@ -82,17 +82,23 @@
             <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 100px">
                 <h1 class="font-weight-semi-bold text-uppercase mb-3">User profile</h1>
                 <div class="d-inline-flex">
-                    <p class="m-0"><a href="">Home</a></p>
+                    <p class="m-0"><a href="Home?service=listAll">Home</a></p>
                     <p class="m-0 px-2">-</p>
                     <p class="m-0">Checkout</p>
                 </div>
             </div>
         </div>
         <!-- Page Header End -->
-
+        <div class="row">
+            <div class="col-md-9">
+            </div>
+            <div class="col-md-3 form-group mt-3" >
+                <a href="changepassword">Change Password</a>
+            </div>
+        </div>
         <!-- Checkout Start -->
         <form action="userprofile" method="post" enctype="multipart/form-data">
-            <div class="row" style="margin-top: 30px; margin-bottom: 20px">
+            <div class="row" style="margin-bottom: 20px">
                 <div class="col-md-3"></div>
                 <div class="col-md-6 form-container">
                     <div class="row">
@@ -126,7 +132,7 @@
                             ${msg}
                         </div>
                     </div>
-                        <div class="row"> 
+                    <div class="row"> 
                         <div class="col-md-4"></div>
                         <div class="col-md-4 form-group" style="margin-top: 20px">
                             <button class="btn btn-primary btn-block">Update profile</button>
@@ -137,6 +143,7 @@
                 <div class="col-md-3"></div>
             </div>
         </form>
+
         <!--                <label>E-mail</label>
                                     <input class="form-control" type="text" placeholder="example@email.com">
                                     <label>Mobile No</label>

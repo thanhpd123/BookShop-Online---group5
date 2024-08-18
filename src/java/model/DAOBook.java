@@ -141,6 +141,41 @@ public class DAOBook extends DBConnect {
         return vector;
     }
 
+    public Vector<Book> getPurchases(String bookID) {
+        String sql = "SELECT Purchases FROM Book WHERE BookID = '" + bookID + "'";
+        Vector<Book> vector = new Vector<Book>();
+        try {
+            Statement state = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs = state.executeQuery(sql);
+            while (rs.next()) {
+                int purchases = rs.getInt(1);
+                Book bk = new Book(purchases);
+                vector.add(bk);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOBook.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return vector;
+    }
+    
+    public Vector<Book> getStatus(String bookID) {
+        String sql = "SELECT Flag, Status FROM Book WHERE BookID = '" + bookID + "'";
+        Vector<Book> vector = new Vector<Book>();
+        try {
+            Statement state = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs = state.executeQuery(sql);
+            while (rs.next()) {
+                String flag = rs.getString(1);
+                String status = rs.getString(2);
+                Book bk = new Book(flag, status);
+                vector.add(bk);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOBook.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return vector;
+    }
+
     public Vector<Book> sortPriceDESC(int start, int end) {
         String sql = "SELECT *\n"
                 + "FROM (\n"
@@ -236,11 +271,6 @@ public class DAOBook extends DBConnect {
     }
 
     public Vector<Book> getBookCate(String catID, String sql) {
-//        String sql = "SELECT Book.BookID, Book.BookImg, Book.Name, Book.PublisherName, Author.AuthorName, Book.Edition, Category.CategoryName, Book.PublicationDate, Book.Quantity, Book.Price\n"
-//                + "FROM Book \n"
-//                + "INNER JOIN Author ON Book.AuthorID = Author.AuthorID\n"
-//                + "INNER JOIN Category ON Book.CategoryID = Category.CategoryID\n"
-//                + "WHERE Book.CategoryID ='" + catID + "' ;";
         Vector<Book> vector = new Vector<Book>();
         try {
             Statement state = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -292,9 +322,12 @@ public class DAOBook extends DBConnect {
         return vector;
     }
 
-    public Vector<Book> searchName(String bName) {
+    public Vector<Book> searchName(int start, int end, String bName) {
         Vector<Book> vector = new Vector<Book>();
-        String sql = "select * from Book where Name like '%" + bName + "%'";
+        String sql = "select * FROM ( \n"
+                + "SELECT BookID, BookImg, Name, Description, PublisherName, AuthorID, Edition, CategoryID, PublicationDate, Quantity, Price, ROW_NUMBER() OVER (ORDER BY BookID ASC) AS RowNum\n"
+                + "from Book where Name like '%" + bName + "%' ) AS SubQuery\n"
+                + "WHERE RowNum BETWEEN '" + start + "' AND '" + end + "'";
         try {
             Statement state = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = state.executeQuery(sql);

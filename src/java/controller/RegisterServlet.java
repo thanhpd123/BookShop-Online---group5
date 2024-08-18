@@ -4,16 +4,20 @@
  */
 package controller;
 
+import entity.Account;
+import entity.ReceiverInfo;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.*;
+import model.AccountDAO;
+import model.DAOOrders;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -43,6 +47,7 @@ public class RegisterServlet extends HttpServlet {
         LocalDate dob = LocalDate.parse(date, formatter);
         LocalDate today = LocalDate.now();
         AccountDAO accdao = new AccountDAO();
+        DAOOrders daoOrder= new DAOOrders();
         LocalDate rd = LocalDate.now(); 
         String registerDate = rd.toString(); 
         if (email.length() > 40 || fname.length() > 40 || lname.length() > 40 || pass.length() > 40) {
@@ -59,7 +64,11 @@ public class RegisterServlet extends HttpServlet {
             msg = "Invalid date of birth";
         } else {
             try {
-                accdao.AddNewAccount(fname, lname, email, phone, address, pass, gender, date, "available", registerDate);
+                accdao.AddNewAccount(fname, lname, email, phone, address, pass, gender, date, "active", registerDate);
+                String name = fname + " " + lname;
+                ArrayList <Account> list = accdao.getEmailList();
+                int userID = list.get(list.size() - 1).getUserID();
+                daoOrder.addReceiverInfo(new ReceiverInfo(name, phone, address, userID));
             } catch (SQLException ex) {
                 Logger.getLogger(RegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
             }

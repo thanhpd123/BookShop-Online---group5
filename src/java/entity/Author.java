@@ -9,21 +9,22 @@ package entity;
  * @author Dung Dinh
  */
 public class Author {
-    private String AuthorID, AuthorName;
+    private int AuthorID;
+    private String AuthorName;
 
     public Author() {
     }
 
-    public Author(String AuthorID, String AuthorName) {
+    public Author(int AuthorID, String AuthorName) {
         this.AuthorID = AuthorID;
         this.AuthorName = AuthorName;
     }
 
-    public String getAuthorID() {
+    public int getAuthorID() {
         return AuthorID;
     }
 
-    public void setAuthorID(String AuthorID) {
+    public void setAuthorID(int AuthorID) {
         this.AuthorID = AuthorID;
     }
 

@@ -114,7 +114,6 @@
             }
 
             #element{
-                margin-left: 100px;
                 list-style-type: none;
                 display: flex;
             }
@@ -188,43 +187,46 @@
             Account acc = (Account)session.getAttribute("acc");
         %>
         <!-- menu -->
-        <div class="menu container-fluid" style="height: 90px; background-color: #E5D3B3">
+        <div class="menu container-fluid" style="height: 90px; width: 100%; background-color: #E5D3B3">
             <div class="row">
                 <!-- logo -->
-                <div class="cl-lg-3 mt-auto mb-auto d-none d-lg-block">
+                <div class="cl-lg-3 mt-auto mb-auto">
                     <a href="Home?service=listAll"><img class="logo" src = "${pageContext.request.contextPath}/assets/logo.PNG" alt="Logo"></a>
                 </div>
 
                 <!-- search bar -->
-                <div class="cl-lg-6 d-flex justify-content-center align-items-center">
-                    <form action="BookController?service=search" method="POST">
-                        <div style="display: inline-block"><input type="text" placeholder="Search Book Name" name="Name" style="width: 350px"></div>
-                        <div style="display: inline-block"><input type="submit" value="Search" name="submit"></div>
-
+                <div class="cl-lg-4 d-flex justify-content-center align-items-center ml-5">
+                    <form action="BookController?service=search&page=1" method="POST">
+                        <div style="display: inline-block"><input type="text" placeholder="Search Book Name" name="Name" style="width: 380px; height: 35px; color: #664229"></div>
+                        <div style="display: inline-block"><button type="submit" class="" style="height: 35px; width: 50px; border-color: white; color: white; background-color: #E5D3B3"><i class="bi bi-search"></i></button></div>
                     </form>
                 </div>
+                
                 <!-- menu item -->
-                <div class="cl-lg-3 d-flex mt-3 mb-3 justify-content-center align-items-center">
+                <div class="cl-lg-3 d-flex mt-3 mb-3 align-items-center">
                     <nav>
                         <ul id="element">
-                            <li id="item"><a href="" style="color: #664229">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
-                                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
-                                    </svg>
-                                </a></li>
+                            <div class="dropdown">
+                                <li id="item"><a href="userprofile" style="color: #664229">
+                                        <i class="bi bi-person h3"></i>
+                                    </a></li>
+                                <div class="dropdown-content" style="background-color: #E5D3B3">
+                                    <div><a href="userprofile" style="color: #664229"><i class="bi bi-person h5"></i> <%=acc.getLastName()%></a></div>
+                                    <div><a href="OrderController" style="color: #664229"><i class="bi bi-wallet2"></i> Đơn Hàng</a></div>
+                                    <div><a href="LogOut" style="color: #664229"><i class="bi bi-box-arrow-right h5"></i> Đăng Xuất</a></div>
+                                </div>
+                            </div>
                             <li id="item"><a href="BookCart?service=showCart&userID=<%=acc.getUserID()%>" style="color: #664229">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
-                                    <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
-                                    </svg>
+                                    <i class="bi bi-cart h4"></i>
                                 </a></li>
-                            <li id="item"><a href="LogOut" style="color: #664229">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"/>
-                                    <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
-                                    </svg> Đăng Xuất
+                            <li id="item" style="color: #E5D3B3">m
+                                </a></li>
+                            <li id="item" style="color: #E5D3B3">m
                                 </a></li>
                         </ul>
                     </nav>
+                </div>
+                <div class="cl-lg-2">
                 </div>
             </div>
         </div>
@@ -243,13 +245,13 @@
                                     <div class="dropdown">
                                         <p id="navbar-list" href="" style="color: black">Thể Loại</p>
                                         <div class="dropdown-content">
-                                            <a href="BookController?service=bookByCat&cat=CAT1">Tiểu Thuyết</a>
-                                            <a href="BookController?service=bookByCat&cat=CAT2">Khoa Học</a>
-                                            <a href="BookController?service=bookByCat&cat=CAT3">Tài Chính</a>
-                                            <a href="BookController?service=bookByCat&cat=CAT4">Tự Lực</a>
-                                            <a href="BookController?service=bookByCat&cat=CAT5">Pháp Luật</a>
-                                            <a href="BookController?service=bookByCat&cat=CAT6">Lập Trình</a>
-                                            <a href="BookController?service=bookByCat&cat=CAT7">Tâm Lý Học</a>
+                                            <a href="BookController?service=bookByCat&cat=CAT1&page=1">Tiểu Thuyết</a>
+                                            <a href="BookController?service=bookByCat&cat=CAT2&page=1">Khoa Học</a>
+                                            <a href="BookController?service=bookByCat&cat=CAT3&page=1">Tài Chính</a>
+                                            <a href="BookController?service=bookByCat&cat=CAT4&page=1">Tự Lực</a>
+                                            <a href="BookController?service=bookByCat&cat=CAT5&page=1">Pháp Luật</a>
+                                            <a href="BookController?service=bookByCat&cat=CAT6&page=1">Lập Trình</a>
+                                            <a href="BookController?service=bookByCat&cat=CAT7&page=1">Tâm Lý Học</a>
                                         </div>
                                     </div>
                                     <a id="navbar-list" href="BlogListServlet" style="color: black">Blog</a>
@@ -264,6 +266,9 @@
                             </div>
                             <div class="carousel-item">
                                 <img class="img-fluid" src="${pageContext.request.contextPath}/assets/featured2.PNG" style="width: 100%" alt="Image">
+                            </div>
+                            <div class="carousel-item">
+                                <img class="img-fluid" src="${pageContext.request.contextPath}/assets/featured3.png" style="width: 100%" alt="Image">
                             </div>
                         </div>
                         <a class="carousel-control-prev" href="#header-carousel" data-slide="prev">
@@ -305,10 +310,10 @@
                             %>
                             <div class="col-3">
                                 <div class="card product-item border-left border-right border-top mb-3">
-                                    <a href="BookController?service=viewBook&bookID=<%=bk.getBookID()%>"><img class="pic d-flex ml-auto mr-auto mt-3 mb-4" src = "${pageContext.request.contextPath}<%=bk.getBookImg()%>" style="width: 150px; height: 220px"></a>
+                                    <a href="BookController?service=viewBook&bookID=<%=bk.getBookID()%>&page=1"><img class="pic d-flex ml-auto mr-auto mt-3 mb-4" src = "${pageContext.request.contextPath}<%=bk.getBookImg()%>" style="width: 150px; height: 220px"></a>
                                     <h6 class="text-truncate mb-3 text-center"> <%=bk.getName()%> </h6>
                                     <div class="d-flex justify-content-center p-0 pb-3">
-                                        <h6><%=bk.getPrice()%>&#8363;</h6>
+                                        <h6 class="myDIV"><%=bk.getPrice()%></h6>
                                     </div>
                                 </div>
                             </div>
@@ -366,10 +371,10 @@
                             %>
                             <div class="col-3">
                                 <div class="card product-item border-left border-right border-top mb-3">
-                                    <a href="BookController?service=viewBook&bookID=<%=bk.getBookID()%>"><img class="pic d-flex ml-auto mr-auto mt-3 mb-4" src = "${pageContext.request.contextPath}<%=bk.getBookImg()%>" style="width: 150px; height: 220px"></a>
+                                    <a href="BookController?service=viewBook&bookID=<%=bk.getBookID()%>&page=1"><img class="pic d-flex ml-auto mr-auto mt-3 mb-4" src = "${pageContext.request.contextPath}<%=bk.getBookImg()%>" style="width: 150px; height: 220px"></a>
                                     <h6 class="text-truncate mb-3 text-center"> <%=bk.getName()%> </h6>
                                     <div class="d-flex justify-content-center p-0 pb-3">
-                                        <h6><%=bk.getPrice()%>&#8363;</h6>
+                                        <h6 class="myDIV"><%=bk.getPrice()%></h6>
                                     </div>
                                 </div>
                             </div>
@@ -427,10 +432,10 @@
                             %>
                             <div class="col-3">
                                 <div class="card product-item border-left border-right border-top mb-3">
-                                    <a href="BookController?service=viewBook&bookID=<%=bk.getBookID()%>"><img class="pic d-flex ml-auto mr-auto mt-3 mb-4" src = "${pageContext.request.contextPath}<%=bk.getBookImg()%>" style="width: 150px; height: 220px"></a>
+                                    <a href="BookController?service=viewBook&bookID=<%=bk.getBookID()%>&page=1"><img class="pic d-flex ml-auto mr-auto mt-3 mb-4" src = "${pageContext.request.contextPath}<%=bk.getBookImg()%>" style="width: 150px; height: 220px"></a>
                                     <h6 class="text-truncate mb-3 text-center"> <%=bk.getName()%> </h6>
                                     <div class="d-flex justify-content-center p-0 pb-3">
-                                        <h6><%=bk.getPrice()%>&#8363;</h6>
+                                        <h6 class="myDIV"><%=bk.getPrice()%></h6>
                                     </div>
                                 </div>
                             </div>
@@ -507,11 +512,10 @@
                 </div>
 
                 <!-- search bar -->
-                <div class="cl-lg-4 d-flex justify-content-center align-items-center">
-                    <form action="BookController?service=search" method="POST">
-                        <div style="display: inline-block"><input type="text" placeholder="Search Book Name" name="Name" style="width: 350px"></div>
-                        <div style="display: inline-block"><input type="submit" value="Search" name="submit"></div>
-
+                <div class="cl-lg-4 d-flex justify-content-center align-items-center ml-5">
+                    <form action="BookController?service=search&page=1" method="POST">
+                        <div style="display: inline-block"><input type="text" placeholder="Search Book Name" name="Name" style="width: 380px; height: 35px; color: #664229"></div>
+                        <div style="display: inline-block"><button type="submit" class="" style="height: 35px; width: 50px; border-color: white; color: white; background-color: #E5D3B3"><i class="bi bi-search"></i></button></div>
                     </form>
                 </div>
 
@@ -551,13 +555,13 @@
                                     <div class="dropdown">
                                         <p id="navbar-list" href="" style="color: black">Thể Loại</p>
                                         <div class="dropdown-content">
-                                            <a href="BookController?service=bookByCat&cat=CAT1">Tiểu Thuyết</a>
-                                            <a href="BookController?service=bookByCat&cat=CAT2">Khoa Học</a>
-                                            <a href="BookController?service=bookByCat&cat=CAT3">Tài Chính</a>
-                                            <a href="BookController?service=bookByCat&cat=CAT4">Tự Lực</a>
-                                            <a href="BookController?service=bookByCat&cat=CAT5">Pháp Luật</a>
-                                            <a href="BookController?service=bookByCat&cat=CAT6">Lập Trình</a>
-                                            <a href="BookController?service=bookByCat&cat=CAT7">Tâm Lý Học</a>
+                                            <a href="BookController?service=bookByCat&cat=CAT1&page=1">Tiểu Thuyết</a>
+                                            <a href="BookController?service=bookByCat&cat=CAT2&page=1">Khoa Học</a>
+                                            <a href="BookController?service=bookByCat&cat=CAT3&page=1">Tài Chính</a>
+                                            <a href="BookController?service=bookByCat&cat=CAT4&page=1">Tự Lực</a>
+                                            <a href="BookController?service=bookByCat&cat=CAT5&page=1">Pháp Luật</a>
+                                            <a href="BookController?service=bookByCat&cat=CAT6&page=1">Lập Trình</a>
+                                            <a href="BookController?service=bookByCat&cat=CAT7&page=1">Tâm Lý Học</a>
                                         </div>
                                     </div>
                                     <a id="navbar-list" href="" style="color: black">Liên Hệ</a>
@@ -572,6 +576,9 @@
                             </div>
                             <div class="carousel-item">
                                 <img class="img-fluid" src="${pageContext.request.contextPath}/assets/featured2.PNG" style="width: 100%" alt="Image">
+                            </div>
+                            <div class="carousel-item">
+                                <img class="img-fluid" src="${pageContext.request.contextPath}/assets/featured3.png" style="width: 100%" alt="Image">
                             </div>
                         </div>
                         <a class="carousel-control-prev" href="#header-carousel" data-slide="prev">
@@ -613,10 +620,10 @@
                             %>
                             <div class="col-3">
                                 <div class="card product-item border-left border-right border-top mb-4">
-                                    <a href="BookController?service=viewBook&bookID=<%=bk.getBookID()%>"><img class="pic d-flex ml-auto mr-auto mt-3 mb-4" src = "${pageContext.request.contextPath}<%=bk.getBookImg()%>" style="width: auto; height: 300px"></a>
+                                    <a href="BookController?service=viewBook&bookID=<%=bk.getBookID()%>&page=1"><img class="pic d-flex ml-auto mr-auto mt-3 mb-4" src = "${pageContext.request.contextPath}<%=bk.getBookImg()%>" style="width: 150px; height: 220px"></a>
                                     <h6 class="text-truncate mb-3 text-center"> <%=bk.getName()%> </h6>
                                     <div class="d-flex justify-content-center p-0 pb-3">
-                                        <h6><%=bk.getPrice()%>&#8363;</h6>
+                                        <h6 class="myDIV"><%=bk.getPrice()%></h6>
                                     </div>
                                 </div>
                             </div>
@@ -674,10 +681,10 @@
                             %>
                             <div class="col-3">
                                 <div class="card product-item border-left border-right border-top mb-4">
-                                    <a href="BookController?service=viewBook&bookID=<%=bk.getBookID()%>"><img class="pic d-flex ml-auto mr-auto mt-3 mb-4" src = "${pageContext.request.contextPath}<%=bk.getBookImg()%>" style="width: auto; height: 300px"></a>
+                                    <a href="BookController?service=viewBook&bookID=<%=bk.getBookID()%>&page=1"><img class="pic d-flex ml-auto mr-auto mt-3 mb-4" src = "${pageContext.request.contextPath}<%=bk.getBookImg()%>" style="width: 150px; height: 220px"></a>
                                     <h6 class="text-truncate mb-3 text-center"> <%=bk.getName()%> </h6>
                                     <div class="d-flex justify-content-center p-0 pb-3">
-                                        <h6><%=bk.getPrice()%>&#8363;</h6>
+                                        <h6 class="myDIV"><%=bk.getPrice()%></h6>
                                     </div>
                                 </div>
                             </div>
@@ -735,10 +742,10 @@
                             %>
                             <div class="col-3">
                                 <div class="card product-item border-left border-right border-top mb-4">
-                                    <a href="BookController?service=viewBook&bookID=<%=bk.getBookID()%>"><img class="pic d-flex ml-auto mr-auto mt-3 mb-4" src = "${pageContext.request.contextPath}<%=bk.getBookImg()%>" style="width: auto; height: 300px"></a>
+                                    <a href="BookController?service=viewBook&bookID=<%=bk.getBookID()%>&page=1"><img class="pic d-flex ml-auto mr-auto mt-3 mb-4" src = "${pageContext.request.contextPath}<%=bk.getBookImg()%>" style="width: 150px; height: 220px"></a>
                                     <h6 class="text-truncate mb-3 text-center"> <%=bk.getName()%> </h6>
                                     <div class="d-flex justify-content-center p-0 pb-3">
-                                        <h6><%=bk.getPrice()%>&#8363;</h6>
+                                        <h6 class="myDIV"><%=bk.getPrice()%></h6>
                                     </div>
                                 </div>
                             </div>
@@ -802,8 +809,14 @@
             }
         %>
 
-
-        <br>
+        <script>
+            let x = document.querySelectorAll(".myDIV");
+            for (let i = 0, len = x.length; i < len; i++) {
+                let num = Number(x[i].innerHTML)
+                        .toLocaleString('en');
+                x[i].innerHTML = num;
+            }
+        </script>
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>

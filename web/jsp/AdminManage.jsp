@@ -26,36 +26,39 @@
 
             .side-bar{
                 float: left;
-                height: 100vh;
+                min-height: 135vh;
                 width: 20vw;
             }
         </style>
     </head>
     <body>
-        <div class="side-bar border-right">
+        <%
+            Account acc = (Account)session.getAttribute("acc");
+        %>
+        <div class="side-bar border-right" style="background-color: #E5D3B3">
             <div class="mt-3 ml-3">
                 <a class="ml-0 mr-0" href="Home?service=listAll"><img class="logo" src = "${pageContext.request.contextPath}/assets/logo.PNG" alt="Logo" style="width: auto; height: 50px"></a>
                 <p style="display: inline-block; font-size: 20px; color: #664229"> Book E Shop </p>
             </div>
             <div>
-                <div class="mt-5 border-top" style="width: 100%;">
+                <div class="container-fluid mt-4" style="width: 100%">
+                    <div class="row">
+                        <div class="col-3 pb-3 pl-4">
+                            <img style="border-radius: 50%; width: 50px; height: 50px" src="<%=acc.getImgUser()%>">
+                        </div>
+                        <div class="col-9 pt-3" style="color: #664229">
+                            <%=acc.getLastName()%> <%=acc.getFirstName()%>
+                        </div>
+                    </div>
+                </div>
+                <div class="border-top" style="width: 100%;">
                     <a href="Home?service=listAll" style="color: black;"><div class="pt-3 pb-3" style="padding-left: 12%"><i class="bi bi-house"></i> &nbsp;Trang Chủ</div></a>
                 </div>
                 <div class="border-top" style="width: 100%;">
                     <a href="AdminController?service=dashboard" style="color: black;"><div class="pt-3 pb-3" style="padding-left: 12%"><i class="bi bi-clipboard-data"></i> &nbsp;Thống Kê</div></a>
                 </div>
-                <div class="dropdown dropright border-top" style="width:100%; padding-top: 3%; padding-bottom: 3%">
-                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" style="width:100%; padding-right: 48%">
-                        <i class="bi bi-list"></i> &nbsp;Danh Sách
-                    </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="BookController?service=listAll">Danh Sách Sản Phẩm</a>
-                        <a class="dropdown-item" href="AdminController?service=listUser">Danh Sách Khách Hàng</a>
-                        <a class="dropdown-item" href="#">Danh Sách Nhân Viên</a>
-                    </div>
-                </div>
-                <div class="border-top border-bottom pt-3 pb-3">
-                    <a href="BookController?service=bookByCat&cat=CAT2" style="width: 100%; color: black"><div style="padding-left: 12%"><i class="bi bi-card-text"></i> &nbsp;Quản Lý Blog</div></a>
+                <div class="border-top" style="width: 100%;">
+                    <a href="AdminController?service=listUser" style="color: black;"><div class="pt-3 pb-3" style="padding-left: 12%"><i class="bi bi-list"></i> &nbsp;Danh Sách Khách Hàng</div></a>
                 </div>
             </div>
         </div>

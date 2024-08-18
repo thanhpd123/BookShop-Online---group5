@@ -6,10 +6,12 @@ package model;
 
 import entity.Feedback;
 import entity.FeedbackDetail;
+import java.sql.Connection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +20,14 @@ import java.util.List;
  * @author ADMIN
  */
 public class FeedbackDAO extends DBConnect {
+
+    protected Connection connection;
+    private ResultSet rs;
+    private PreparedStatement ps;
+
+    public FeedbackDAO() {
+        connection = new DBConnect().getConnection();
+    }
 
     public List<Feedback> getAllFeedbacks() {
         String sql = "SELECT \n"
@@ -125,6 +135,24 @@ public class FeedbackDAO extends DBConnect {
             Logger.getLogger(FeedbackDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+
+    public int getTotalFeedback(String from, String to) {
+        int total = 0;
+        String sql = "Select  count (FeedbackID) as total from Feedback where FBDate between ? and ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, from);
+            st.setString(2, to);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                total = rs.getInt("total");
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return total;
     }
 
     public static void main(String[] args) {

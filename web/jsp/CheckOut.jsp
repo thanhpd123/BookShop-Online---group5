@@ -6,7 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page import="entity.Account, entity.Cart, java.util.Vector"%>
+<%@page import="entity.Account, entity.Cart, entity.Address, entity.ReceiverInfo, java.util.Vector"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -139,9 +139,25 @@
                 display: none;
                 position: absolute;
                 background-color: #f9f9f9;
-                min-width: 150px;
+                min-width: 650px;
                 box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
                 z-index: 1;
+            }
+
+            .dropdown1-content {
+                display: none;
+                position: absolute;
+                background-color: #f9f9f9;
+                min-width: 160px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                z-index: 1;
+            }
+
+            .dropdown1-content a {
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
             }
 
             .dropdown-content a {
@@ -155,55 +171,78 @@
                 background-color: #f1f1f1
             }
 
+            .dropdown1-content a:hover {
+                background-color: #f1f1f1
+            }
+
             .dropdown:hover .dropdown-content {
+                display: block;
+            }
+
+            .dropdown:hover .dropdown1-content {
                 display: block;
             }
 
             .dropdown:hover .dropbtn {
                 background-color: #3e8e41;
             }
+
+            .modal-second {
+                z-index: 1052;
+            }
+
+            .modal-backdrop.fade {
+                & + .modal-backdrop.fade{
+                    z-index: 1051;
+                }
+            }
         </style>
     </head>
     <body>
+        <%
+            Account acc = (Account)session.getAttribute("acc");
+        %>
         <!-- menu -->
-        <div class="menu container-fluid" style="height: 90px; background-color: #E5D3B3">
+        <div class="menu container-fluid" style="height: 90px; width: 100%; background-color: #E5D3B3">
             <div class="row">
                 <!-- logo -->
-                <div class="cl-lg-3 mt-auto mb-auto d-none d-lg-block">
+                <div class="cl-lg-3 mt-auto mb-auto">
                     <a href="Home?service=listAll"><img class="logo" src = "${pageContext.request.contextPath}/assets/logo.PNG" alt="Logo"></a>
                 </div>
 
                 <!-- search bar -->
-                <div class="cl-lg-6 d-flex justify-content-center align-items-center">
-                    <form action="BookController?service=search" method="POST">
-                        <div style="display: inline-block"><input type="text" placeholder="Search Book Name" name="Name" style="width: 350px"></div>
-                        <div style="display: inline-block"><input type="submit" value="Search" name="submit"></div>
-
+                <div class="cl-lg-4 d-flex justify-content-center align-items-center ml-5">
+                    <form action="BookController?service=search&page=1" method="POST">
+                        <div style="display: inline-block"><input type="text" placeholder="Search Book Name" name="Name" style="width: 380px; height: 35px; color: #664229"></div>
+                        <div style="display: inline-block"><button type="submit" class="" style="height: 35px; width: 50px; border-color: white; color: white; background-color: #E5D3B3"><i class="bi bi-search"></i></button></div>
                     </form>
                 </div>
 
                 <!-- menu item -->
-                <div class="cl-lg-3 d-flex justify-content-center align-items-center">
+                <div class="cl-lg-3 d-flex mt-3 mb-3 align-items-center">
                     <nav>
                         <ul id="element">
-                            <li id="item"><a href="" style="color: #664229">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
-                                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
-                                    </svg>
+                            <div class="dropdown">
+                                <li id="item"><a href="userprofile" style="color: #664229">
+                                        <i class="bi bi-person h3"></i>
+                                    </a></li>
+                                <div class="dropdown1-content" style="background-color: #E5D3B3">
+                                    <div><a href="userprofile" style="color: #664229"><i class="bi bi-person h5"></i> <%=acc.getLastName()%></a></div>
+                                    <div><a href="OrderController" style="color: #664229"><i class="bi bi-wallet2"></i> Đơn Hàng</a></div>
+                                    <div><a href="LogOut" style="color: #664229"><i class="bi bi-box-arrow-right h5"></i> Đăng Xuất</a></div>
+                                </div>
+                            </div>
+                            <li id="item"><a href="BookCart?service=showCart&userID=<%=acc.getUserID()%>" style="color: #664229">
+                                    <i class="bi bi-cart h4"></i>
                                 </a></li>
-                            <li id="item"><a href="BookCart?service=showCart" style="color: #664229">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
-                                    <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
-                                    </svg>
+                            <li id="item" style="color: #E5D3B3">m
                                 </a></li>
-                            <li id="item"><a href="" style="color: #664229">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"/>
-                                    <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
-                                    </svg>
+                            <li id="item" style="color: #E5D3B3">m
                                 </a></li>
                         </ul>
                     </nav>
+                </div>
+                <div class="cl-lg-2">
                 </div>
             </div>
         </div>
@@ -217,63 +256,178 @@
                 <div class="col-lg-5 pl-0 pr-0">
                     <div class="container-fluid">
                         <div class="row">
-                            <div class="col-12 text-center mt-3 mb-4" style="font-size: 23px">Thông tin Liên lạc</div>
+                            <div class="col-12 text-center mt-3 mb-4" style="font-size: 23px; font-weight: 500; color: #664229">Thông tin Liên lạc</div>
                         </div>
                         <%
-                            Vector<Account> vector = (Vector<Account>) request.getAttribute("dataAddress");
+                            Vector<ReceiverInfo> vectorReceiverAdr = (Vector<ReceiverInfo>)request.getAttribute("dataReceiverAdr");
                             String name = (String) request.getAttribute("name");
-                            for(Account acc : vector) {
+                            String payment = (String) request.getAttribute("payment");
+                            String ReceiverAdr = (String) request.getAttribute("ReceiverAdr");
+                            for(ReceiverInfo rv : vectorReceiverAdr) {
                         %>
                         <div class="row mb-3">
-                            <div class="col-3 mt-auto mb-auto pl-5" style="font-size: 17px">Tên người nhận: </div>
-                            <div class="col-7 border ml-0 pt-2 pb-2" style="width:100%; font-weight: normal; font-size: 18px"><%=acc.getFirstName()%> <%=acc.getLastName()%></div>
+                            <div class="col-3 mt-auto mb-auto pl-5" style="font-size: 17px;">Tên người nhận: </div>
+                            <div class="col-7 border ml-0 pl-3 pt-2 pb-2" style="width:100%; font-weight: normal; font-size: 18px"><%=rv.getName()%></div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col-3 mt-auto mb-auto pl-5" style="display: inline-block; font-size: 17px">Địa chỉ: </div>
-                            <div class="col-7 border ml-0 pt-2 pb-2" style="width:100%; font-weight: normal; font-size: 18px"><%=acc.getAddress()%></div>
+                            <div class="col-3 mt-auto mb-auto" style="display: inline-block; font-size: 17px; padding-left: 15%">Địa chỉ: </div>
+                            <div class="col-7 border ml-0 pl-3 pt-2 pb-2" style="width:100%; font-weight: normal; font-size: 18px"><%=rv.getAddress()%></div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col-3 mt-auto mb-auto pl-5" style="display: inline-block; font-size: 17px">SĐT: </div>
-                            <div class="col-7 border ml-0 pt-2 pb-2" style="width:100%; font-weight: normal; font-size: 18px"><%=acc.getPhoneNo()%></div>
+                            <div class="col-3 mt-auto mb-auto" style="display: inline-block; font-size: 17px; padding-left: 18%">SĐT: </div>
+                            <div class="col-7 border ml-0 pl-3 pt-2 pb-2" style="width:100%; font-weight: normal; font-size: 18px"><%=rv.getPhoneNo()%></div>
                         </div>
                         <%
                             }
                         %>
-                        <div class="row mt-5">
-                            <div class="col-4">
+                        <div class="row">
+                            <div class="col-9">
                             </div>
-                            <div class="col-4 mt-5">
-                                <%
-                                    if (name.equals("<i class=\"bi bi-credit-card-2-front\"></i> Chuyển Khoản")) {
-                                %>
-                                <img style="width: 100%; height: auto" src="${pageContext.request.contextPath}/assets/qr.jfif">
-                                <%
-                                    }
-                                %>
+                            <div class="col-3" data-toggle="modal" data-target="#exampleModal">
+                                <button type="button" class="btn" style="background-color: white; border-color: #664229; color: #664229" data-toggle="modal" data-target="#exampleModal">
+                                    Thay Đổi
+                                </button>
                             </div>
-                            <div class="col-4">
+                        </div>
+                        <%
+                            Vector<ReceiverInfo> vectorReceiverInfo = (Vector<ReceiverInfo>)request.getAttribute("dataReceiverInfo");
+                        %>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title pl-5" id="exampleModalLabel" style="color: #664229">Chọn Địa Chỉ Nhận Hàng</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body ml-4">
+                                        <form action="BookCart?service=address&way=<%=payment%>" method="post">
+                                            <div class="container-fluid">
+                                                <%
+                                                    if(!vectorReceiverInfo.isEmpty()) {
+                                                    for(ReceiverInfo rcv : vectorReceiverInfo) {
+                                                %>
+                                                <div class="row pt-3 pb-3 border-bottom">
+                                                    <input type="radio" id="receiver" value="<%=rcv.getID()%>" name="address">
+                                                    <label class="pl-3" for="receiver">
+                                                        <div class="" style="display: inline-block">
+                                                            <%=rcv.getName()%>  &nbsp;|&nbsp;
+                                                        </div>
+                                                        <div class="" style="display: inline-block">
+                                                            <%=rcv.getPhoneNo()%>
+                                                        </div>
+                                                        <div>
+                                                            <%=rcv.getAddress()%>
+                                                        </div>
+                                                    </label>
+                                                </div>
+                                                <%
+                                                    }
+                                                    }
+                                                %>
+
+                                                <button type="button" class="btn mt-3 pt-2" style="background-color: white; border-color: #D2B48C; color: #987554" data-toggle="modal" data-dismiss="modal" data-target="#exampleModal1">
+                                                    <i class="bi bi-plus"></i>  Thêm Địa Chỉ
+                                                </button>
+
+                                                <div class="row pt-4 pb-3">
+                                                    <div class="col-3">
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <input class="px-3 py-2" style="background-color: white; color: #987554" type="button" value="Hủy" data-dismiss="modal">
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <input class="px-3 py-2" style="background-color: white; color: #987554" type="submit" name="submit" value="Thay Đổi">
+                                                    </div>
+                                                    <div class="col-3">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Modal -->
+                        <div class="modal fade modal-second" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title pl-5" id="exampleModalLabel" style="color: #664229">Thêm Địa Chỉ</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="BookCart?service=addAddress" method="post">
+                                            <div class="container-fluid">
+                                                <div class="row">
+                                                    <div class="col-4" style="padding-left: 12%">
+                                                        Họ Và Tên:
+                                                    </div>
+                                                    <div class="col-8 pl-0">
+                                                        <input type="text" style="width: 92%" placeholder="Nhập Họ Và Tên" name="Name">
+                                                    </div>
+                                                </div>
+                                                <div class="row pt-3">
+                                                    <div class="col-4" style="padding-left: 6%">
+                                                        Số Điện Thoại:
+                                                    </div>
+                                                    <div class="col-8 pl-0">
+                                                        <input type="text" style="width: 92%" placeholder="Nhập Số Điện Thoại" name="PhoneNo">
+                                                    </div>
+                                                </div>
+                                                <div class="row pt-3">
+                                                    <div class="col-4" style="padding-left: 16%">
+                                                        Địa Chỉ:
+                                                    </div>
+                                                    <div class="col-8 pl-0">
+                                                        <textarea placeholder="Nhập Địa Chỉ" name="Address" rows="3" cols="33"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="row pt-4 pb-3">
+                                                    <div class="col-3">
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <input class="px-3 py-2" style="background-color: white; color: #987554" type="button" value="Quay Lại" data-dismiss="modal" data-toggle="modal" data-target="#exampleModal">
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <input class="px-3 py-2" style="background-color: white; color: #987554" type="submit" name="submit" onclick="sucess()" value="Thêm Địa Chỉ" >
+                                                    </div>
+                                                    <div class="col-3">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
+
                 </div>
                 <div class="col-lg-7 pl-0 pr-0">
                     <div class="container-fluid">
                         <div class="row">
-                            <div class="col-12 text-center mt-3 mb-4" style="font-size: 23px"> Đơn Hàng </div>
+                            <div class="col-12 text-center mt-3 mb-4" style="font-size: 23px; font-weight: 500; color: #664229"> Đơn Hàng </div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col-3 text-center" style="font-size: 20px">
+                            <div class="col-3 text-center" style="font-size: 20px; font-weight: 500; color: #664229">
                             </div>
-                            <div class="col-3 text-center" style="font-size: 20px">
+                            <div class="col-3 text-center" style="font-size: 20px; font-weight: 500; color: #664229">
                                 Sản Phẩm
                             </div>
-                            <div class="col-2 text-center" style="font-size: 20px">
+                            <div class="col-2 text-center" style="font-size: 20px; font-weight: 500; color: #664229">
                                 Giá
                             </div>
-                            <div class="col-2 text-center" style="font-size: 20px">
+                            <div class="col-2 text-center" style="font-size: 20px; font-weight: 500; color: #664229">
                                 Số Lượng
                             </div>
-                            <div class="col-2 text-center" style="font-size: 20px">
+                            <div class="col-2 text-center" style="font-size: 20px; font-weight: 500; color: #664229">
                                 Thành Tiền
                             </div>
                         </div>
@@ -287,18 +441,18 @@
                         %>
                         <div class="row">
                             <div class="col-3 text-center">
-                                <img class="ml-auto mr-auto mb-2" src="${pageContext.request.contextPath}<%=cart.getBookImg()%>" style="height: 190px; width: 130px">
+                                <img class="ml-auto mr-auto mb-2" src="${pageContext.request.contextPath}<%=cart.getBookImg()%>" style="height: 160px; width: 120px">
                             </div>
                             <div class="col-3 text-center mt-auto mb-auto">
                                 <%=cart.getBookID()%>
                             </div>
-                            <div class="col-2 text-center mt-auto mb-auto">
+                            <div class="col-2 text-center mt-auto mb-auto myDIV">
                                 <%=cart.getPrice()%>
                             </div>
                             <div class="col-2 text-center mt-auto mb-auto">
                                 <%=cart.getQuantity()%>
                             </div>
-                            <div class="col-2 text-center mt-auto mb-auto">
+                            <div class="col-2 text-center mt-auto mb-auto myDIV">
                                 <%=total%>
                             </div>
                         </div>
@@ -308,20 +462,37 @@
                         <div class="row mt-4">
                             <div class="col-2">
                             </div>
-                            <div class="col-8 border">
+                            <div class="col-8 border" style="border-radius: 10px">
                                 <div class="dropdown text-center pt-3 pb-3" style="width: 100%">
                                     <%=name%>
                                     <div class="dropdown-content">
-                                        <div onclick="card()"><a href="BookCart?service=checkOut&way=card"> Thẻ Tín Dụng / Ghi Nợ</a></div>
-                                        <div><a href="BookCart?service=checkOut&way=ck"> Chuyển Khoản</a></div>
-                                        <div><a href="BookCart?service=checkOut&way=cod"> Thanh Toán Khi Nhận Hàng</a></div>
+                                        <div class="pt-2 pb-2" onclick="card()"> Thẻ Tín Dụng / Ghi Nợ</a></div>
+                                        <div><a href="BookCart?service=checkOut&way=ck"> Chuyển Khoản </a></div>
+                                        <div><a href="BookCart?service=checkOut&way=cod"> Thanh Toán Khi Nhận Hàng </a></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-2">
                             </div>
                         </div>
-
+                        <div class="row mt-5">
+                            <div class="col-3">
+                            </div>
+                            <%
+                                int ID = (int)request.getAttribute("ID");
+                            %>
+                            <div class="col-6 mt-5">
+                                    <%
+                                        if (name.equals("<i class=\"bi bi-credit-card-2-front\"></i> Chuyển Khoản")) {
+                                    %>
+                                    <img style="width: 100%; height: auto" src="https://img.vietqr.io/image/970423-03847457501-UIPvhPS.png?amount=<%=totalPrice%>&addInfo=BeS%20Ma%20Don%20Hang%20<%=ID%>">
+                                    <%
+                                        }
+                                    %>
+                            </div>
+                            <div class="col-3">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -329,12 +500,23 @@
                 <div class="col-5">
                 </div>
                 <div class="col-4 mt-auto mb-auto">
-                    <div class="" style="font-size: 20px; font-weight: normal"> Tổng thanh toán (<%=vectorC.size()%> sản phẩm): <%=totalPrice%>&#8363</div>
-                    
+                    <div class="" style="font-size: 20px; font-weight: normal; display: inline-block; color: #664229"> Tổng thanh toán (<%=vectorC.size()%> sản phẩm): &nbsp;</div><div class="myDIV" style="font-size: 20px; display: inline-block"> <%=totalPrice%></div>
                 </div>
+                <%
+                    if (name.equals("<i class=\"bi bi-cart-check\"></i> Phương Thức Thanh Toán")) {
+                %>
                 <div class="col-2">
-                    <a href="BookCart?service=payment"><button class="button1 mt-auto mb-auto ml-5" style="font-size:20px; width: 150px; height: 60px;">Đặt Hàng</button></a>
+                    <button onclick="pay()" class="button1 mt-auto mb-auto ml-5" style="font-size:20px; width: 150px; height: 60px;">Đặt Hàng</button>
                 </div>
+                <%
+                    } else {
+                %>
+                <div class="col-2">
+                    <a href="BookCart?service=payment&payment=<%=payment%>&address=<%=ReceiverAdr%>"><button class="button1 mt-auto mb-auto ml-5" style="font-size:20px; width: 150px; height: 60px;">Đặt Hàng</button></a>
+                </div>
+                <%
+                    }
+                %>
                 <div class="col-1">
                 </div>
             </div>
@@ -382,6 +564,27 @@
             function card() {
                 alert("Hiện tại, Cửa Hàng chưa hỗ trợ thanh toán qua thẻ\nVui Lòng chọn phương thức thanh toán khác!");
             }
+            function pay() {
+                alert("Vui Lòng chọn một phương thức thanh toán!");
+            }
+            function sucess() {
+                alert("Thêm Địa Chỉ Thành Công!");
+            }
+        </script>
+        <script>
+            let x = document.querySelectorAll(".myDIV");
+            for (let i = 0, len = x.length; i < len; i++) {
+                let num = Number(x[i].innerHTML)
+                        .toLocaleString('en');
+                x[i].innerHTML = num;
+            }
+        </script>
+        <script>
+            $(document).on('hidden.bs.modal', function () {
+                if ($('.modal:visible').length) {
+                    $('body').addClass('modal-open');
+                }
+            });
         </script>
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

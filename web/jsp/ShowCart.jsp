@@ -15,6 +15,48 @@
         <link rel="stylesheet" href="CSS/style.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
         <style>
+            .dropbtn {
+                background-color: #4CAF50;
+                color: white;
+                padding: 16px;
+                font-size: 16px;
+                border: none;
+                cursor: pointer;
+            }
+
+            .dropdown {
+                position: relative;
+                display: inline-block;
+            }
+
+            .dropdown-content {
+                display: none;
+                position: absolute;
+                background-color: #f9f9f9;
+                min-width: 160px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                z-index: 1;
+            }
+
+            .dropdown-content a {
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }
+
+            .dropdown-content a:hover {
+                background-color: #f1f1f1
+            }
+
+            .dropdown:hover .dropdown-content {
+                display: block;
+            }
+
+            .dropdown:hover .dropbtn {
+                background-color: #3e8e41;
+            }
+
             .logo{
                 width: 15%;
                 height: auto;
@@ -137,44 +179,46 @@
             Account acc = (Account)session.getAttribute("acc");
         %>
         <!-- menu -->
-        <div class="menu container-fluid" style="height: 90px; background-color: #E5D3B3">
+        <div class="menu container-fluid" style="height: 90px; width: 100%; background-color: #E5D3B3">
             <div class="row">
                 <!-- logo -->
-                <div class="cl-lg-3 mt-auto mb-auto d-none d-lg-block">
+                <div class="cl-lg-3 mt-auto mb-auto">
                     <a href="Home?service=listAll"><img class="logo" src = "${pageContext.request.contextPath}/assets/logo.PNG" alt="Logo"></a>
                 </div>
 
                 <!-- search bar -->
-                <div class="cl-lg-6 d-flex justify-content-center align-items-center">
-                    <form action="BookController?service=search" method="POST">
-                        <div style="display: inline-block"><input type="text" placeholder="Search Book Name" name="Name" style="width: 350px"></div>
-                        <div style="display: inline-block"><input type="submit" value="Search" name="submit"></div>
-
+                <div class="cl-lg-4 d-flex justify-content-center align-items-center ml-5">
+                    <form action="BookController?service=search&page=1" method="POST">
+                        <div style="display: inline-block"><input type="text" placeholder="Search Book Name" name="Name" style="width: 380px; height: 35px; color: #664229"></div>
+                        <div style="display: inline-block"><button type="submit" class="" style="height: 35px; width: 50px; border-color: white; color: white; background-color: #E5D3B3"><i class="bi bi-search"></i></button></div>
                     </form>
                 </div>
-
+                
                 <!-- menu item -->
-                <div class="cl-lg-3 d-flex justify-content-center align-items-center">
+                <div class="cl-lg-3 d-flex mt-3 mb-3 align-items-center">
                     <nav>
                         <ul id="element">
-                            <li id="item"><a href="" style="color: #664229">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
-                                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
-                                    </svg>
+                            <div class="dropdown">
+                                <li id="item"><a href="userprofile" style="color: #664229">
+                                        <i class="bi bi-person h3"></i>
+                                    </a></li>
+                                <div class="dropdown-content" style="background-color: #E5D3B3">
+                                    <div><a href="userprofile" style="color: #664229"><i class="bi bi-person h5"></i> <%=acc.getLastName()%></a></div>
+                                    <div><a href="OrderController" style="color: #664229"><i class="bi bi-wallet2"></i> Đơn Hàng</a></div>
+                                    <div><a href="LogOut" style="color: #664229"><i class="bi bi-box-arrow-right h5"></i> Đăng Xuất</a></div>
+                                </div>
+                            </div>
+                            <li id="item"><a href="BookCart?service=showCart&userID=<%=acc.getUserID()%>" style="color: #664229">
+                                    <i class="bi bi-cart h4"></i>
                                 </a></li>
-                            <li id="item"><a href="BookCart?service=showCart" style="color: #664229">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
-                                    <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
-                                    </svg>
+                            <li id="item" style="color: #E5D3B3">m
                                 </a></li>
-                            <li id="item"><a href="LogOut" style="color: #664229">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"/>
-                                    <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
-                                    </svg>
+                            <li id="item" style="color: #E5D3B3">m
                                 </a></li>
                         </ul>
                     </nav>
+                </div>
+                <div class="cl-lg-2">
                 </div>
             </div>
         </div>
@@ -209,7 +253,7 @@
                                 for(Cart cart1 : vectorCart){
                                 if(cart1.getCartID() == cart.getCartID()){
                             %>
-                            <div class="col-3 text-center pt-4 pb-4 mt-auto mb-auto pl-5"><img src="${pageContext.request.contextPath}<%=cart.getBookImg()%>" style="width: 50%"></div>
+                            <div class="col-3 text-center pt-4 pb-4 mt-auto mb-auto pl-5"><img src="${pageContext.request.contextPath}<%=cart.getBookImg()%>" style="width: 120px; height: 170px"></div>
                             <div class="col-3 text-center mt-auto mb-auto" style="font-size: 18px"><%=cart.getBookID()%></div>
                             <div class="col-3 text-center mt-auto mb-auto" style="font-size: 18px">
                                 <div class="container-fluid">
@@ -234,7 +278,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-2 text-center mt-auto mb-auto" style="font-size: 18px"><%=cart.getPrice()*cart.getQuantity()%>&#8363;</div>
+                            <div class="col-2 text-center mt-auto mb-auto myDIV" style="font-size: 18px"><%=cart.getPrice()*cart.getQuantity()%></div>
                             <div class="col-1 text-center mt-auto mb-auto" style="font-size: 18px"><a href="BookCart?service=deleteCart&bookID=<%=cart1.getBookID()%>"><i class="bi bi-x h3" style="color: #664229"></i></a></div>
                                     <%
                                             }
@@ -256,7 +300,7 @@
                     <a href="BookCart?service=deleteAll"><button class="button2 mt-auto mb-auto" style="font-size:20px; width: 150px; height: 60px;">Xóa tất cả</button></a>
                 </div>
                 <div class="col-lg-5 mt-auto mb-auto" style="padding-left: 350px; font-size: 20px">
-                    <div class="">Tổng thanh toán (<%=vector.size()%> sản phẩm): <%=totalPrice%>&#8363</div>
+                    <div class="" style="display: inline-block">Tổng thanh toán (<%=vector.size()%> sản phẩm): </div> <div class="myDIV" style="display: inline-block"> <%=totalPrice%> </div>
                 </div>
                 <div class="col-lg-3" style="padding-left: 100px;">
                     <%
@@ -326,6 +370,14 @@
 
             function warn() {
                 alert("Chưa có Sản Phẩm trong giỏ hàng");
+            }
+        </script>
+        <script>
+            let x = document.querySelectorAll(".myDIV");
+            for (let i = 0, len = x.length; i < len; i++) {
+                let num = Number(x[i].innerHTML)
+                        .toLocaleString('en');
+                x[i].innerHTML = num;
             }
         </script>
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

@@ -8,6 +8,7 @@ import entity.Account;
 import java.time.format.DateTimeFormatter;
 import java.sql.Date;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -102,7 +103,8 @@ public class AccountDAO extends DBConnect {
                             rs.getString("Address"),
                             rs.getString("DOB"),
                             rs.getBoolean("Gender"),
-                            rs.getString("imgUser")
+                            rs.getString("imgUser"),
+                            rs.getString("Status")
                     );
                 }
             }
@@ -133,7 +135,7 @@ public class AccountDAO extends DBConnect {
         try {
             // Lấy kết nối từ DBContext
             connection = (Connection) new DBConnect().getConnection();
-            String sql = "INSERT INTO Account (RoleID, FirstName, LastName, Email, Password, PhoneNo, Address, Gender, DOB, Status, RegisterDate) "
+            String sql = "INSERT INTO Account (RoleID, FirstName, LastName, Email, Password, PhoneNo, Address, Gender, DOB, Status, Created_Date) "
                     + "VALUES (3, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
                 ps.setString(1, fname);
@@ -271,6 +273,178 @@ public class AccountDAO extends DBConnect {
             System.out.println(e);
         }
         return null;
+    }
+
+    public String[] getStaticsCustomerIn7Days(String from, String to) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        // Parse chuỗi ngày/tháng/năm sang LocalDate
+        LocalDate fromDate = LocalDate.parse(from, formatter);
+        // Mảng để lưu trữ 7 ngày
+        String[] customersArray = new String[8];
+        // Thiết lập ngày bắt đầu là ngày "from"
+        LocalDate currentDate = fromDate;
+        AccountDAO dao = new AccountDAO();
+        // Lặp qua 7 ngày và thêm chúng vào mảng
+        for (int i = 0; i < 8; i++) {
+            // Chuyển LocalDate thành chuỗi và thêm vào mảng
+            int total = dao.getStaticsCustomerInDay(currentDate.toString());
+            customersArray[i] = Integer.toString(total);
+            // Tăng ngày hiện tại lên 1 để di chuyển đến ngày tiếp theo
+            currentDate = currentDate.plusDays(1);
+        }
+        return customersArray;
+    }
+
+    public int getStaticsCustomerInDay(String day) {
+        int total = 0;
+        String sql = "Select  count (UserID) as total from Account "
+                + "where Created_Date = ? and roleID='3'";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, day);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                total = rs.getInt("total");
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return total;
+    }
+
+    public int getTotalAccount(String from, String to) {
+        int total = 0;
+        String sql = "Select  count (UserID) as total from Account where Created_Date  between ? and ? and roleID='3';";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, from);
+            st.setString(2, to);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                total = rs.getInt("total");
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return total;
+    }
+
+    public String[] getStaticsPostIn7Days(String from, String to) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        // Parse chuỗi ngày/tháng/năm sang LocalDate
+        LocalDate fromDate = LocalDate.parse(from, formatter);
+        // Mảng để lưu trữ 7 ngày
+        String[] customersArray = new String[8];
+        // Thiết lập ngày bắt đầu là ngày "from"
+        LocalDate currentDate = fromDate;
+        AccountDAO dao = new AccountDAO();
+        // Lặp qua 7 ngày và thêm chúng vào mảng
+        for (int i = 0; i < 8; i++) {
+            // Chuyển LocalDate thành chuỗi và thêm vào mảng
+            int total = dao.getStaticsPostsInDay(currentDate.toString());
+            customersArray[i] = Integer.toString(total);
+            // Tăng ngày hiện tại lên 1 để di chuyển đến ngày tiếp theo
+            currentDate = currentDate.plusDays(1);
+        }
+        return customersArray;
+    }
+
+    public int getStaticsPostsInDay(String day) {
+        int total = 0;
+        String sql = "Select  count (BlogID) as total from Blogs "
+                + "where CreatedDate = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, day);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                total = rs.getInt("total");
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return total;
+    }
+
+    public String[] getStaticsProductIn7Days(String from, String to) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        // Parse chuỗi ngày/tháng/năm sang LocalDate
+        LocalDate fromDate = LocalDate.parse(from, formatter);
+        LocalDate toDate = LocalDate.parse(to, formatter);
+        // Mảng để lưu trữ 7 ngày
+        String[] customersArray = new String[8];
+        // Thiết lập ngày bắt đầu là ngày "from"
+        LocalDate currentDate = fromDate;
+        AccountDAO dao = new AccountDAO();
+        // Lặp qua 7 ngày và thêm chúng vào mảng
+        for (int i = 0; i < 8; i++) {
+            // Chuyển LocalDate thành chuỗi và thêm vào mảng
+            int total = dao.getStaticsProductInDay(currentDate.toString());
+            customersArray[i] = Integer.toString(total);
+            // Tăng ngày hiện tại lên 1 để di chuyển đến ngày tiếp theo
+            currentDate = currentDate.plusDays(1);
+        }
+
+        return customersArray;
+    }
+
+    public int getStaticsProductInDay(String day) {
+        int total = 0;
+        String sql = "Select count (BookID) as total from Book "
+                + "where PublicationDate = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, day);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                total = rs.getInt("total");
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return total;
+    }
+
+    public String[] getStaticsFeedbackIn7Days(String from, String to) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        // Parse chuỗi ngày/tháng/năm sang LocalDate
+        LocalDate fromDate = LocalDate.parse(from, formatter);
+        LocalDate toDate = LocalDate.parse(to, formatter);
+        // Mảng để lưu trữ 7 ngày
+        String[] customersArray = new String[8];
+        // Thiết lập ngày bắt đầu là ngày "from"
+        LocalDate currentDate = fromDate;
+        AccountDAO dao = new AccountDAO();
+        // Lặp qua 7 ngày và thêm chúng vào mảng
+        for (int i = 0; i < 8; i++) {
+            // Chuyển LocalDate thành chuỗi và thêm vào mảng
+            int total = dao.getStaticsFeedbackInDay(currentDate.toString());
+            customersArray[i] = Integer.toString(total);
+            // Tăng ngày hiện tại lên 1 để di chuyển đến ngày tiếp theo
+            currentDate = currentDate.plusDays(1);
+        }
+
+        return customersArray;
+    }
+
+    public int getStaticsFeedbackInDay(String day) {
+        int total = 0;
+        String sql = "Select count (FeedbackID) as total from Feedback "
+                + "where FBDate = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, day);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                total = rs.getInt("total");
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return total;
     }
 
     public static void main(String[] args) {

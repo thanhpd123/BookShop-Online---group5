@@ -132,7 +132,7 @@ public class BookController extends HttpServlet {
                 start = pageID * end + 1;
                 end = 5 * page;
             }
-            Vector<EntityFeedback> vectorFB = daoFB.getFeedback(start ,end ,bookID);
+            Vector<EntityFeedback> vectorFB = daoFB.getFeedback(start, end, bookID);
             request.setAttribute("dataFB", vectorFB);
             request.setAttribute("dataAll", vectorAll);
             request.setAttribute("dataBook", vectorBook);
@@ -143,22 +143,40 @@ public class BookController extends HttpServlet {
         }
 
         if (service.equals("viewBook")) {
+            int page = Integer.parseInt(request.getParameter("page"));
+            int start = 1, pageID;
+            int end = 4;
+            if (page == 1) {
+            }
+            if (page != 1) {
+                pageID = page - 1;
+                start = pageID * end + 1;
+                end = 4 * page;
+            }
             String bookID = request.getParameter("bookID");
             Vector<EntityFeedback> vectorFB = daoFB.getFeedback(1, 5, bookID);
             Vector<Book> vectorBook = dao.getBook(bookID);
+            Vector<Book> vectorPur = dao.getPurchases(bookID);
+            Vector<Book> vectorS = dao.getStatus(bookID);
             Vector<EntityFeedback> vectorAll = daoFB.getFeedback(bookID);
             Vector<Book> vectorC = dao.getCat(bookID, "Select BookID, BookImg, Name, Description, PublisherName, AuthorID, Edition, CategoryID, PublicationDate, Quantity, Price from Book\n"
                     + "Where BookID = '" + bookID + "'");
             String cat = vectorC.get(0).getCategoryID();
-            Vector<Book> vectorCat = dao.getBookCate(cat, "SELECT TOP 4 Book.BookID, Book.BookImg, Book.Name, Book.Description, Book.PublisherName, Author.AuthorName, Book.Edition, Category.CategoryName, Book.PublicationDate, Book.Quantity, Book.Price\n"
-                    + "FROM Book \n"
-                    + "INNER JOIN Author ON Book.AuthorID = Author.AuthorID\n"
+            Vector<Book> vectorCat = dao.getBookCate(cat, "SELECT * FROM ( \n"
+                    + "SELECT Book.BookID, Book.BookImg, Book.Name, Book.Description, Book.PublisherName, Author.AuthorName, Book.Edition, Category.CategoryName, Book.PublicationDate, Book.Quantity, Book.Price, ROW_NUMBER() OVER (ORDER BY Book.BookID ASC) AS RowNum\n"
+                    + "FROM Book\n"
                     + "INNER JOIN Category ON Book.CategoryID = Category.CategoryID\n"
-                    + "WHERE Book.CategoryID ='" + cat + "' AND BookID <> '" + bookID + "';");
+                    + "INNER JOIN Author ON Book.AuthorID = Author.AuthorID\n"
+                    + "WHERE Book.CategoryID='" + cat + "' AND BookID <> '" + bookID + "') \n"
+                    + "AS SubQuery\n"
+                    + "WHERE RowNum BETWEEN '" + start + "' AND '" + end + "';");
             request.setAttribute("dataFB", vectorFB);
             request.setAttribute("dataAll", vectorAll);
+            request.setAttribute("dataS", vectorS);
+            request.setAttribute("page", page);
             request.setAttribute("dataBook", vectorBook);
             request.setAttribute("data", vectorC);
+            request.setAttribute("dataPur", vectorPur);
             request.setAttribute("dataCate", vectorCat);
             RequestDispatcher dis = request.getRequestDispatcher("/jsp/BookDetail.jsp");
             dis.forward(request, response);
@@ -198,9 +216,21 @@ public class BookController extends HttpServlet {
         }
 
         if (service.equals("search")) {
+            int page = Integer.parseInt(request.getParameter("page"));
+            int start = 1, pageID;
+            int end = 16;
+            if (page == 1) {
+            }
+            if (page != 1) {
+                pageID = page - 1;
+                start = pageID * end + 1;
+                end = 16 * page;
+            }
             String name = request.getParameter("Name");
-            Vector<Book> vector = dao.searchName(name);
+            Vector<Book> vectorAll = dao.getAllBook("SELECT * FROM Book");
+            Vector<Book> vector = dao.searchName(start, end, name);
             request.setAttribute("data", vector);
+            request.setAttribute("dataAll", vectorAll);
             RequestDispatcher dis = request.getRequestDispatcher("/jsp/BookManage.jsp");
             dis.forward(request, response);
         }

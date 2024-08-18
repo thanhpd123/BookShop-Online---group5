@@ -46,7 +46,7 @@ html {
   font-family: sans-serif;
   line-height: 1.15;
   -webkit-text-size-adjust: 100%;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0) ;
 }
 
 article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
@@ -2365,8 +2365,8 @@ fieldset:disabled a.btn {
 
 .btn-primary {
   color: #212529;
-  background-color: #D19C97;
-  border-color: #D19C97;
+  background-color: #D2B48C;
+  border-color: #D2B48C;
 }
 
 .btn-primary:hover {
@@ -6104,7 +6104,7 @@ button.bg-primary:focus {
 }
 
 .bg-secondary {
-  background-color: #EDF1FF !important;
+    background-color: #E5D3B3 !important;
 }
 
 a.bg-secondary:hover, a.bg-secondary:focus,
@@ -6614,6 +6614,7 @@ button.bg-dark:focus {
 
 .align-items-center {
   align-items: center !important;
+  background-color: #E5D3B3;
 }
 
 .align-items-baseline {

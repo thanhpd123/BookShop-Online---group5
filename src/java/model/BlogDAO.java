@@ -24,7 +24,7 @@ import java.util.logging.Logger;
 public class BlogDAO extends DBConnect {
 
     public List<Blog> getAllBlog() {
-        String sql = "select * from Blogs";
+        String sql = "select b.BlogID, bd.BlogImg, bd.BlogAuthorImg, b.Title, b.AuthorName, b.CreatedDate from Blogs b join BlogDetails bd on b.BlogID=bd.BlogID";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -40,9 +40,13 @@ public class BlogDAO extends DBConnect {
     }
 
     public BlogDetail getBlogDetailbyID(int blogID) {
-        String sql = "select b.BlogID,b.Title, b.BlogImg,b.BlogAuthorImg, b.AuthorName, b.Content, b.CreatedDate, b.UserID\n"
-                + "                 from Blogs b full join BlogComments bc \n"
-                + "                 on b.BlogID = bc.BlogID where b.BlogID = ?";
+        String sql = "SELECT b.BlogID, b.Title, bd.BlogImg, bd.BlogAuthorImg, b.AuthorName, \n"
+                + "       bd.Content1 + bd.Content2 + bd.Content3 AS Content, \n"
+                + "       b.CreatedDate, b.UserID\n"
+                + "FROM Blogs b\n"
+                + "JOIN BlogDetails bd ON b.BlogID = bd.BlogID\n"
+                + "FULL JOIN BlogComments bc ON b.BlogID = bc.BlogID\n"
+                + "WHERE b.BlogID = ?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, blogID);
@@ -104,9 +108,12 @@ public class BlogDAO extends DBConnect {
 
     public List<Blog> pagingBlogs(int numberPaging) {
         List<Blog> list = new ArrayList<>();
-        String sql = "select * from Blogs\n"
+        String sql = "SELECT b.BlogID, bd.BlogImg, bd.BlogAuthorImg, b.Title, b.AuthorName, b.CreatedDate\n"
+                + "FROM Blogs b\n"
+                + "JOIN BlogDetails bd ON b.BlogID = bd.BlogID \n"
                 + "ORDER BY CreatedDate DESC\n"
-                + "OFFSET ? ROWS FETCH NEXT 6 ROWS ONLY";
+                + "OFFSET ? ROWS \n"
+                + "FETCH NEXT 6 ROWS ONLY";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, (numberPaging - 1) * 6);
@@ -122,11 +129,12 @@ public class BlogDAO extends DBConnect {
 
     public List<Blog> getRecentsBlog() {
         List<Blog> list = new ArrayList<>();
-        String sql = "SELECT *\n"
-                + "FROM Blogs\n"
+        String sql = "SELECT b.BlogID, bd.BlogImg, bd.BlogAuthorImg, b.Title, b.AuthorName, b.CreatedDate\n"
+                + "FROM Blogs b\n"
+                + "JOIN BlogDetails bd ON b.BlogID = bd.BlogID\n"
                 + "ORDER BY CreatedDate DESC\n"
                 + "OFFSET 0 ROWS\n"
-                + "FETCH NEXT 5 ROWS ONLY;";
+                + "FETCH NEXT 5 ROWS ONLY";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();

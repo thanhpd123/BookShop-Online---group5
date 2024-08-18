@@ -6,7 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page import="entity.Orders, java.util.Vector, entity.Account"%>
+<%@page import="entity.Orders, java.util.Vector, entity.Account, entity.OrderDetail"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -65,7 +65,10 @@
     <body>
         <c:import url="/jsp/SaleManage.jsp" />
         <%
+            Account acc1 = (Account)session.getAttribute("acc");
             Vector<Orders> vectorOr = (Vector<Orders>)request.getAttribute("dataOrder");
+            Vector<Orders> vectorNew = (Vector<Orders>)request.getAttribute("vectorNew");
+            Vector<OrderDetail> vectorOrder = (Vector<OrderDetail>)request.getAttribute("vectorOrder");
             Vector<Orders> vector = (Vector<Orders>)request.getAttribute("dataOr");
             Vector<Orders> vectorByUser = (Vector<Orders>)request.getAttribute("dataOrByUser");
             Vector<Account> vectorAcc = (Vector<Account>)request.getAttribute("data");
@@ -90,16 +93,105 @@
             }
         %>
         <div class="container-fluid">
-            <div class="row" style="background-color: #F5F5F5; height: 100vh">
+            <div class="row pt-2 pb-2">
+                <div class="col-10">
+                </div>
+                <div class="col-2">
+                    <div class="dropdown">
+                        Tài Khoản
+                        <div class="dropdown-content">
+                            <a href="userprofile"><i class="bi bi-person h5"></i> <%=acc1.getLastName()%></a>
+                            <a href="LogOut">Đăng Xuất</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="background-color: #F5F5F5; height: 110vh;">
                 <div class="col-1">
                 </div>
-                <div class="col-10 mt-5">
+                <div class="col-10 mt-3">
                     <div class="container-fluid">
+                        <div class="row mb-4" style="background-color: #F5F5F5;">
+                            <div class="col mr-3" style="background-color: white">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <div class="mt-4 mb-4 text-center" style="width: 60px; height: 60px; background-color: #A52A2A; padding-top: 5%">
+                                                <i class="bi bi-cart-plus h1" style="width: 100%; color: white;"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col-9 pt-4">
+                                            <div class="container-fluid">
+                                                <%
+                                                    int i = 0;
+                                                    for (Orders order : vectorNew) {
+                                                        i++;
+                                                    }
+                                                %>
+                                                <div class="row">
+                                                    <h4 class="pl-0"><%=i%></h4>
+                                                </div>
+                                                <div class="row">
+                                                    Đơn Hàng Mới trong 7 Ngày
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col mr-3" style="background-color: white">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <div class="mt-4 mb-4 text-center" style="width: 60px; height: 60px; background-color: #D2691E; padding-top: 5%">
+                                                <i class="bi bi-collection h1" style="width: 100%; color: white;"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col-9 pt-4">
+                                            <div class="container-fluid">
+                                                <div class="row">
+                                                    <h4 class="pl-0"><%=a + b + c + d%></h4>
+                                                </div>
+                                                <div class="row">
+                                                    Tổng Số Đơn Hàng
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col" style="background-color: white">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="mt-4 mb-4 text-center" style="width: 60px; height: 60px; background-color: #F4A460; padding-top: 5%">
+                                                <i class="bi bi-currency-dollar h1" style="width: 100%; color: white;"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col-8 pt-4">
+                                            <div class="container-fluid">
+                                                <%
+                                                    int price = 0;
+                                                    for (OrderDetail orderinfo : vectorOrder) {
+                                                        price += orderinfo.getPrice();
+                                                    }
+                                                %>
+                                                <div class="row">
+                                                    <h4 class="myDIV pl-0"><%=price%></h4>
+                                                </div>
+                                                <div class="row">
+                                                    Tổng Doanh Thu
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col pt-4 pb-4 mr-3" style="background-color: white">
                                 <div class="container-fluid">
                                     <div class="row pl-5">
-                                        Tổng Số Đơn Hàng: <%=a + b + c%>
                                     </div>
                                     <div class="row pt-3">
                                         <canvas id="myChart" style="width:100%;max-width:500px"></canvas>
@@ -109,7 +201,7 @@
                             <div class="col ml-2 pt-4" style="background-color: white">
                                 <div class="container-fluid">
                                     <div class="row pb-4">
-                                        <div class="col-5" style="padding-left: 10%">
+                                        <div class="col-5" style="padding-left: 8%">
                                             Lợi Nhuận Cửa Hàng:
                                         </div>
                                         <div class="col-4">
@@ -127,7 +219,7 @@
                                         <div style="width: 100%">Lợi Nhuận <%=day%> Ngày Gần Nhất:</div>
                                     </div>
                                     <div class="row pb-4">
-                                        <canvas id="LineChart" style="width:100%;max-width:600px"></canvas>
+                                        <canvas id="Chart" style="width:100%;max-width:600px"></canvas>
                                     </div>
                                 </div>
                             </div>
@@ -135,13 +227,13 @@
                         <div class="row mt-4" style="background-color: white; padding-top: 50px">
                             <div class="col-5">
                                 <div class="container-fluid">
-                                    <form action="SaleController?service=dashboard" method="post">
+                                    <form action="SaleController?service=dashboard" method="post" onsubmit="return validateForm()">
                                         <div class="row pt-4">
                                             <div class="col-4" style="padding-left: 40px">
                                                 Người Dùng:
                                             </div>
                                             <div class="col-7">
-                                                <select name="userID" style="background-color: white; padding: 6px;">
+                                                <select name="userID" id="userID" style="background-color: white; padding: 6px;">
                                                     <option></option>
                                                     <%
                                                         for (Account acc : vectorAcc) {
@@ -160,7 +252,7 @@
                                                 Bắt Đầu:
                                             </div>
                                             <div class="col-7">
-                                                <input class="text-center" type="date" name="start" style="width: 170px; padding: 2px">
+                                                <input class="text-center" type="date" id="start" name="start" style="width: 170px; padding: 2px">
                                             </div>
                                             <div class="col-1">
                                             </div>
@@ -170,7 +262,7 @@
                                                 Kết Thúc:
                                             </div>
                                             <div class="col-7">
-                                                <input class="text-center" type="date" name="end" style="width: 170px; padding: 2px">
+                                                <input class="text-center" type="date" id="end" name="end" style="width: 170px; padding: 2px">
                                             </div>
                                             <div class="col-1">
                                             </div>
@@ -179,13 +271,12 @@
                                             <div class="col-4">
                                             </div>
                                             <div class="col-7">
-                                                <input type="submit" class="p-2" style="background-color: white; width: 100px" value="Tra Cứu" name="submit">
-                                            </div>
-                                            <div class="col-1">
+                                                <input type="submit" class="p-2" style="background-color: white; width: 100px; border-color: #664229" value="Tra Cứu" name="submit">
 
+                                                <div class="col-1">
+                                                </div>
                                             </div>
                                         </div>
-
                                     </form>
                                 </div>
                             </div>
@@ -251,7 +342,42 @@
                 }
             });
         </script>
-
+        <script>
+            let x1 = document.querySelectorAll(".myDIV");
+            for (let i = 0, len = x1.length; i < len; i++) {
+                let num = Number(x1[i].innerHTML)
+                        .toLocaleString('en');
+                x1[i].innerHTML = num;
+            }
+        </script>
+        <script type="text/javascript">
+            function validateForm() {
+                var start = document.getElementById("start").value;
+                var userID = document.getElementById("userID").value;
+                var end = document.getElementById("end").value;
+                if (start.trim() === "" && userID !== "" && end.trim() !== "") {
+                    alert("Vui lòng nhập ngày Bắt Đầu!");
+                    return false; // Prevent the form from being submitted
+                }
+                if (end.trim() === "" && start.trim() !== "" && userID !== "") {
+                    alert("Vui lòng nhập ngày Kết Thúc!");
+                    return false; // Prevent the form from being submitted
+                }
+                if (start.trim() === "" && end.trim() === "" && userID !== "") {
+                    alert("Vui lòng nhập ngày Bắt Đầu và ngày Kết Thúc!");
+                    return false; // Prevent the form from being submitted
+                }
+                if (start.trim() === "" && end.trim() === "" && userID.trim() === "") {
+                    alert("Vui lòng nhập đầy đủ thông tin!");
+                    return false; // Prevent the form from being submitted
+                }
+                if (userID.trim() === "") {
+                    alert("Vui lòng chọn Người Dùng!");
+                    return false; // Prevent the form from being submitted
+                }
+                return true; // Allow the form to be submitted
+            }
+        </script>
         <script>
             const x = [<%
                             for (Orders or : vector) {
@@ -269,7 +395,7 @@
                 }
             %>
             ];
-            new Chart("LineChart", {
+            new Chart("Chart", {
                 type: "line",
                 data: {
                     labels: x,
@@ -290,7 +416,6 @@
                 }
             });
         </script>
-
         <script>
             var xValues = ["Đang xử lý", "Đang giao hàng", "Đã giao hàng", "Đã hủy"];
             var yValues = [<%=c%>, <%=b%>, <%=a%>, <%=d%>];
@@ -309,7 +434,7 @@
                     legend: {display: false},
                     title: {
                         display: true,
-                        text: "Tỷ Lệ Đơn Đặt Hàng"
+                        text: "Số Lượng Đơn Đặt Hàng"
                     }
                 }
             });

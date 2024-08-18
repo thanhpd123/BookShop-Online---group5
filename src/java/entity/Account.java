@@ -16,7 +16,37 @@ public class Account {
 
     public Account() {
     }
+    
+    
+    public Account(String FirstName, String LastName, String PhoneNo, String Address) {
+        this.FirstName = FirstName;
+        this.LastName = LastName;
+        this.PhoneNo = PhoneNo;
+        this.Address = Address;
+    }
+    
+    public Account(String FirstName, String LastName, String Email, String Password, int UserID) {
+        this.FirstName = FirstName;
+        this.LastName = LastName;
+        this.Email = Email;
+        this.Password = Password;
+        this.UserID = UserID;
+    }
 
+    public Account(String RoleID, String FirstName, String LastName, String Email, String Password, String PhoneNo, String Address, String DOB, boolean Gender, String Status, String RegisterDate) {
+        this.RoleID = RoleID;
+        this.FirstName = FirstName;
+        this.LastName = LastName;
+        this.Email = Email;
+        this.Password = Password;
+        this.PhoneNo = PhoneNo;
+        this.Address = Address;
+        this.DOB = DOB;
+        this.Gender = Gender;
+        this.Status = Status;
+        this.RegisterDate = RegisterDate;
+    }
+    
     public Account(String RoleID, String FirstName, String LastName, String Email, String Password, String PhoneNo, String Address, String DOB, boolean Gender, String imgUser) {
         this.RoleID = RoleID;
         this.FirstName = FirstName;
